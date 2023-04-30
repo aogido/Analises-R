@@ -1,4 +1,4 @@
-x#+Title: Analises Descritivas
+#+Title: Analises Descritivas
 
 * varnames
 X                                                                                        
