@@ -183,6 +183,8 @@ Sentar.levantar.pos
 
  #+RESULTS: summary(dados)
  #+begin_example
+
+ 
    Participante       Rem_Pres  Genero               Cidade       Idade               Estado.civil         Escolaridade
   P1     : 1    Presencial:18   F:34                    : 5   Min.   :64.00                 : 5    sup completo  :11   
   P10    : 1    Remoto    :20   M: 4   Fortaleza - Ceara: 1   1st Qu.:66.00   casado(a)     : 7                  : 5   
