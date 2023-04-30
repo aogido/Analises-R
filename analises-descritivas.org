@@ -477,10 +477,10 @@ Sentar.levantar.pos
    [1] "Desvio Padrao =  3.90135722990014"
    #+end_example
 
-
+   
 * Testes de Normalidade
  #+name: testes de normalidade
- #+begin_src R :session s1 :results output
+ #+begin_src R :session s1 :results output :exports both
 shapiro.test(   myDados$Genero )
 shapiro.test(   myDados$Cidade )
 shapiro.test(   myDados$Idade )
