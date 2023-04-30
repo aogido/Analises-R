@@ -181,6 +181,8 @@ Sentar.levantar.pos
    summary(myDados)
  #+end_src
 
+ #+Name: summary(dados)
+ #+begin_src sh 
    Participante       Rem_Pres  Genero               Cidade       Idade               Estado.civil         Escolaridade
   P1     : 1    Presencial:18   F:34                    : 5   Min.   :64.00                 : 5    sup completo  :11   
   P10    : 1    Remoto    :20   M: 4   Fortaleza - Ceara: 1   1st Qu.:66.00   casado(a)     : 7                  : 5   
@@ -221,7 +223,7 @@ Sentar.levantar.pos
   3rd Qu.:19.88   3rd Qu.:14.5        3rd Qu.:13.00      
   Max.   :29.00   Max.   :23.0        Max.   :24.00      
   NA's   :20      NA's   :20          NA's   :21
-
+ #+end_src
 
 
 #+Name: mean sd var
