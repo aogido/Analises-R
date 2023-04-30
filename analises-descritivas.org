@@ -227,8 +227,7 @@ Sentar.levantar.pos
 
 
 #+Name: mean sd var
- #+begin_src R :session s1 :results output
-
+ #+begin_src R :session s1 :results output :exports both
     print("---------------------------------------")
     print("## Media, Variancia e Desvios Padrao")
     print("Idade")
