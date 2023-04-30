@@ -1,0 +1,2339 @@
+x#+Title: Analises Descritivas
+
+* varnames
+X                                                                                        
+Genero                                                                                   
+Cidade                                                                                   
+Idade                                                                                    
+Estado.civil                                                                             
+Escolaridade                                                                             
+Esp_Pre                                                                                  
+ESP_Pos                                                                                  
+FPP.D.pre
+FPP.E.pre
+FPP.D.pos
+FPP.E.pos
+UG.pre
+TUG.pos
+EP.Pre..D
+EP..Pre.E.
+EP.D..pos
+EP.E..por
+Teste.vel.pre
+Teste.vel.pos
+Alc.Func.pre
+Alc.Func.pos
+Sentar.levantar.pre
+Sentar.levantar.pos
+
+
+* Ambiente de execucao das estatisticas
+
+ #+NAME: R environment which R
+ #+begin_src R :session s1 :results output 
+   system('which R')
+   system("R --version")
+   env_vars <- Sys.getenv()
+   env_vars_R <- env_vars[grep("^R", names(env_vars))]
+   env_vars_R
+ #+end_src
+
+ #+RESULTS: R environment which R
+ #+begin_example
+ /bin/R
+ R version 4.2.3 (2023-03-15) -- "Shortstop Beagle"
+ Copyright (C) 2023 The R Foundation for Statistical Computing
+ Platform: x86_64-redhat-linux-gnu (64-bit)
+
+ R is free software and comes with ABSOLUTELY NO WARRANTY.
+ You are welcome to redistribute it under the terms of the
+ GNU General Public License versions 2 or 3.
+ For more information about these matters see
+ https://www.gnu.org/licenses/.
+ R_ARCH                                 
+ R_BROWSER                              /usr/bin/xdg-open
+ R_BZIPCMD                              /usr/bin/bzip2
+ R_DOC_DIR                              /usr/share/doc/R
+ R_GZIPCMD                              /usr/bin/gzip
+ R_HOME                                 /usr/lib64/R
+ R_INCLUDE_DIR                          /usr/include/R
+ R_LIBS_SITE                            /usr/local/lib/R/site-library:/usr/local/lib/R/library:/usr/lib64/R/library:/usr/share/R/library
+ R_LIBS_USER                            /home/wgn/R/x86_64-redhat-linux-gnu-library/4.2
+ R_PAPERSIZE                            a4
+ R_PDFVIEWER                            /usr/bin/xdg-open
+ R_PLATFORM                             x86_64-redhat-linux-gnu
+ R_PRINTCMD                             lpr
+ R_RD4PDF                               times,inconsolata,hyper
+ R_SESSION_TMPDIR                       /tmp/Rtmp5cEBn6
+ R_SHARE_DIR                            /usr/share/R
+ R_STRIP_SHARED_LIB                     strip --strip-unneeded
+ R_STRIP_STATIC_LIB                     strip --strip-debug
+ R_SYSTEM_ABI                           linux,gcc,gxx,gfortran,gfortran
+ R_TEXI2DVICMD                          /usr/bin/texi2dvi
+ R_UNZIPCMD                             /usr/bin/unzip
+ R_ZIPCMD                               /usr/bin/zip
+ #+end_example
+
+* Prepacao do ambiente para execucao das analises
+
+#+Name: library(ggplot2)
+#+begin_src R :session s1 :results output :exports code
+  #install.packages("ggplot2")
+  #install.packages("gridExtra")
+  options(scipen=999)  # turn off scientific notation like 1e+06
+  library(ggplot2)
+  library(dplyr)
+  library(gridExtra)
+#+end_src
+
+#+RESULTS: library(ggplot2)
+
+* Carregamento dos dados para analises
+
+#+Name: read.csv
+ #+begin_src R :session s1 :results output 
+  dados <- read.csv("./Dados/PlanFinal19Mar23.csv", header=TRUE, stringsAsFactors=TRUE)
+  myDados <- dados %>% rename(Esp_Pre = ESP...Pre, ESP_Pos = ESP..Pos, Rem_Pres="X")
+ #+end_src
+
+ #+RESULTS: read.csv
+
+* Conhecendo as variaveis 
+
+ #+name: names(dados)
+ #+begin_src R :session s1 :results output 
+   var_names <- names(myDados)
+   var_names
+ #+end_src
+
+ #+RESULTS: names(dados)
+ #+begin_example
+  [1] "Participante"                                                                             
+  [2] "Rem_Pres"                                                                                 
+  [3] "Genero"                                                                                   
+  [4] "Cidade"                                                                                   
+  [5] "Idade"                                                                                    
+  [6] "Estado.civil"                                                                             
+  [7] "Escolaridade"                                                                             
+  [8] "Desde.qdo.freq.Univ.Aberta.Terc.Idade."                                                   
+  [9] "Por.qual.meio.tecnologico.vocÃª.participara.das.atividades.online.do.Programa.USP60..EACH."
+ [10] "Entrevista"                                                                               
+ [11] "Esp_Pre"                                                                                  
+ [12] "ESP_Pos"                                                                                  
+ [13] "FPP.D.pre"                                                                                
+ [14] "FPP.E.pre"                                                                                
+ [15] "FPP.D.pos"                                                                                
+ [16] "FPP.E.pos"                                                                                
+ [17] "TUG.pre"                                                                                  
+ [18] "TUG.pos"                                                                                  
+ [19] "EP.Pre..D"                                                                                
+ [20] "EP..Pre.E."                                                                               
+ [21] "EP.D..pos"                                                                                
+ [22] "EP.E..por"                                                                                
+ [23] "Teste.vel.pre"                                                                            
+ [24] "Teste.vel.pos"                                                                            
+ [25] "Alc.Func.pre"                                                                             
+ [26] "Alc.Func.pos"                                                                             
+ [27] "Sentar.levantar.pre"                                                                      
+ [28] "Sentar.levantar.pos"
+ #+end_example
+
+#+Name:  str(myDados)
+ #+begin_src R :session s1 :results output
+  str(myDados)
+#+end_src
+
+#+RESULTS: str(myDados)
+#+begin_example
+'data.frame':	38 obs. of  28 variables:
+ $ Participante                                                                             : Factor w/ 38 levels "P1","P10","P11",..: 1 12 23 33 34 35 36 37 38 2 ...
+ $ Rem_Pres                                                                                 : Factor w/ 2 levels "Presencial","Remoto": 2 2 2 2 2 2 2 2 2 2 ...
+ $ Genero                                                                                   : Factor w/ 2 levels "F","M": 1 1 1 1 2 1 1 1 1 1 ...
+ $ Cidade                                                                                   : Factor w/ 6 levels "","Fortaleza - Ceara",..: 5 3 4 5 5 5 5 5 5 1 ...
+ $ Idade                                                                                    : int  66 64 70 80 68 68 64 90 84 NA ...
+ $ Estado.civil                                                                             : Factor w/ 6 levels "","casado(a)",..: 4 6 2 6 3 3 2 6 6 1 ...
+ $ Escolaridade                                                                             : Factor w/ 10 levels "","EspecializaÃ§Ã£o",..: 2 2 10 5 9 9 2 3 5 1 ...
+ $ Desde.qdo.freq.Univ.Aberta.Terc.Idade.                                                   : int  2021 2021 2021 2018 2019 2018 2019 2009 2008 NA ...
+ $ Por.qual.meio.tecnologico.vocÃª.participara.das.atividades.online.do.Programa.USP60..EACH.: Factor w/ 5 levels "","Computador",..: 3 3 5 5 5 4 5 2 5 1 ...
+ $ Entrevista                                                                               : Factor w/ 2 levels "","ok": 2 2 2 2 2 2 2 2 2 2 ...
+ $ Esp_Pre                                                                                  : int  12 14 15 13 14 13 17 16 11 15 ...
+ $ ESP_Pos                                                                                  : int  6 4 12 13 12 7 15 14 10 12 ...
+ $ FPP.D.pre                                                                                : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ FPP.E.pre                                                                                : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ FPP.D.pos                                                                                : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ FPP.E.pos                                                                                : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ TUG.pre                                                                                  : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ TUG.pos                                                                                  : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ EP.Pre..D                                                                                : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ EP..Pre.E.                                                                               : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ EP.D..pos                                                                                : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ EP.E..por                                                                                : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ Teste.vel.pre                                                                            : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ Teste.vel.pos                                                                            : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ Alc.Func.pre                                                                             : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ Alc.Func.pos                                                                             : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ Sentar.levantar.pre                                                                      : int  NA NA NA NA NA NA NA NA NA NA ...
+ $ Sentar.levantar.pos                                                                      : int  NA NA NA NA NA NA NA NA NA NA ...
+#+end_example
+ 
+ #+Name: summary(dados)
+ #+begin_src R :session s1 :results output
+   summary(myDados)
+ #+end_src
+
+ #+RESULTS: summary(dados)
+ #+begin_example
+   Participante       Rem_Pres  Genero               Cidade       Idade               Estado.civil         Escolaridade
+  P1     : 1    Presencial:18   F:34                    : 5   Min.   :64.00                 : 5    sup completo  :11   
+  P10    : 1    Remoto    :20   M: 4   Fortaleza - Ceara: 1   1st Qu.:66.00   casado(a)     : 7                  : 5   
+  P11    : 1                           Londria - ParanÃ¡ : 1   Median :70.00   divorciada/sep: 6    fund completo : 5   
+  P12    : 1                           Santos - SP      : 2   Mean   :71.38   solteirao(a)  : 7    medio completo: 5   
+  P13    : 1                           SÃ£o Paulo - SP   :27   3rd Qu.:75.00   uniao estavel : 1    EspecializaÃ§Ã£o: 4   
+  P14    : 1                           SÃ£o Paulo -SP    : 2   Max.   :90.00   viuvo(a)      :12    Sup Incompleto: 3   
+  (Other):32                                                  NA's   :1                            (Other)       : 5   
+  Desde.qdo.freq.Univ.Aberta.Terc.Idade. Por.qual.meio.tecnologico.vocÃª.participara.das.atividades.online.do.Programa.USP60..EACH.
+  Min.   :2006                                     : 5                                                                            
+  1st Qu.:2014                           Computador: 2                                                                            
+  Median :2018                           Notebook  : 9                                                                            
+  Mean   :2016                           Outro     : 1                                                                            
+  3rd Qu.:2021                           Smartphone:21                                                                            
+  Max.   :2022                                                                                                                    
+  NA's   :5                                                                                                                       
+  Entrevista    Esp_Pre         ESP_Pos         FPP.D.pre       FPP.E.pre       FPP.D.pos       FPP.E.pos        TUG.pre      
+    : 8      Min.   : 2.00   Min.   : 2.000   Min.   :10.00   Min.   : 5.00   Min.   :10.00   Min.   : 6.00   Min.   : 5.070  
+  ok:30      1st Qu.:12.00   1st Qu.: 6.000   1st Qu.:13.00   1st Qu.:11.00   1st Qu.:14.35   1st Qu.:14.35   1st Qu.: 6.915  
+             Median :14.50   Median :10.000   Median :18.00   Median :15.75   Median :21.50   Median :21.05   Median : 8.040  
+             Mean   :13.78   Mean   : 9.667   Mean   :16.71   Mean   :14.94   Mean   :19.63   Mean   :18.48   Mean   : 8.129  
+             3rd Qu.:17.00   3rd Qu.:12.250   3rd Qu.:20.00   3rd Qu.:19.38   3rd Qu.:22.98   3rd Qu.:22.45   3rd Qu.: 9.133  
+             Max.   :23.00   Max.   :22.000   Max.   :23.00   Max.   :27.50   Max.   :30.00   Max.   :28.00   Max.   :10.870  
+             NA's   :2       NA's   :2        NA's   :21      NA's   :20      NA's   :20      NA's   :20      NA's   :20      
+     TUG.pos        EP.Pre..D        EP..Pre.E.      EP.D..pos       EP.E..por      Teste.vel.pre   Teste.vel.pos    Alc.Func.pre  
+  Min.   :5.260   Min.   : 2.250   Min.   : 2.42   Min.   : 0.62   Min.   : 1.440   Min.   :2.220   Min.   :2.010   Min.   : 8.00  
+  1st Qu.:6.510   1st Qu.: 4.067   1st Qu.:11.32   1st Qu.:11.60   1st Qu.: 9.185   1st Qu.:3.183   1st Qu.:3.375   1st Qu.:10.12  
+  Median :7.185   Median :14.915   Median :30.00   Median :24.50   Median :24.500   Median :3.425   Median :4.000   Median :15.00  
+  Mean   :7.409   Mean   :17.222   Mean   :21.52   Mean   :20.12   Mean   :19.940   Mean   :3.640   Mean   :3.937   Mean   :15.22  
+  3rd Qu.:8.117   3rd Qu.:30.000   3rd Qu.:30.00   3rd Qu.:30.00   3rd Qu.:30.000   3rd Qu.:4.157   3rd Qu.:4.310   3rd Qu.:19.12  
+  Max.   :9.530   Max.   :30.000   Max.   :30.00   Max.   :33.00   Max.   :30.000   Max.   :4.810   Max.   :5.630   Max.   :28.00  
+  NA's   :20      NA's   :20       NA's   :20      NA's   :20      NA's   :20       NA's   :20      NA's   :20      NA's   :20     
+   Alc.Func.pos   Sentar.levantar.pre Sentar.levantar.pos
+  Min.   : 9.00   Min.   : 6.0        Min.   : 7.00      
+  1st Qu.:11.00   1st Qu.: 9.0        1st Qu.: 9.00      
+  Median :14.50   Median :11.0        Median :11.00      
+  Mean   :16.58   Mean   :11.5        Mean   :11.71      
+  3rd Qu.:19.88   3rd Qu.:14.5        3rd Qu.:13.00      
+  Max.   :29.00   Max.   :23.0        Max.   :24.00      
+  NA's   :20      NA's   :20          NA's   :21
+ #+end_example
+
+
+#+Name: mean sd var
+ #+begin_src R :session s1 :results output
+
+    print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("Idade")
+    print(paste("Media =", mean(na.omit(myDados$Idade))))
+    print(paste("Variancia = ", var((na.omit(myDados$Idade)))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$Idade))))
+
+    print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("Estress Pre ")  
+    print(paste("Media =", mean(na.omit(myDados$Esp_Pre))))
+    print(paste("Variancia = ", var(na.omit(myDados$Esp_Pre))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$Esp_Pre)))
+
+    print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("Estress Pos")  
+    print(paste("Media =", mean(na.omit(myDados$ESP_Pos))))
+    print(paste("Variancia = ", var(na.omit(myDados$ESP_Pos))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$ESP_Pos))))
+
+  print("XXX---------------------------------------")
+  print("XXX## Media, Variancia e Desvios Padrao")
+  print("XXXEP.D.pre")  
+  print(paste("Media =", mean(na.omit(myDados$EP.D.pre))))
+  print(paste("Variancia = ", var(na.omit(myDados$EP.D.pre))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP.D.pre))))
+
+
+  print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("FPP.D.pos")  
+  print(paste("Media =", mean(na.omit(myDados$FPP.D.pos))))
+  print(paste("Variancia = ", var(na.omit(myDados$FPP.D.pos))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$FPP.D.pos))))
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("FPP.E.pos")  
+  print(paste("Media =", mean(na.omit(myDados$FPP.E.pos))))
+  print(paste("Variancia = ", var(na.omit(myDados$FPP.E.pos))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$FPP.E.pos))))
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("TUG.pre")
+  print(paste("Media =", mean(na.omit(myDados$TUG.pre))))
+  print(paste("Variancia = ", var(na.omit(myDados$TUG.pre))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$TUG.pre))))
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("TUG.pos")  
+  print(paste("Media =", mean(na.omit(myDados$TUG.pos))))
+  print(paste("Variancia = ", var(na.omit(myDados$TUG.pos))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$TUG.pos))))
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("EP.Pre..D")  
+  print(paste("Media =", mean(na.omit(myDados$EP.Pre..D))))
+  print(paste("Variancia = ", var(na.omit(myDados$EP.Pre..D))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP.Pre..D))))
+
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("EP..Pre.E.")  
+  print(paste("Media =", mean(na.omit(myDados$EP..Pre.E.))))
+  print(paste("Variancia = ", var(na.omit(myDados$EP..Pre.E.))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP..Pre.E.))))
+
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("EP.D..pos")  
+  print(paste("Media =", mean(na.omit(myDados$EP.D..pos))))
+  print(paste("Variancia = ", var(na.omit(myDados$EP.D..pos))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP.D..pos))))
+
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("EP.E..por")  
+  print(paste("Media =", mean(na.omit(myDados$EP.E..por))))
+  print(paste("Variancia = ", var(na.omit(myDados$EP.E..por))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP.E..por))))
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("Teste.vel.pre")  
+  print(paste("Media =", mean(na.omit(myDados$Teste.vel.pre))))
+  print(paste("Variancia = ", var(na.omit(myDados$Teste.vel.pre))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Teste.vel.pre))))
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("Teste.vel.pos")  
+  print(paste("Media =", mean(na.omit(myDados$Teste.vel.pos))))
+  print(paste("Variancia = ", var(na.omit(myDados$Teste.vel.pos))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Teste.vel.pos))))
+
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("Alc.Func.pre")  
+  print(paste("Media =", mean(na.omit(myDados$Alc.Func.pre))))
+  print(paste("Variancia = ", var(na.omit(myDados$Alc.Func.pre))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Alc.Func.pre))))
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("Alc.Func.pos")  
+  print(paste("Media =", mean(na.omit(myDados$Alc.Func.pos))))
+  print(paste("Variancia = ", var(na.omit(myDados$Alc.Func.pos))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Alc.Func.pos))))
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("Sentar.levantar.pre")  
+  print(paste("Media =", mean(na.omit(myDados$Sentar.levantar.pre))))
+  print(paste("Variancia = ", var(na.omit(myDados$Sentar.levantar.pre))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Sentar.levantar.pre))))
+
+    print("---------------------------------------")
+  print("## Media, Variancia e Desvios Padrao")
+  print("Sentar.levantar.pos")  
+  print(paste("Media =", mean(na.omit(myDados$Sentar.levantar.pos))))
+  print(paste("Variancia = ", var(na.omit(myDados$Sentar.levantar.pos))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Sentar.levantar.pos))))
+   #+end_src
+
+   #+RESULTS: mean sd var
+   #+begin_example
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "Idade"
+   [1] "Media = 71.3783783783784"
+   [1] "Variancia =  41.8528528528529"
+   [1] "Desvio Padrao =  6.4693780885687"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "Estress Pre "
+   [1] "Media = 13.7777777777778"
+   [1] "Variancia =  24.1777777777778"
+   Erro: unexpected symbol em:
+   "
+     print"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "Estress Pos"
+   [1] "Media = 9.66666666666667"
+   [1] "Variancia =  19.4857142857143"
+   [1] "Desvio Padrao =  4.41426259818266"
+   [1] "XXX---------------------------------------"
+   [1] "XXX## Media, Variancia e Desvios Padrao"
+   [1] "XXXEP.D.pre"
+   [1] "Media = NA"
+   Warning message:
+   In mean.default(na.omit(myDados$EP.D.pre)) :
+     argumento nÃ£o Ã© numÃ©rico nem lÃ³gico: retornando NA
+   Error in var(na.omit(myDados$EP.D.pre)) : 'x' Ã© NULL
+   [1] "Desvio Padrao =  NA"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "FPP.D.pos"
+   [1] "Media = 19.6277777777778"
+   [1] "Variancia =  29.6433006535948"
+   [1] "Desvio Padrao =  5.44456615843676"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "FPP.E.pos"
+   [1] "Media = 18.4833333333333"
+   [1] "Variancia =  37.4367647058824"
+   [1] "Desvio Padrao =  6.11855903835882"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "TUG.pre"
+   [1] "Media = 8.12944444444445"
+   [1] "Variancia =  2.56506437908497"
+   [1] "Desvio Padrao =  1.60158183652443"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "TUG.pos"
+   [1] "Media = 7.40944444444444"
+   [1] "Variancia =  1.58558202614379"
+   [1] "Desvio Padrao =  1.25919896209606"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "EP.Pre..D"
+   [1] "Media = 17.2222222222222"
+   [1] "Variancia =  152.010512418301"
+   [1] "Desvio Padrao =  12.3292543334259"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "EP..Pre.E."
+   [1] "Media = 21.5177777777778"
+   [1] "Variancia =  129.924900653595"
+   [1] "Desvio Padrao =  11.3984604510256"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "EP.D..pos"
+   [1] "Media = 20.1183333333333"
+   [1] "Variancia =  131.259897058824"
+   [1] "Desvio Padrao =  11.4568711723063"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "EP.E..por"
+   [1] "Media = 19.94"
+   [1] "Variancia =  121.315847058824"
+   [1] "Desvio Padrao =  11.0143473278639"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "Teste.vel.pre"
+   [1] "Media = 3.64"
+   [1] "Variancia =  0.5664"
+   [1] "Desvio Padrao =  0.752595508889071"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "Teste.vel.pos"
+   [1] "Media = 3.93666666666667"
+   [1] "Variancia =  0.657741176470588"
+   [1] "Desvio Padrao =  0.811012439158974"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "Alc.Func.pre"
+   [1] "Media = 15.2222222222222"
+   [1] "Variancia =  37.7712418300654"
+   [1] "Desvio Padrao =  6.14583125623095"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "Alc.Func.pos"
+   [1] "Media = 16.5833333333333"
+   [1] "Variancia =  42.5073529411765"
+   [1] "Desvio Padrao =  6.51976632565742"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "Sentar.levantar.pre"
+   [1] "Media = 11.5"
+   [1] "Variancia =  19.4411764705882"
+   [1] "Desvio Padrao =  4.40921494946529"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "Sentar.levantar.pos"
+   [1] "Media = 11.7058823529412"
+   [1] "Variancia =  15.2205882352941"
+   [1] "Desvio Padrao =  3.90135722990014"
+   #+end_example
+
+
+* Testes de Normalidade
+ #+name: testes de normalidade
+ #+begin_src R :session s1 :results output
+shapiro.test(   myDados$Genero )
+shapiro.test(   myDados$Cidade )
+shapiro.test(   myDados$Idade )
+shapiro.test(   myDados$Estado.civil )
+shapiro.test(   myDados$Escolaridade )
+shapiro.test(   myDados$Esp_Pre )
+shapiro.test(   myDados$ESP_Pos ) 
+shapiro.test(   myDados$FPP.D.pre )
+shapiro.test(   myDados$FPP.E.pre )
+shapiro.test(   myDados$FPP.D.pos )
+shapiro.test(   myDados$FPP.E.pos )
+shapiro.test(   myDados$UG.pre )
+shapiro.test(   myDados$TUG.pos )
+shapiro.test(   myDados$EP.Pre..D )
+shapiro.test(   myDados$EP..Pre.E. )
+shapiro.test(   myDados$EP.D..pos )
+shapiro.test(   myDados$EP.E..por )
+shapiro.test(   myDados$Teste.vel.pre )
+shapiro.test(   myDados$Teste.vel.pos )
+shapiro.test(   myDados$Alc.Func.pre )
+shapiro.test(   myDados$Alc.Func.pos )
+shapiro.test(   myDados$Sentar.levantar.pre )
+shapiro.test(   myDados$Sentar.levantar.pos )
+
+ #+end_src
+
+ #+RESULTS: testes de normalidade
+ #+begin_example
+ Error in shapiro.test(myDados$Genero) : is.numeric(x) is not TRUE
+ Error in shapiro.test(myDados$Cidade) : is.numeric(x) is not TRUE
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$Idade
+ W = 0.90201, p-value = 0.003354
+ Error in shapiro.test(myDados$Estado.civil) : is.numeric(x) is not TRUE
+ Error in shapiro.test(myDados$Escolaridade) : is.numeric(x) is not TRUE
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$Esp_Pre
+ W = 0.93933, p-value = 0.0484
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$ESP_Pos
+ W = 0.95399, p-value = 0.1396
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$FPP.D.pre
+ W = 0.90557, p-value = 0.08423
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$FPP.E.pre
+ W = 0.97219, p-value = 0.8377
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$FPP.D.pos
+ W = 0.9402, p-value = 0.2921
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$FPP.E.pos
+ W = 0.94266, p-value = 0.3216
+ Error in shapiro.test(myDados$UG.pre) : is.numeric(x) is not TRUE
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$TUG.pos
+ W = 0.95595, p-value = 0.5257
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$EP.Pre..D
+ W = 0.77189, p-value = 0.0006251
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$EP..Pre.E.
+ W = 0.70934, p-value = 0.0001027
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$EP.D..pos
+ W = 0.831, p-value = 0.00431
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$EP.E..por
+ W = 0.7905, p-value = 0.001119
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$Teste.vel.pre
+ W = 0.89457, p-value = 0.04626
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$Teste.vel.pos
+ W = 0.96624, p-value = 0.7248
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$Alc.Func.pre
+ W = 0.92969, p-value = 0.1918
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$Alc.Func.pos
+ W = 0.89636, p-value = 0.04968
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$Sentar.levantar.pre
+ W = 0.91862, p-value = 0.1222
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$Sentar.levantar.pos
+ W = 0.82548, p-value = 0.004635
+ #+end_example
+
+Os valores mais diferentes  foram
+
+    data:  myDados$ *FPP.D.pre*
+ W = 0.90557, p-value = *0.08423*
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$ *FPP.E.pre*
+ W = 0.97219, p-value = *0.8377*
+
+ Abaixo os graficos qq pra comparar
+ 
+  #+name: qqplot(myDados$FPP.D.pre)
+ #+begin_src R :session s1 :file qqplot_myDados_FPP.D.pre.png :results file graphics
+    qqnorm(myDados$FPP.D.pre)
+    qqline(myDados$FPP.D.pre)
+   #+end_src
+
+   #+RESULTS: qqplot(myDados$FPP.D.pre)
+   [[file:qqplot_myDados_FPP.D.pre.png]]
+
+   #+name: qqplot(myDados$FPP.E.pre)
+   #+begin_src R :session s1 :file qqplot_myDados_FPP.E.pre.png :results file graphics
+     qqnorm(myDados$FPP.E.pre)
+     qqline(myDados$FPP.E.pre)
+   #+end_src
+
+   #+RESULTS: qqplot(myDados$FPP.E.pre)
+   [[file:qqplot_myDados_FPP.E.pre.png]]
+
+ 
+   
+
+* Analise Descritiva
+  https://www.r-bloggers.com/2018/11/explore-your-dataset-in-r/
+  
+** Boxplots e summary pra cada variavel
+
+#+Name: plot_boxplot <- function(var_y, var_x = "") fun
+#+begin_src R :session s1 :results output
+     plot_boxplot <- function(var_y, strTitle = "", strSubTitle = "", strVarYLabel = "", var_x = "", strVarXLabel = "") {
+       ggplot(data = dados, aes(y = var_y, x = var_x)) + 
+       geom_errorbar(stat = "boxplot", width = .2) +
+       geom_boxplot(width = 0.4, outlier.shape=1, outlier.size=4, fill = "yellow") +
+       geom_point(stat = "summary", fun= "mean", shape = 4, size=2, color = "blue") +
+       ggtitle (strTitle, subtitle=strSubTitle) + ylab(strVarYLabel) + xlab(strVarXLabel) +
+       #coord_flip() +
+       theme_classic()
+     }
+
+    #print_summary(dados$Idade, c("Genero","Estado.civil","Escolaridade"))
+    print_summary <- function(var, byFactorVars){
+      summary(var)
+      lapply(byFactorVars,
+             function(factorVar) {
+               print(factorVar)
+               by(var, dados[[factorVar]], summary)})
+    }
+
+#+end_src
+
+#+RESULTS: plot_boxplot <- function(var_y, var_x = "") fun
+
+
+*** Idade
+#+Name: summary(dados$idade) by "Genero","Estado.civil","Escolaridade"
+#+begin_src R :session s1 :results output 
+  summary(dados$Idade)
+  vars <- c("Genero","Estado.civil","Escolaridade")
+  lapply(vars, function(x) by(dados$Idade, dados[[x]], summary))
+#+end_src
+
+#+RESULTS: summary(dados$idade) by "Genero","Estado.civil","Escolaridade"
+#+begin_example
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  64.00   66.00   70.00   71.38   75.00   90.00       1
+[[1]]
+dados[[x]]: F
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  64.00   66.00   70.00   71.64   75.00   90.00       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: M
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  65.00   67.25   68.50   69.25   70.50   75.00 
+
+[[2]]
+dados[[x]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     65      65      66      67      68      71       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: casado(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  64.00   64.00   66.00   68.14   69.50   80.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: divorciada/sep
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  68.00   68.00   68.50   69.33   69.75   73.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: solteirao(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  66.00   67.00   72.00   70.43   73.00   75.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: uniao estavel
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     71      71      71      71      71      71 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: viuvo(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  64.00   70.00   77.50   76.33   81.00   90.00 
+
+[[3]]
+dados[[x]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     65      65      66      67      68      71       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: EspecializaÃ§Ã£o
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  64.00   64.00   65.00   67.25   68.25   75.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: fund completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     68      75      77      78      80      90 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: fund incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     78      78      78      78      78      78 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: Fund Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     80      81      82      82      83      84 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: med comp
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     68      68      68      68      68      68 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: medio completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   65.0    70.0    73.0    74.2    78.0    85.0 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: mestrado
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     66      66      66      66      66      66 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: sup completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  64.00   68.00   70.00   69.45   71.50   74.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[x]]: Sup Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  64.00   66.50   69.00   67.67   69.50   70.00
+#+end_example
+
+
+#+NAME: plot_boxplot idade
+#+begin_src R :session s1 :file boxplot_idade2.png :results output graphics file
+  plot_boxplot(dados$Idade, "Idade")
+#+end_src
+
+#+RESULTS: plot_boxplot idade
+[[file:boxplot_idade2.png]]
+
+
+#+NAME: plot_boxplot idade by "Genero","Estado.civil","Escolaridade"
+#+begin_src R :session s1 :file boxplot_idade_by_genero.png :results output graphics file
+  plot_boxplot(dados$Idade, "Idade", dados$Genero, "Genero")
+#+end_src
+
+#+RESULTS: plot_boxplot idade by "Genero","Estado.civil","Escolaridade"
+[[file:boxplot_idade_by_genero.png]]
+
+
+*** "ESP_Pre"
+
+#+Name: print_summary(dados$Esp...Pre, c("Genero","Estado.civil","Escolaridade"));
+#+begin_src R :session s1 :results output 
+  print_summary(myDados$Esp_Pre, c("Genero","Estado.civil","Escolaridade"));
+#+end_src
+
+#+RESULTS: print_summary(dados$Esp...Pre, c("Genero","Estado.civil","Escolaridade"));
+#+begin_example
+[1] "Genero"
+[1] "Estado.civil"
+[1] "Escolaridade"
+[[1]]
+dados[[factorVar]]: F
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   2.00   12.00   15.00   13.85   17.00   23.00       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: M
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    5.0     9.5    14.0    13.0    17.0    20.0       1 
+
+[[2]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  14.00   14.50   15.00   15.67   16.50   18.00       2 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: casado(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4.00    9.50   14.00   12.14   15.50   17.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: divorciada/sep
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4.00    8.50   13.50   12.00   16.25   17.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: solteirao(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2.00   12.00   13.00   14.57   20.00   23.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: uniao estavel
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     15      15      15      15      15      15 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: viuvo(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   8.00   12.50   15.00   14.58   17.50   19.00 
+
+[[3]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  14.00   14.50   15.00   15.67   16.50   18.00       2 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: EspecializaÃ§Ã£o
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  12.00   13.50   15.50   15.75   17.75   20.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: fund completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    8.0    16.0    16.0    14.8    17.0    17.0 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: fund incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     19      19      19      19      19      19 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: Fund Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   11.0    11.5    12.0    12.0    12.5    13.0 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: med comp
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     20      20      20      20      20      20 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: medio completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    4.0    15.0    17.0    14.8    19.0    19.0 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: mestrado
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     14      14      14      14      14      14 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: sup completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2.00   10.50   13.00   12.45   14.50   23.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: Sup Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    4.0     4.5     5.0     8.0    10.0    15.0
+#+end_example
+
+#+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré")
+#+begin_src R :session s1 :file boxplot_Esp_Pre.png :results output graphics file
+  plot_boxplot(
+    var_y = myDados$Esp_Pre,
+    strTitle = "Estresse Percebido - Pre",
+    strVarYLabel = "Estress Percebido - Pre")
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré")
+[[file:boxplot_Esp_Pre.png]]
+
+
+
+#+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY GENERO)
+#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_GENERO.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$Esp_Pre,
+      var_x = myDados$Genero,
+      strTitle = "Estresse Percebido - Pre",
+      strSubTitle = "Agrupado por Genero",
+      strVarYLabel = "Estress Percebido - Pre",
+      strVarXLabel = "Genero")
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY GENERO)
+[[file:boxplot_Esp_Pre_BY_GENERO.png]]
+
+
+
+#+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY ESTADO-CIVIL)
+#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_ESTADOCIVIL.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$Esp_Pre,
+      var_x = myDados$Genero,
+      strTitle = "Estresse Percebido - Pre",
+      strSubTitle = "Agrupado por Estado Civil",
+      strVarYLabel = "Estress Percebido - Pre",
+      strVarXLabel = "Estado Civil")
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY ESTADO-CIVIL)
+[[file:boxplot_Esp_Pre_BY_ESTADOCIVIL.png]]
+
+
+
+#+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY ESCOLARIDADE)
+#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_ESCOLARIDADE.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$Esp_Pre,
+      var_x = myDados$Escolaridade,
+      strTitle = "Estresse Percebido - Pre",
+      strSubTitle = "Agrupado por Escolaridade",
+      strVarYLabel = "Estress Percebido - Pre",
+      strVarXLabel = "Escolaridade")
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY ESCOLARIDADE)
+[[file:boxplot_Esp_Pre_BY_ESCOLARIDADE.png]]
+
+
+
+
+*** "ESP..Pos"
+
+#+Name: print_summary(dados$Esp_Pos, c("Genero","Estado.civil","Escolaridade"));
+#+begin_src R :session s1 :results output 
+  print_summary(myDados$ESP_Pos, c("Genero","Estado.civil","Escolaridade"));
+#+end_src
+
+#+RESULTS: print_summary(dados$Esp_Pos, c("Genero","Estado.civil","Escolaridade"));
+#+begin_example
+[1] "Genero"
+[1] "Estado.civil"
+[1] "Escolaridade"
+[[1]]
+dados[[factorVar]]: F
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  2.000   6.000  10.000   9.606  12.000  22.000       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: M
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   3.00    7.50   12.00   10.33   14.00   16.00       1 
+
+[[2]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  10.00   11.00   12.00   11.33   12.00   12.00       2 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: casado(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  3.000   5.500  12.000   9.286  12.000  15.000 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: divorciada/sep
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2.00    3.50    6.00    7.00   10.75   13.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: solteirao(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   3.00    7.50    9.00   10.71   13.00   22.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: uniao estavel
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     11      11      11      11      11      11 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: viuvo(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4.00    7.50   10.00   10.08   13.00   14.00 
+
+[[3]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  10.00   11.00   12.00   11.33   12.00   12.00       2 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: EspecializaÃ§Ã£o
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4.00    5.50   10.50   10.25   15.25   16.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: fund completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    2.0     6.0    12.0     9.4    13.0    14.0 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: fund incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     14      14      14      14      14      14 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: Fund Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  10.00   10.75   11.50   11.50   12.25   13.00 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: med comp
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      9       9       9       9       9       9 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: medio completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    3.0     8.0    10.0     9.4    13.0    13.0 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: mestrado
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     12      12      12      12      12      12 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: sup completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  3.000   6.500   9.000   9.364  10.500  22.000 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: Sup Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    3.0     3.0     3.0     6.0     7.5    12.0
+#+end_example
+
+
+*** ESP Pre e Pos Juntos
+#+NAME:  plot_boxplot_2vars(var1 = myDados$Esp_Pre, var2 = myDados$Esp_Pre)
+#+begin_src R :session s1 :file boxplot_2vars_EspPre_-_EspPos.png :results output graphics file
+  #plot_boxplot(
+  #  var_y = myDados$Esp_Pre,
+  #  strTitle = "Estresse Percebido - Pre",
+  #  strVarYLabel = "Estress Percebido - Pre")
+
+  plot_boxplot(
+    var_y = myDados$myDados$ESP_Pos,
+    strTitle = "Estresse Percebido - Pos",
+    strVarYLabel = "Estress Percebido - Pos")
+  
+#+end_src
+
+#+RESULTS: plot_boxplot_2vars(var1 = myDados$Esp_Pre, var2 = myDados$Esp_Pre)
+[[file:boxplot_2vars_EspPre_-_EspPos.png]]
+
+
+*** "FPP.D.pre"
+
+#+Name: print_summary(dados$FPP.D.pre, c("Genero","Estado.civil","Escolaridade"));
+#+begin_src R :session s1 :results output 
+  print_summary(myDados$FPP.D.pre, c("Genero","Estado.civil","Escolaridade"));
+#+end_src
+
+#+RESULTS: print_summary(dados$FPP.D.pre, c("Genero","Estado.civil","Escolaridade"));
+#+begin_example
+[1] "Genero"
+[1] "Estado.civil"
+[1] "Escolaridade"
+[[1]]
+dados[[factorVar]]: F
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   10.0    12.5    18.0    16.5    19.5    23.0      18 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: M
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     20      20      20      20      20      20       3 
+
+[[2]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  10.00   10.75   15.50   16.00   20.75   23.00       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: casado(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  18.00   18.75   19.50   19.50   20.25   21.00       5 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: divorciada/sep
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  11.00   14.50   18.00   15.83   18.25   18.50       3 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: solteirao(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  11.00   13.25   16.50   16.25   19.50   21.00       3 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: uniao estavel
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: viuvo(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  13.00   13.38   16.25   17.12   20.00   23.00       8 
+
+[[3]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  10.00   10.75   15.50   16.00   20.75   23.00       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: EspecializaÃ§Ã£o
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       4 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: fund completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   18.5    18.5    18.5    18.5    18.5    18.5       4 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: fund incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     23      23      23      23      23      23 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: Fund Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       2 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: med comp
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     21      21      21      21      21      21 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: medio completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  13.00   15.50   18.00   16.67   18.50   19.00       2 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: mestrado
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     18      18      18      18      18      18 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: sup completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  11.00   11.62   13.75   14.92   17.75   21.00       5 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: Sup Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       3
+#+end_example
+
+
+*** "FPP.E.pre"
+
+#+Name: print_summary(dados$FPP.E.pre, c("Genero","Estado.civil","Escolaridade"));
+#+begin_src R :session s1 :results output 
+  print_summary(myDados$FPP.E.pre, c("Genero","Estado.civil","Escolaridade"));
+#+end_src
+
+#+RESULTS: print_summary(dados$FPP.E.pre, c("Genero","Estado.civil","Escolaridade"));
+#+begin_example
+[1] "Genero"
+[1] "Estado.civil"
+[1] "Escolaridade"
+[[1]]
+dados[[factorVar]]: F
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   5.00   11.00   15.00   14.21   17.50   21.00      17 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: M
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   27.5    27.5    27.5    27.5    27.5    27.5       3 
+
+[[2]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   5.00   11.00   14.75   15.50   19.25   27.50       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: casado(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  16.50   17.38   18.25   18.25   19.12   20.00       5 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: divorciada/sep
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   9.00   12.00   15.00   14.67   17.50   20.00       3 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: solteirao(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   8.00   10.25   13.75   13.88   17.38   20.00       3 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: uniao estavel
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: viuvo(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   10.0    11.0    11.5    14.2    17.5    21.0       7 
+
+[[3]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   5.00   11.00   14.75   15.50   19.25   27.50       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: EspecializaÃ§Ã£o
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       4 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: fund completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     20      20      20      20      20      20       4 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: fund incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     21      21      21      21      21      21 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: Fund Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       2 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: med comp
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     20      20      20      20      20      20 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: medio completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  10.00   10.75   13.00   13.38   15.62   17.50       1 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: mestrado
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   16.5    16.5    16.5    16.5    16.5    16.5 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: sup completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   8.00    9.50   11.25   12.67   15.25   20.00       5 
+--------------------------------------------------------------------------------------------------- 
+dados[[factorVar]]: Sup Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       3
+#+end_example
+
+
+*** "FPP.D.pos"
+
+*** "FPP.E.pos"
+
+*** "TUG.pre"
+
+*** "TUG.pos"
+
+*** "EP.Pre..D"
+
+*** "EP..Pre.E."
+
+*** "EP.D..pos"
+
+*** "EP.E..por"
+
+*** "Teste.vel.pre"
+
+*** "Teste.vel.pos"
+
+*** "Alc.Func.pre"
+
+*** "Alc.Func.pos"
+
+*** "Sentar.levantar.pre"
+
+*** "Sentar.levantar.pos"                                                                      
+
+
+
+
+
+* Testes Wilcoxon signed rank
+
+** ESP
+
+#+Name FUNCTION teste_wilcox 
+#+begin_src R :session s1 :results output
+
+  teste_wilcox <- function(var1, var2){    
+    Dados_var1_e_var2 <- cbind(var1,var2)
+    Dados_var1_e_var2_SemMissing <- na.omit(Dados_var1_e_var2)
+
+    resultWilcoxExactFALSE <- wilcox.test(
+     Dados_var1_e_var2_SemMissing[,1],
+     Dados_var1_e_var2_SemMissing[,2], paired = TRUE, exact = FALSE)
+    resultWilcoxExactFALSE
+
+    resultWilcoxPadrao <- wilcox.test(
+     Dados_var1_e_var2_SemMissing[,1],
+     Dados_var1_e_var2_SemMissing[,2], paired = TRUE)
+    resultWilcoxPadrao
+
+    return(
+      list(
+        resultWilcoxExactFALSE = resultWilcoxExactFALSE,
+        resultWilcoxPadrao = resultWilcoxPadrao))
+    }
+
+#+end_src
+
+#+RESULTS:
+
+
+#+Name: EspDados => teste_wilcox(myDados$Esp_Pre,myDados$ESP_Pos)
+#+begin_src R :session s1 :results output
+  print("=== Dados sem missing...")
+  ESP_Pre_e_Pos <- cbind(myDados$Esp_Pre,myDados$ESP_Pos)
+  ESP_Pre_e_Pos
+
+  print("=== Dados sem missing...")
+  ESP_Pre_e_Pos_SemMissing <- na.omit(Dados_var1_e_var2)
+  ESP_Pre_e_Pos_SemMissing
+
+  resultWilcoxExactFALSE <- wilcox.test(
+    ESP_Pre_e_Pos_SemMissing[,1],
+    ESP_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE
+
+  resultWilcoxPadrao <- wilcox.test(
+    Dados_var1_e_var2_SemMissing[,1],
+    Dados_var1_e_var2_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao
+
+#+end_src
+
+#+RESULTS: EspDados => teste_wilcox(myDados$Esp_Pre,myDados$ESP_Pos)
+#+begin_example
+[1] "=== Dados sem missing..."
+      [,1] [,2]
+ [1,]   NA   NA
+ [2,]   NA   NA
+ [3,]   NA   NA
+ [4,]   NA   NA
+ [5,]   NA   NA
+ [6,]   NA   NA
+ [7,]   NA   NA
+ [8,]   NA   NA
+ [9,]   NA   NA
+[10,]   NA   NA
+[11,]   NA   NA
+[12,]   NA   NA
+[13,]   NA   NA
+[14,]   NA   NA
+[15,]   NA   NA
+[16,]   NA   NA
+[17,]   NA   NA
+[18,]   NA   NA
+[19,]   NA   NA
+[20,]   NA   NA
+[21,] 18.5 19.0
+[22,] 21.0 30.0
+[23,] 21.0 23.0
+[24,] 13.5 22.4
+[25,] 19.0 22.0
+[26,] 18.0 14.3
+[27,] 18.0 21.0
+[28,] 14.0 24.6
+[29,]   NA 22.9
+[30,] 13.0 14.5
+[31,] 11.0 13.0
+[32,] 11.0 12.0
+[33,] 20.0 22.0
+[34,] 23.0 23.0
+[35,] 19.0 20.0
+[36,] 23.0 25.6
+[37,] 10.0 10.0
+[38,] 11.0 14.0
+[1] "=== Dados sem missing..."
+Error in na.omit(Dados_var1_e_var2) : 
+  objeto 'Dados_var1_e_var2' nÃ£o encontrado
+Erro: objeto 'ESP_Pre_e_Pos_SemMissing' nÃ£o encontrado
+Error in wilcox.test(ESP_Pre_e_Pos_SemMissing[, 1], ESP_Pre_e_Pos_SemMissing[,  : 
+  objeto 'ESP_Pre_e_Pos_SemMissing' nÃ£o encontrado
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
+V = 127, p-value = 0.01759
+alternative hypothesis: true location shift is not equal to 0
+Error in wilcox.test(Dados_var1_e_var2_SemMissing[, 1], Dados_var1_e_var2_SemMissing[,  : 
+  objeto 'Dados_var1_e_var2_SemMissing' nÃ£o encontrado
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
+V = 127, p-value = 0.01759
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+
+
+
+
+
+#+Name: EspDados => teste_wilcox(myDados$FPP.D.pre,myDados$FPP.E.pre)
+#+begin_src R :session s1 :results output
+  print("=== Dados sem missing...")
+  FPP.E.pre_e_Pos <- cbind(myDados$FPP.D.pre,myDados$FPP.E.pre)
+  FPP.E.pre_e_Pos
+
+  print("=== Dados sem missing...")
+  FPP.E.pre_e_Pos_SemMissing <- na.omit(FPP.E.pre_e_Pos)
+  FPP.E.pre_e_Pos_SemMissing
+
+  resultWilcoxExactFALSE <- wilcox.test(
+    FPP.E.pre_e_Pos_SemMissing[,1],
+    FPP.E.pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE
+
+  resultWilcoxPadrao <- wilcox.test(
+    FPP.E.pre_e_Pos_SemMissing[,1],
+    FPP.E.pre_e_Pos_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao
+
+#+end_src
+
+#+RESULTS: EspDados => teste_wilcox(myDados$FPP.D.pre,myDados$FPP.E.pre)
+#+begin_example
+[1] "=== Dados sem missing..."
+      [,1] [,2]
+ [1,]   NA   NA
+ [2,]   NA   NA
+ [3,]   NA   NA
+ [4,]   NA   NA
+ [5,]   NA   NA
+ [6,]   NA   NA
+ [7,]   NA   NA
+ [8,]   NA   NA
+ [9,]   NA   NA
+[10,]   NA   NA
+[11,]   NA   NA
+[12,]   NA   NA
+[13,]   NA   NA
+[14,]   NA   NA
+[15,]   NA   NA
+[16,]   NA   NA
+[17,]   NA   NA
+[18,]   NA   NA
+[19,]   NA   NA
+[20,]   NA   NA
+[21,] 18.5 20.0
+[22,] 21.0 20.0
+[23,] 21.0 20.0
+[24,] 13.5 11.5
+[25,] 19.0 11.0
+[26,] 18.0 15.0
+[27,] 18.0 16.5
+[28,] 14.0 11.0
+[29,]   NA 17.5
+[30,] 13.0 10.0
+[31,] 11.0 13.0
+[32,] 11.0  9.0
+[33,] 20.0 27.5
+[34,] 23.0 16.5
+[35,] 19.0 16.5
+[36,] 23.0 21.0
+[37,] 10.0  5.0
+[38,] 11.0  8.0
+[1] "=== Dados sem missing..."
+      [,1] [,2]
+ [1,] 18.5 20.0
+ [2,] 21.0 20.0
+ [3,] 21.0 20.0
+ [4,] 13.5 11.5
+ [5,] 19.0 11.0
+ [6,] 18.0 15.0
+ [7,] 18.0 16.5
+ [8,] 14.0 11.0
+ [9,] 13.0 10.0
+[10,] 11.0 13.0
+[11,] 11.0  9.0
+[12,] 20.0 27.5
+[13,] 23.0 16.5
+[14,] 19.0 16.5
+[15,] 23.0 21.0
+[16,] 10.0  5.0
+[17,] 11.0  8.0
+attr(,"na.action")
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 29
+attr(,"class")
+[1] "omit"
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
+V = 127, p-value = 0.01759
+alternative hypothesis: true location shift is not equal to 0
+Warning message:
+In wilcox.test.default(FPP.E.pre_e_Pos_SemMissing[, 1], FPP.E.pre_e_Pos_SemMissing[,  :
+  nÃ£o Ã© possÃ­vel computar o valor de p exato com o de desempate
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
+V = 127, p-value = 0.01759
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+
+
+
+
+
+
+
+ 
+**  myDados$FPP.D.pre, myDados$FPP.D.pos
+
+#+Name: EspDados => teste_wilcox(myDados$FPP.D.pre,myDados$FPP.D.pos)
+#+begin_src R :session s1 :results output
+  print("=== Dados sem missing...")
+  FPP.D_Pre_e_Pos <- cbind(myDados$FPP.D.pre,myDados$FPP.D.pos)
+  FPP.D_Pre_e_Pos
+
+  print("=== Dados sem missing...")
+  ESP_Pre_e_Pos_SemMissing <- na.omit(Dados_var1_e_var2)
+  ESP_Pre_e_Pos_SemMissing
+
+  resultWilcoxExactFALSE <- wilcox.test(
+    ESP_Pre_e_Pos_SemMissing[,1],
+    ESP_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE
+
+  resultWilcoxPadrao <- wilcox.test(
+    Dados_var1_e_var2_SemMissing[,1],
+    Dados_var1_e_var2_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao
+
+#+end_src
+
+#+RESULTS: EspDados => teste_wilcox(myDados$FPP.D.pre,myDados$FPP.D.pos)
+#+begin_example
+[1] "=== Dados sem missing..."
+      [,1] [,2]
+ [1,]   NA   NA
+ [2,]   NA   NA
+ [3,]   NA   NA
+ [4,]   NA   NA
+ [5,]   NA   NA
+ [6,]   NA   NA
+ [7,]   NA   NA
+ [8,]   NA   NA
+ [9,]   NA   NA
+[10,]   NA   NA
+[11,]   NA   NA
+[12,]   NA   NA
+[13,]   NA   NA
+[14,]   NA   NA
+[15,]   NA   NA
+[16,]   NA   NA
+[17,]   NA   NA
+[18,]   NA   NA
+[19,]   NA   NA
+[20,]   NA   NA
+[21,] 18.5 19.0
+[22,] 21.0 30.0
+[23,] 21.0 23.0
+[24,] 13.5 22.4
+[25,] 19.0 22.0
+[26,] 18.0 14.3
+[27,] 18.0 21.0
+[28,] 14.0 24.6
+[29,]   NA 22.9
+[30,] 13.0 14.5
+[31,] 11.0 13.0
+[32,] 11.0 12.0
+[33,] 20.0 22.0
+[34,] 23.0 23.0
+[35,] 19.0 20.0
+[36,] 23.0 25.6
+[37,] 10.0 10.0
+[38,] 11.0 14.0
+[1] "=== Dados sem missing..."
+Error in na.omit(Dados_var1_e_var2) : 
+  objeto 'Dados_var1_e_var2' nÃ£o encontrado
+Erro: objeto 'ESP_Pre_e_Pos_SemMissing' nÃ£o encontrado
+Error in wilcox.test(ESP_Pre_e_Pos_SemMissing[, 1], ESP_Pre_e_Pos_SemMissing[,  : 
+  objeto 'ESP_Pre_e_Pos_SemMissing' nÃ£o encontrado
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
+V = 127, p-value = 0.01759
+alternative hypothesis: true location shift is not equal to 0
+Error in wilcox.test(Dados_var1_e_var2_SemMissing[, 1], Dados_var1_e_var2_SemMissing[,  : 
+  objeto 'Dados_var1_e_var2_SemMissing' nÃ£o encontrado
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
+V = 127, p-value = 0.01759
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+
+
+**  EspSemMissing <- cbind(myDados$FPP.E.pre, myDados$FPP.E.pos)
+
+#+Name: EspDados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
+#+begin_src R :session s1 :results output
+  print("=== Dados sem missing...")
+  FPP.E_Pre_e_Pos <- cbind(myDados$FPP.E.pre,myDados$FPP.E.pos)
+  FPP.E_Pre_e_Pos
+
+  print("=== Dados sem missing...")
+  FPP.E_Pre_e_Pos_SemMissing <- na.omit(FPP.E_Pre_e_Pos)
+  FPP.E_Pre_e_Pos_SemMissing
+
+  resultWilcoxExactFALSE <- wilcox.test(
+    FPP.E_Pre_e_Pos_SemMissing[,1],
+    FPP.E_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE
+
+  resultWilcoxPadrao <- wilcox.test(
+    Dados_var1_e_var2_SemMissing[,1],
+    Dados_var1_e_var2_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao
+
+#+end_src
+
+#+RESULTS: EspDados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
+#+begin_example
+[1] "=== Dados sem missing..."
+      [,1] [,2]
+ [1,]   NA   NA
+ [2,]   NA   NA
+ [3,]   NA   NA
+ [4,]   NA   NA
+ [5,]   NA   NA
+ [6,]   NA   NA
+ [7,]   NA   NA
+ [8,]   NA   NA
+ [9,]   NA   NA
+[10,]   NA   NA
+[11,]   NA   NA
+[12,]   NA   NA
+[13,]   NA   NA
+[14,]   NA   NA
+[15,]   NA   NA
+[16,]   NA   NA
+[17,]   NA   NA
+[18,]   NA   NA
+[19,]   NA   NA
+[20,]   NA   NA
+[21,] 20.0 22.0
+[22,] 20.0 25.5
+[23,] 20.0 21.0
+[24,] 11.5 21.1
+[25,] 11.0 21.6
+[26,] 15.0 14.3
+[27,] 16.5 22.0
+[28,] 11.0 22.6
+[29,] 17.5 23.0
+[30,] 10.0 12.5
+[31,] 13.0 14.5
+[32,]  9.0  9.5
+[33,] 27.5 28.0
+[34,] 16.5 17.0
+[35,] 16.5 18.0
+[36,] 21.0 24.1
+[37,]  5.0  6.0
+[38,]  8.0 10.0
+[1] "=== Dados sem missing..."
+      [,1] [,2]
+ [1,] 20.0 22.0
+ [2,] 20.0 25.5
+ [3,] 20.0 21.0
+ [4,] 11.5 21.1
+ [5,] 11.0 21.6
+ [6,] 15.0 14.3
+ [7,] 16.5 22.0
+ [8,] 11.0 22.6
+ [9,] 17.5 23.0
+[10,] 10.0 12.5
+[11,] 13.0 14.5
+[12,]  9.0  9.5
+[13,] 27.5 28.0
+[14,] 16.5 17.0
+[15,] 16.5 18.0
+[16,] 21.0 24.1
+[17,]  5.0  6.0
+[18,]  8.0 10.0
+attr(,"na.action")
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+attr(,"class")
+[1] "omit"
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  FPP.E_Pre_e_Pos_SemMissing[, 1] and FPP.E_Pre_e_Pos_SemMissing[, 2]
+V = 4, p-value = 0.0004121
+alternative hypothesis: true location shift is not equal to 0
+Error in wilcox.test(Dados_var1_e_var2_SemMissing[, 1], Dados_var1_e_var2_SemMissing[,  : 
+  objeto 'Dados_var1_e_var2_SemMissing' nÃ£o encontrado
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
+V = 127, p-value = 0.01759
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+
+**  EspSemMissing <- cbind(myDados$TUG.pre, myDados$TUG.pos)
+
+#+Name: EspDados => teste_wilcox(myDados$TUG.pre,myDados$TUG.pos)
+#+begin_src R :session s1 :results output
+  print("=== Dados sem missing...")
+  TUG_Pre_e_Pos <- cbind(myDados$TUG.pre,myDados$TUG.pos)
+  TUG_Pre_e_Pos
+
+  print("=== Dados sem missing...")
+  TUG_Pre_e_Pos_SemMissing <- na.omit(TUG_Pre_e_Pos)
+  TUG_Pre_e_Pos_SemMissing
+
+  resultWilcoxExactFALSE <- wilcox.test(
+    TUG_Pre_e_Pos_SemMissing[,1],
+    TUG_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE
+
+  resultWilcoxPadrao <- wilcox.test(
+    TUG_Pre_e_Pos_SemMissing[,1],
+    TUG_Pre_e_Pos_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao
+
+#+end_src
+
+#+RESULTS: EspDados => teste_wilcox(myDados$TUG.pre,myDados$TUG.pos)
+#+begin_example
+[1] "=== Dados sem missing..."
+       [,1] [,2]
+ [1,]    NA   NA
+ [2,]    NA   NA
+ [3,]    NA   NA
+ [4,]    NA   NA
+ [5,]    NA   NA
+ [6,]    NA   NA
+ [7,]    NA   NA
+ [8,]    NA   NA
+ [9,]    NA   NA
+[10,]    NA   NA
+[11,]    NA   NA
+[12,]    NA   NA
+[13,]    NA   NA
+[14,]    NA   NA
+[15,]    NA   NA
+[16,]    NA   NA
+[17,]    NA   NA
+[18,]    NA   NA
+[19,]    NA   NA
+[20,]    NA   NA
+[21,]  6.70 6.44
+[22,]  6.72 6.50
+[23,]  7.76 7.14
+[24,]  9.61 9.53
+[25,]  8.96 9.31
+[26,]  6.11 6.75
+[27,]  5.07 5.26
+[28,]  9.49 7.77
+[29,]  7.75 7.06
+[30,]  8.90 7.65
+[31,]  9.19 8.23
+[32,]  6.20 5.87
+[33,]  8.32 6.54
+[34,]  8.87 7.23
+[35,] 10.75 8.69
+[36,]  7.50 7.78
+[37,]  7.56 6.12
+[38,] 10.87 9.50
+[1] "=== Dados sem missing..."
+       [,1] [,2]
+ [1,]  6.70 6.44
+ [2,]  6.72 6.50
+ [3,]  7.76 7.14
+ [4,]  9.61 9.53
+ [5,]  8.96 9.31
+ [6,]  6.11 6.75
+ [7,]  5.07 5.26
+ [8,]  9.49 7.77
+ [9,]  7.75 7.06
+[10,]  8.90 7.65
+[11,]  9.19 8.23
+[12,]  6.20 5.87
+[13,]  8.32 6.54
+[14,]  8.87 7.23
+[15,] 10.75 8.69
+[16,]  7.50 7.78
+[17,]  7.56 6.12
+[18,] 10.87 9.50
+attr(,"na.action")
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+attr(,"class")
+[1] "omit"
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  TUG_Pre_e_Pos_SemMissing[, 1] and TUG_Pre_e_Pos_SemMissing[, 2]
+V = 148, p-value = 0.006931
+alternative hypothesis: true location shift is not equal to 0
+
+	Wilcoxon signed rank exact test
+
+data:  TUG_Pre_e_Pos_SemMissing[, 1] and TUG_Pre_e_Pos_SemMissing[, 2]
+V = 148, p-value = 0.004745
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+
+
+**  EspSemMissing <- cbind(myDados$EP.Pre..D, myDados$EP.D..pos)
+
+#+Name: EspDados => teste_wilcox(myDados$EP.Pre..D,myDados$EP.D..pos)
+#+begin_src R :session s1 :results output
+  print("=== Dados sem missing...")
+  EP.D_Pre_e_Pos <- cbind(myDados$EP.Pre..D,myDados$EP.D..pos)
+  EP.D_Pre_e_Pos
+
+  print("=== Dados sem missing...")
+  EP.D_Pre_e_Pos_SemMissing <- na.omit(EP.D_Pre_e_Pos)
+  EP.D_Pre_e_Pos_SemMissing
+
+  resultWilcoxExactFALSE <- wilcox.test(
+    EP.D_Pre_e_Pos_SemMissing[,1],
+    EP.D_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE
+
+  resultWilcoxPadrao <- wilcox.test(
+    EP.D_Pre_e_Pos_SemMissing[,1],
+    EP.D_Pre_e_Pos_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao
+
+#+end_src
+
+#+RESULTS: EspDados => teste_wilcox(myDados$EP.Pre..D,myDados$EP.D..pos)
+#+begin_example
+[1] "=== Dados sem missing..."
+       [,1]  [,2]
+ [1,]    NA    NA
+ [2,]    NA    NA
+ [3,]    NA    NA
+ [4,]    NA    NA
+ [5,]    NA    NA
+ [6,]    NA    NA
+ [7,]    NA    NA
+ [8,]    NA    NA
+ [9,]    NA    NA
+[10,]    NA    NA
+[11,]    NA    NA
+[12,]    NA    NA
+[13,]    NA    NA
+[14,]    NA    NA
+[15,]    NA    NA
+[16,]    NA    NA
+[17,]    NA    NA
+[18,]    NA    NA
+[19,]    NA    NA
+[20,]    NA    NA
+[21,] 30.00 30.00
+[22,] 30.00 30.00
+[23,] 10.00 12.00
+[24,] 30.00 30.00
+[25,]  5.20  0.62
+[26,] 30.00 30.00
+[27,] 30.00 30.00
+[28,] 30.00 30.00
+[29,]  3.69  4.10
+[30,] 15.83 17.00
+[31,]  3.00 33.00
+[32,] 14.00 19.00
+[33,] 10.19 15.30
+[34,] 30.00 30.00
+[35,]  2.25  3.31
+[36,]  2.26 11.47
+[37,] 30.00 30.00
+[38,]  3.58  6.33
+[1] "=== Dados sem missing..."
+       [,1]  [,2]
+ [1,] 30.00 30.00
+ [2,] 30.00 30.00
+ [3,] 10.00 12.00
+ [4,] 30.00 30.00
+ [5,]  5.20  0.62
+ [6,] 30.00 30.00
+ [7,] 30.00 30.00
+ [8,] 30.00 30.00
+ [9,]  3.69  4.10
+[10,] 15.83 17.00
+[11,]  3.00 33.00
+[12,] 14.00 19.00
+[13,] 10.19 15.30
+[14,] 30.00 30.00
+[15,]  2.25  3.31
+[16,]  2.26 11.47
+[17,] 30.00 30.00
+[18,]  3.58  6.33
+attr(,"na.action")
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+attr(,"class")
+[1] "omit"
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  EP.D_Pre_e_Pos_SemMissing[, 1] and EP.D_Pre_e_Pos_SemMissing[, 2]
+V = 6, p-value = 0.03231
+alternative hypothesis: true location shift is not equal to 0
+Warning message:
+In wilcox.test.default(EP.D_Pre_e_Pos_SemMissing[, 1], EP.D_Pre_e_Pos_SemMissing[,  :
+  cannot compute exact p-value with zeroes
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  EP.D_Pre_e_Pos_SemMissing[, 1] and EP.D_Pre_e_Pos_SemMissing[, 2]
+V = 6, p-value = 0.03231
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+
+**  EspSemMissing <- cbind(myDados$EP..Pre.E., myDados$EP.E..por)
+
+#+Name: EspDados => teste_wilcox(myDados$EP..Pre.E.,myDados$EP.E..por)
+#+begin_src R :session s1 :results output
+  print("=== Dados sem missing...")
+  EP.E_Pre_e_Pos <- cbind(myDados$EP..Pre.E.,myDados$EP.E..por)
+  EP.E_Pre_e_Pos
+
+  print("=== Dados sem missing...")
+  EP.E_Pre_e_Pos_SemMissing <- na.omit(EP.E_Pre_e_Pos)
+  EP.E_Pre_e_Pos_SemMissing
+
+  resultWilcoxExactFALSE <- wilcox.test(
+    EP.E_Pre_e_Pos_SemMissing[,1],
+    EP.E_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE
+
+  resultWilcoxPadrao <- wilcox.test(
+    EP.E_Pre_e_Pos_SemMissing[,1],
+    EP.E_Pre_e_Pos_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao
+
+#+end_src
+
+#+RESULTS: EspDados => teste_wilcox(myDados$EP..Pre.E.,myDados$EP.E..por)
+#+begin_example
+[1] "=== Dados sem missing..."
+       [,1]  [,2]
+ [1,]    NA    NA
+ [2,]    NA    NA
+ [3,]    NA    NA
+ [4,]    NA    NA
+ [5,]    NA    NA
+ [6,]    NA    NA
+ [7,]    NA    NA
+ [8,]    NA    NA
+ [9,]    NA    NA
+[10,]    NA    NA
+[11,]    NA    NA
+[12,]    NA    NA
+[13,]    NA    NA
+[14,]    NA    NA
+[15,]    NA    NA
+[16,]    NA    NA
+[17,]    NA    NA
+[18,]    NA    NA
+[19,]    NA    NA
+[20,]    NA    NA
+[21,] 30.00 30.00
+[22,] 30.00 30.00
+[23,]  7.68  8.21
+[24,] 30.00  7.13
+[25,]  2.42  7.37
+[26,] 30.00 30.00
+[27,] 30.00 30.00
+[28,] 30.00 30.00
+[29,] 30.00 12.53
+[30,] 11.20 12.11
+[31,] 17.00 19.00
+[32,] 30.00 30.00
+[33,] 30.00 30.00
+[34,] 30.00 30.00
+[35,]  4.18  5.24
+[36,]  3.17  1.44
+[37,] 30.00 30.00
+[38,] 11.67 15.89
+[1] "=== Dados sem missing..."
+       [,1]  [,2]
+ [1,] 30.00 30.00
+ [2,] 30.00 30.00
+ [3,]  7.68  8.21
+ [4,] 30.00  7.13
+ [5,]  2.42  7.37
+ [6,] 30.00 30.00
+ [7,] 30.00 30.00
+ [8,] 30.00 30.00
+ [9,] 30.00 12.53
+[10,] 11.20 12.11
+[11,] 17.00 19.00
+[12,] 30.00 30.00
+[13,] 30.00 30.00
+[14,] 30.00 30.00
+[15,]  4.18  5.24
+[16,]  3.17  1.44
+[17,] 30.00 30.00
+[18,] 11.67 15.89
+attr(,"na.action")
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+attr(,"class")
+[1] "omit"
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  EP.E_Pre_e_Pos_SemMissing[, 1] and EP.E_Pre_e_Pos_SemMissing[, 2]
+V = 21, p-value = 0.9057
+alternative hypothesis: true location shift is not equal to 0
+Warning message:
+In wilcox.test.default(EP.E_Pre_e_Pos_SemMissing[, 1], EP.E_Pre_e_Pos_SemMissing[,  :
+  cannot compute exact p-value with zeroes
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  EP.E_Pre_e_Pos_SemMissing[, 1] and EP.E_Pre_e_Pos_SemMissing[, 2]
+V = 21, p-value = 0.9057
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+
+
+
+
+
+
+**  EspSemMissing <- cbind(myDados$Teste.vel.pre, myDados$Teste.vel.pos)
+
+#+Name: EspDados => teste_wilcox(myDados$Teste.vel.pre.,myDados$Teste.vel.pos)
+#+begin_src R :session s1 :results output
+  print("=== Dados sem missing...")
+  Teste.vel_Pre_e_Pos <- cbind(myDados$Teste.vel.pre,myDados$Teste.vel.pos)
+  Teste.vel_Pre_e_Pos
+
+  print("=== Dados sem missing...")
+  Teste.vel_Pre_e_Pos_SemMissing <- na.omit(Teste.vel_Pre_e_Pos)
+  Teste.vel_Pre_e_Pos_SemMissing
+
+  resultWilcoxExactFALSE <- wilcox.test(
+    Teste.vel_Pre_e_Pos_SemMissing[,1],
+    Teste.vel_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE
+
+  resultWilcoxPadrao <- wilcox.test(
+    Teste.vel_Pre_e_Pos_SemMissing[,1],
+    Teste.vel_Pre_e_Pos_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao
+
+#+end_src
+
+#+RESULTS: EspDados => teste_wilcox(myDados$Teste.vel.pre.,myDados$Teste.vel.pos)
+#+begin_example
+[1] "=== Dados sem missing..."
+      [,1] [,2]
+ [1,]   NA   NA
+ [2,]   NA   NA
+ [3,]   NA   NA
+ [4,]   NA   NA
+ [5,]   NA   NA
+ [6,]   NA   NA
+ [7,]   NA   NA
+ [8,]   NA   NA
+ [9,]   NA   NA
+[10,]   NA   NA
+[11,]   NA   NA
+[12,]   NA   NA
+[13,]   NA   NA
+[14,]   NA   NA
+[15,]   NA   NA
+[16,]   NA   NA
+[17,]   NA   NA
+[18,]   NA   NA
+[19,]   NA   NA
+[20,]   NA   NA
+[21,] 3.44 4.16
+[22,] 3.02 5.63
+[23,] 3.01 3.45
+[24,] 3.42 3.87
+[25,] 4.25 4.44
+[26,] 2.98 3.25
+[27,] 2.22 2.01
+[28,] 3.28 3.31
+[29,] 3.31 3.35
+[30,] 3.57 4.11
+[31,] 3.40 3.90
+[32,] 3.15 4.10
+[33,] 3.88 3.20
+[34,] 4.75 4.10
+[35,] 4.81 4.36
+[36,] 3.43 4.75
+[37,] 4.80 5.10
+[38,] 4.80 3.77
+[1] "=== Dados sem missing..."
+      [,1] [,2]
+ [1,] 3.44 4.16
+ [2,] 3.02 5.63
+ [3,] 3.01 3.45
+ [4,] 3.42 3.87
+ [5,] 4.25 4.44
+ [6,] 2.98 3.25
+ [7,] 2.22 2.01
+ [8,] 3.28 3.31
+ [9,] 3.31 3.35
+[10,] 3.57 4.11
+[11,] 3.40 3.90
+[12,] 3.15 4.10
+[13,] 3.88 3.20
+[14,] 4.75 4.10
+[15,] 4.81 4.36
+[16,] 3.43 4.75
+[17,] 4.80 5.10
+[18,] 4.80 3.77
+attr(,"na.action")
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+attr(,"class")
+[1] "omit"
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  Teste.vel_Pre_e_Pos_SemMissing[, 1] and Teste.vel_Pre_e_Pos_SemMissing[, 2]
+V = 53, p-value = 0.1634
+alternative hypothesis: true location shift is not equal to 0
+
+	Wilcoxon signed rank exact test
+
+data:  Teste.vel_Pre_e_Pos_SemMissing[, 1] and Teste.vel_Pre_e_Pos_SemMissing[, 2]
+V = 53, p-value = 0.1674
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+
+
+
+
+**  EspSemMissing <- cbind(myDados$Alc.Func.pre, myDados$Alc.Func.pos)
+#+Name: EspDados => teste_wilcox(myDados$Alc.Func.pre,myDados$Alc.Func.pos)
+#+begin_src R :session s1 :results output
+  print("=== Dados sem missing...")
+  Alc.Func_Pre_e_Pos <- cbind(myDados$Teste.vel.pre,myDados$Teste.vel.pos)
+  Alc.Func_Pre_e_Pos
+
+  print("=== Dados sem missing...")
+  Alc.Func_Pre_e_Pos_SemMissing <- na.omit(Alc.Func_Pre_e_Pos)
+  Alc.Func_Pre_e_Pos_SemMissing
+
+  resultWilcoxExactFALSE <- wilcox.test(
+    Alc.Func_Pre_e_Pos_SemMissing[,1],
+    Alc.Func_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE
+
+  resultWilcoxPadrao <- wilcox.test(
+    Alc.Func_Pre_e_Pos_SemMissing[,1],
+    Alc.Func_Pre_e_Pos_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao
+
+#+end_src
+
+#+RESULTS: EspDados => teste_wilcox(myDados$Alc.Func.pre,myDados$Alc.Func.pos)
+#+begin_example
+[1] "=== Dados sem missing..."
+      [,1] [,2]
+ [1,]   NA   NA
+ [2,]   NA   NA
+ [3,]   NA   NA
+ [4,]   NA   NA
+ [5,]   NA   NA
+ [6,]   NA   NA
+ [7,]   NA   NA
+ [8,]   NA   NA
+ [9,]   NA   NA
+[10,]   NA   NA
+[11,]   NA   NA
+[12,]   NA   NA
+[13,]   NA   NA
+[14,]   NA   NA
+[15,]   NA   NA
+[16,]   NA   NA
+[17,]   NA   NA
+[18,]   NA   NA
+[19,]   NA   NA
+[20,]   NA   NA
+[21,] 3.44 4.16
+[22,] 3.02 5.63
+[23,] 3.01 3.45
+[24,] 3.42 3.87
+[25,] 4.25 4.44
+[26,] 2.98 3.25
+[27,] 2.22 2.01
+[28,] 3.28 3.31
+[29,] 3.31 3.35
+[30,] 3.57 4.11
+[31,] 3.40 3.90
+[32,] 3.15 4.10
+[33,] 3.88 3.20
+[34,] 4.75 4.10
+[35,] 4.81 4.36
+[36,] 3.43 4.75
+[37,] 4.80 5.10
+[38,] 4.80 3.77
+[1] "=== Dados sem missing..."
+      [,1] [,2]
+ [1,] 3.44 4.16
+ [2,] 3.02 5.63
+ [3,] 3.01 3.45
+ [4,] 3.42 3.87
+ [5,] 4.25 4.44
+ [6,] 2.98 3.25
+ [7,] 2.22 2.01
+ [8,] 3.28 3.31
+ [9,] 3.31 3.35
+[10,] 3.57 4.11
+[11,] 3.40 3.90
+[12,] 3.15 4.10
+[13,] 3.88 3.20
+[14,] 4.75 4.10
+[15,] 4.81 4.36
+[16,] 3.43 4.75
+[17,] 4.80 5.10
+[18,] 4.80 3.77
+attr(,"na.action")
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+attr(,"class")
+[1] "omit"
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  Alc.Func_Pre_e_Pos_SemMissing[, 1] and Alc.Func_Pre_e_Pos_SemMissing[, 2]
+V = 53, p-value = 0.1634
+alternative hypothesis: true location shift is not equal to 0
+
+	Wilcoxon signed rank exact test
+
+data:  Alc.Func_Pre_e_Pos_SemMissing[, 1] and Alc.Func_Pre_e_Pos_SemMissing[, 2]
+V = 53, p-value = 0.1674
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+
+
+**  EspSemMissing <- cbind(myDados$Sentar.levantar.pre, myDados$Sentar.levantar.pos)
+
+#+Name: EspDados => teste_wilcox(myDados$Sentar.levantar.pre,myDados$Alc.Sentar.levantar.pos)
+#+begin_src R :session s1 :results output
+  print("=== Dados com missing...")
+  Alc.Sentar.levantar_Pre_e_Pos <- cbind(myDados$Sentar.levantar.pre,myDados$Sentar.levantar.pos)
+  Alc.Sentar.levantar_Pre_e_Pos
+
+  print("=== Dados sem missing...")
+  Alc.Sentar.levantar_Pre_e_Pos_SemMissing <- na.omit(Alc.Sentar.levantar_Pre_e_Pos)
+  Alc.Sentar.levantar_Pre_e_Pos_SemMissing
+
+  resultWilcoxExactFALSE <- wilcox.test(
+    Alc.Sentar.levantar_Pre_e_Pos_SemMissing[,1],
+    Alc.Sentar.levantar_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE
+
+  resultWilcoxPadrao <- wilcox.test(
+    Alc.Sentar.levantar_Pre_e_Pos_SemMissing[,1],
+    Alc.Sentar.levantar_Pre_e_Pos_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao
+
+#+end_src
+
+#+RESULTS: EspDados => teste_wilcox(myDados$Sentar.levantar.pre,myDados$Alc.Sentar.levantar.pos)
+#+begin_example
+[1] "=== Dados com missing..."
+      [,1] [,2]
+ [1,]   NA   NA
+ [2,]   NA   NA
+ [3,]   NA   NA
+ [4,]   NA   NA
+ [5,]   NA   NA
+ [6,]   NA   NA
+ [7,]   NA   NA
+ [8,]   NA   NA
+ [9,]   NA   NA
+[10,]   NA   NA
+[11,]   NA   NA
+[12,]   NA   NA
+[13,]   NA   NA
+[14,]   NA   NA
+[15,]   NA   NA
+[16,]   NA   NA
+[17,]   NA   NA
+[18,]   NA   NA
+[19,]   NA   NA
+[20,]   NA   NA
+[21,]   16   14
+[22,]   13   12
+[23,]   13   15
+[24,]   15   13
+[25,]   13   11
+[26,]    9   11
+[27,]   23   24
+[28,]   15   13
+[29,]    9   NA
+[30,]    9   10
+[31,]   10   12
+[32,]   10    9
+[33,]    6    8
+[34,]    7    9
+[35,]   12   13
+[36,]   15   10
+[37,]    6    8
+[38,]    6    7
+[1] "=== Dados sem missing..."
+      [,1] [,2]
+ [1,]   16   14
+ [2,]   13   12
+ [3,]   13   15
+ [4,]   15   13
+ [5,]   13   11
+ [6,]    9   11
+ [7,]   23   24
+ [8,]   15   13
+ [9,]    9   10
+[10,]   10   12
+[11,]   10    9
+[12,]    6    8
+[13,]    7    9
+[14,]   12   13
+[15,]   15   10
+[16,]    6    8
+[17,]    6    7
+attr(,"na.action")
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 29
+attr(,"class")
+[1] "omit"
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  Alc.Sentar.levantar_Pre_e_Pos_SemMissing[, 1] and Alc.Sentar.levantar_Pre_e_Pos_SemMissing[, 2]
+V = 70, p-value = 0.77
+alternative hypothesis: true location shift is not equal to 0
+Warning message:
+In wilcox.test.default(Alc.Sentar.levantar_Pre_e_Pos_SemMissing[,  :
+  nÃ£o Ã© possÃ­vel computar o valor de p exato com o de desempate
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  Alc.Sentar.levantar_Pre_e_Pos_SemMissing[, 1] and Alc.Sentar.levantar_Pre_e_Pos_SemMissing[, 2]
+V = 70, p-value = 0.77
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
