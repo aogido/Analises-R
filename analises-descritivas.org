@@ -479,8 +479,8 @@ Sentar.levantar.pos
 
    
 * Testes de Normalidade
- #+name: testes de normalidade
- #+begin_src R :session s1 :results output :exports both
+#+name: testes de normalidade
+#+begin_src R :session s1 :results output :exports both
 shapiro.test(   myDados$Genero )
 shapiro.test(   myDados$Cidade )
 shapiro.test(   myDados$Idade )
@@ -504,7 +504,6 @@ shapiro.test(   myDados$Alc.Func.pre )
 shapiro.test(   myDados$Alc.Func.pos )
 shapiro.test(   myDados$Sentar.levantar.pre )
 shapiro.test(   myDados$Sentar.levantar.pos )
-
  #+end_src
 
  #+RESULTS: testes de normalidade
