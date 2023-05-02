@@ -1035,7 +1035,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY ESTADO-CIVIL)
-#+begin_src R :session s1 :file boxplot_Esp_Pos_BY_ESTADOCIVIL.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_Esp_Pos_BY_ESTADOCIVIL.png :results output graphics file :exports both
     plot_boxplot(
       var_y = myDados$Esp_Pos,
       var_x = myDados$Genero,
@@ -1053,7 +1053,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY ESCOLARIDADE)
-#+begin_src R :session s1 :file boxplot_Esp_Pos_BY_ESCOLARIDADE.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_Esp_Pos_BY_ESCOLARIDADE.png :results output graphics file :exports both
     plot_boxplot(
       var_y = myDados$ESP_Pos,
       var_x = myDados$Escolaridade,
@@ -1086,7 +1086,7 @@ dados[[factorVar]]: Sup Incompleto
 *** "FPP.D.pre"
 
 #+Name: print_summary(dados$FPP.D.pre, c("Genero","Estado.civil","Escolaridade"));
-#+begin_src R :session s1 :results output 
+#+begin_src R :session s1 :results output :exports both
   print_summary(myDados$FPP.D.pre, c("Genero","Estado.civil","Escolaridade"));
 #+end_src
 
@@ -1172,7 +1172,7 @@ dados[[factorVar]]: Sup Incompleto
 #+end_example
 
 #+Name: FPP.D.pre dados
-#+begin_src R :session s1 :results output 
+#+begin_src R :session s1 :results output :exports both
   myDados$FPP.D.pre
 #+end_src
 
@@ -1221,7 +1221,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplot(myDados$FPP.D.pre  BY ESTADO-CIVIL)
-#+begin_src R :session s1 :file boxplot_FPP.D.pre_BY_ESTADOCIVIL.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_FPP.D.pre_BY_ESTADOCIVIL.png :results output graphics file :exports both
     plot_boxplot(
       var_y = myDados$FPP.D.pre,
       var_x = myDados$Estado.civil,
@@ -1237,7 +1237,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplot - myDados$FPP.D.pre BY ESCOLARIDADE
-#+begin_src R :session s1 :file boxplot_FPP.D.pre_BY_ESCOLARIDADE.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_FPP.D.pre_BY_ESCOLARIDADE.png :results output graphics file :exports both
     plot_boxplot(
       var_y = myDados$FPP.D.pre,
       var_x = myDados$Escolaridade,
@@ -1254,7 +1254,7 @@ dados[[factorVar]]: Sup Incompleto
 *** "FPP.D.pos"
 
 #+Name: print_summary(dados$FPP.D.pos, c("Genero","Estado.civil","Escolaridade"));
-#+begin_src R :session s1 :results output 
+#+begin_src R :session s1 :results output :exports both
   print_summary(myDados$FPP.D.pos, c("Genero","Estado.civil","Escolaridade"));
 #+end_src
 
@@ -1342,7 +1342,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+Name: FPP.D.pos dados
-#+begin_src R :session s1 :results output 
+#+begin_src R :session s1 :results output :exports both
   myDados$FPP.D.pos
 #+end_src
 
@@ -1389,7 +1389,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplot(myDados$FPP.D.pos  BY ESTADO-CIVIL)
-#+begin_src R :session s1 :file boxplot_FPP.D.pos_BY_ESTADOCIVIL.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_FPP.D.pos_BY_ESTADOCIVIL.png :results output graphics file :exports both
     plot_boxplot(
       var_y = myDados$FPP.D.pos,
       var_x = myDados$Estado.civil,
@@ -1407,7 +1407,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplot - myDados$FPP.D.pos BY ESCOLARIDADE
-#+begin_src R :session s1 :file boxplot_FPP.D.pos_BY_ESCOLARIDADE.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_FPP.D.pos_BY_ESCOLARIDADE.png :results output graphics file :exports both
     plot_boxplot(
       var_y = myDados$FPP.D.pos,
       var_x = myDados$Escolaridade,
@@ -1440,7 +1440,7 @@ dados[[factorVar]]: Sup Incompleto
 *** "FPP.E.pre"
 
 #+Name: print_summary(dados$FPP.E.pre, c("Genero","Estado.civil","Escolaridade"));
-#+begin_src R :session s1 :results output 
+#+begin_src R :session s1 :results output :exports both
   print_summary(myDados$FPP.E.pre, c("Genero","Estado.civil","Escolaridade"));
 #+end_src
 
@@ -1527,7 +1527,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+Name: FPP.E.pre dados
-#+begin_src R :session s1 :results output 
+#+begin_src R :session s1 :results output :exports both
   myDados$FPP.E.pre
 #+end_src
 
@@ -1574,7 +1574,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplotmyDados$FPP.E.pre  BY ESTADO-CIVIL
-#+begin_src R :session s1 :file boxplot_FPP.E.pre_BY_ESTADOCIVIL.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_FPP.E.pre_BY_ESTADOCIVIL.png :results output graphics file :exports both
     plot_boxplot(
       var_y = myDados$FPP.E.pre,
       var_x = myDados$Estado.civil,
@@ -1610,7 +1610,7 @@ dados[[factorVar]]: Sup Incompleto
 
 *** "FPP.E.pos"
 #+Name: print_summary(dados$FPP.E.pos, c("Genero","Estado.civil","Escolaridade"));
-#+begin_src R :session s1 :results output 
+#+begin_src R :session s1 :results output :export both
   print_summary(myDados$FPP.E.pos, c("Genero","Estado.civil","Escolaridade"));
 #+end_src
 
@@ -1697,7 +1697,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+Name: FPP.E.pos dados
-#+begin_src R :session s1 :results output 
+#+begin_src R :session s1 :results output :exports both
   myDados$FPP.E.pos
 #+end_src
 
@@ -1744,7 +1744,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplotmyDados$FPP.E.pos  BY ESTADO-CIVIL
-#+begin_src R :session s1 :file boxplot_FPP.E.pos_BY_ESTADOCIVIL.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_FPP.E.pos_BY_ESTADOCIVIL.png :results output graphics file :exports both
     plot_boxplot(
       var_y = myDados$FPP.E.pos,
       var_x = myDados$Estado.civil,
