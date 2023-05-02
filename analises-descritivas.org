@@ -635,24 +635,25 @@ Os valores mais diferentes  foram
 
 #+Name: plot_boxplot <- function(var_y, var_x = "") fun
 #+begin_src R :session s1 :results output
-     plot_boxplot <- function(var_y, strTitle = "", strSubTitle = "", strVarYLabel = "", var_x = "", strVarXLabel = "") {
-       ggplot(data = dados, aes(y = var_y, x = var_x)) + 
-       geom_errorbar(stat = "boxplot", width = .2) +
-       geom_boxplot(width = 0.4, outlier.shape=1, outlier.size=4, fill = "yellow") +
-       geom_point(stat = "summary", fun= "mean", shape = 4, size=2, color = "blue") +
-       ggtitle (strTitle, subtitle=strSubTitle) + ylab(strVarYLabel) + xlab(strVarXLabel) +
-       #coord_flip() +
-       theme_classic()
-     }
+   plot_boxplot <- function(var_y, strTitle = "", strSubTitle = "", strVarYLabel = "", var_x = "", strVarXLabel = "") {
+   p <- ggplot(data = myDados, aes(y = var_y, x = var_x)) + 
+     geom_errorbar(stat = "boxplot", width = .2) +
+     geom_boxplot(width = 0.4, outlier.shape=1, outlier.size=4, fill = "yellow") +
+     geom_point(stat = "summary", fun= "mean", shape = 4, size=2, color = "blue") +
+     ggtitle (strTitle, subtitle=strSubTitle) + ylab(strVarYLabel) + xlab(strVarXLabel) +
+     #coord_flip() +
+     theme_classic()
+     return(p)
+   }
 
-    #print_summary(dados$Idade, c("Genero","Estado.civil","Escolaridade"))
-    print_summary <- function(var, byFactorVars){
-      summary(var)
-      lapply(byFactorVars,
-             function(factorVar) {
-               print(factorVar)
-               by(var, dados[[factorVar]], summary)})
-    }
+  #print_summary(dados$Idade, c("Genero","Estado.civil","Escolaridade"))
+  print_summary <- function(var, byFactorVars){
+    summary(var)
+    lapply(byFactorVars,
+           function(factorVar) {
+             print(factorVar)
+             by(var, dados[[factorVar]], summary)})
+  }
 
 #+end_src
 
@@ -856,7 +857,7 @@ dados[[factorVar]]: Sup Incompleto
 
 #+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré")
 #+begin_src R :session s1 :file boxplot_Esp_Pre.png :results output graphics file  :exports both
-  plot_boxplot(
+ Esp_Pre_BoxPlot <- plot_boxplot(
     var_y = myDados$Esp_Pre,
     strTitle = "Estresse Percebido - Pre",
     strVarYLabel = "Estress Percebido - Pre")
@@ -1004,6 +1005,31 @@ dados[[factorVar]]: Sup Incompleto
     3.0     3.0     3.0     6.0     7.5    12.0
 #+end_example
 
+#+Name: asdfasdfasdf
+#+begin_src R :session s1 :results output 
+  myDados$ESP_Pos
+#+end_src
+
+#+RESULTS: asdfasdfasdf
+:  [1]  6  4 12 13 12  7 15 14 10 12  3 22 13 10 12 11 16 13  6  3  2  8  9  6 10  3 12  3 13  8 12  5 NA 10  9 14 NA 10
+
+
+
+#+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos")
+#+begin_src R :session s1 :file boxplot_Esp_Pos.png :results output graphics file  :exports both
+
+ Esp_Pos_BoxPlot <- plot_boxplot(
+     var_y = myDados$ESP_Pos,
+     strTitle = "Estresse Percebido - Pos",
+     strVarYLabel = "Estress Percebido - Pos")
+  Esp_Pos_BoxPlot
+
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos")
+[[file:boxplot_Esp_Pos.png]]
+
+
 
 *** ESP Pre e Pos Juntos
 #+NAME:  plot_boxplot_2vars(var1 = myDados$Esp_Pre, var2 = myDados$Esp_Pre)
@@ -1023,6 +1049,14 @@ dados[[factorVar]]: Sup Incompleto
 #+RESULTS: plot_boxplot_2vars(var1 = myDados$Esp_Pre, var2 = myDados$Esp_Pre)
 [[file:boxplot_2vars_EspPre_-_EspPos.png]]
 
+
+#+NAME:  plot_boxplot Esp Pre e Esp pos juntos
+#+begin_src R :session s1 :file boxplot_Esp_Pre_e_Pos_Juntos.png :results output graphics file  :exports both
+grid.arrange(Esp_Pre_BoxPlot,Esp_Pos_BoxPlot, ncol = 2)
+#+end_src
+
+#+RESULTS: plot_boxplot Esp Pre e Esp pos juntos
+[[file:boxplot_Esp_Pre_e_Pos_Juntos.png]]
 
 *** "FPP.D.pre"
 
