@@ -902,7 +902,7 @@ dados[[factorVar]]: Sup Incompleto
 *** "ESP..Pos"
 
 #+Name: print_summary(dados$Esp_Pos, c("Genero","Estado.civil","Escolaridade"));
-#+begin_src R :session s1 :results output 
+#+begin_src R :session s1 :results output :exports both
   print_summary(myDados$ESP_Pos, c("Genero","Estado.civil","Escolaridade"));
 #+end_src
 
@@ -987,13 +987,16 @@ dados[[factorVar]]: Sup Incompleto
     3.0     3.0     3.0     6.0     7.5    12.0
 #+end_example
 
-#+Name: asdfasdfasdf
+#+Name: myDados$ESP_Pos dados
 #+begin_src R :session s1 :results output 
   myDados$ESP_Pos
 #+end_src
 
-#+RESULTS: asdfasdfasdf
-:  [1]  6  4 12 13 12  7 15 14 10 12  3 22 13 10 12 11 16 13  6  3  2  8  9  6 10  3 12  3 13  8 12  5 NA 10  9 14 NA 10
+#+RESULTS: myDados$ESP_Pos dados
+:  [1]  6  4 12 13 12  7 15 14 10 12  3 22 13 10 12 11 16 13  6  3
+: [21]  2  8  9  6 10  3 12  3 13  8 12  5 NA 10  9 14 NA 10
+
+
 
 
 #+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos")
