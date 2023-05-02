@@ -1067,22 +1067,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 *** ESP Pre e Pos Juntos
-#+NAME:  plot_boxplot_2vars(var1 = myDados$Esp_Pre, var2 = myDados$Esp_Pre)
-#+begin_src R :session s1 :file boxplot_2vars_EspPre_-_EspPos.png :results output graphics file
-  #plot_boxplot(
-  #  var_y = myDados$Esp_Pre,
-  #  strTitle = "Estresse Percebido - Pre",
-  #  strVarYLabel = "Estress Percebido - Pre")
 
-  plot_boxplot(
-    var_y = myDados$myDados$ESP_Pos,
-    strTitle = "Estresse Percebido - Pos",
-    strVarYLabel = "Estress Percebido - Pos")
-  
-#+end_src
-
-#+RESULTS: plot_boxplot_2vars(var1 = myDados$Esp_Pre, var2 = myDados$Esp_Pre)
-[[file:boxplot_2vars_EspPre_-_EspPos.png]]
 
 
 #+NAME:  plot_boxplot Esp Pre e Esp pos juntos
