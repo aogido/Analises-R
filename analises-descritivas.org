@@ -867,7 +867,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY ESTADO-CIVIL)
-#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_ESTADOCIVIL.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_ESTADOCIVIL.png :results output graphics file: :exports both
     plot_boxplot(
       var_y = myDados$Esp_Pre,
       var_x = myDados$Genero,
@@ -883,7 +883,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY ESCOLARIDADE)
-#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_ESCOLARIDADE.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_ESCOLARIDADE.png :results output graphics file :exports both
     plot_boxplot(
       var_y = myDados$Esp_Pre,
       var_x = myDados$Escolaridade,
