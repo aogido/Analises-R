@@ -60,24 +60,6 @@
 #+end_src
 
 #+RESULTS: library(ggplot2)
-#+begin_example
-
-Attaching package: âdplyrâ
-
-The following objects are masked from âpackage:statsâ:
-
-    filter, lag
-
-The following objects are masked from âpackage:baseâ:
-
-    intersect, setdiff, setequal, union
-
-Attaching package: âgridExtraâ
-
-The following object is masked from âpackage:dplyrâ:
-
-    combine
-#+end_example
 
 * Carregamento dos dados para analises
 
@@ -1014,7 +996,6 @@ dados[[factorVar]]: Sup Incompleto
 :  [1]  6  4 12 13 12  7 15 14 10 12  3 22 13 10 12 11 16 13  6  3  2  8  9  6 10  3 12  3 13  8 12  5 NA 10  9 14 NA 10
 
 
-
 #+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos")
 #+begin_src R :session s1 :file boxplot_Esp_Pos.png :results output graphics file  :exports both
 
@@ -1028,6 +1009,60 @@ dados[[factorVar]]: Sup Incompleto
 
 #+RESULTS: plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos")
 [[file:boxplot_Esp_Pos.png]]
+
+
+
+
+#+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY GENERO)
+#+begin_src R :session s1 :file boxplot_Esp_Pos_BY_GENERO.png :results output graphics file  :exports both
+    plot_boxplot(
+      var_y = myDados$ESP_Pos,
+      var_x = myDados$Genero,
+      strTitle = "Estresse Percebido - Pos",
+      strSubTitle = "Agrupado por Genero",
+      strVarYLabel = "Estress Percebido - Pos",
+      strVarXLabel = "Genero")
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY GENERO)
+[[file:boxplot_Esp_Pos_BY_GENERO.png]]
+
+
+
+
+
+#+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY ESTADO-CIVIL)
+#+begin_src R :session s1 :file boxplot_Esp_Pos_BY_ESTADOCIVIL.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$Esp_Pos,
+      var_x = myDados$Genero,
+      strTitle = "Estresse Percebido - Pos",
+      strSubTitle = "Agrupado por Estado Civil",
+      strVarYLabel = "Estress Percebido - Pos",
+      strVarXLabel = "Estado Civil")
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY ESTADO-CIVIL)
+[[file:boxplot_Esp_Pos_BY_ESTADOCIVIL.png]]
+
+
+
+
+
+#+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY ESCOLARIDADE)
+#+begin_src R :session s1 :file boxplot_Esp_Pos_BY_ESCOLARIDADE.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$ESP_Pos,
+      var_x = myDados$Escolaridade,
+      strTitle = "Estresse Percebido - Pre",
+      strSubTitle = "Agrupado por Escolaridade",
+      strVarYLabel = "Estress Percebido - Pre",
+      strVarXLabel = "Escolaridade")
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY ESCOLARIDADE)
+[[file:boxplot_Esp_Pos_BY_ESCOLARIDADE.png]]
+
 
 
 
@@ -1058,6 +1093,7 @@ dados[[factorVar]]: Sup Incompleto
 
 #+RESULTS: plot_boxplot Esp Pre e Esp pos juntos
 [[file:boxplot_Esp_Pre_e_Pos_Juntos.png]]
+
 
 *** "FPP.D.pre"
 
@@ -1146,6 +1182,271 @@ dados[[factorVar]]: Sup Incompleto
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
      NA      NA      NA     NaN      NA      NA       3
 #+end_example
+
+#+Name: FPP.D.pre dados
+#+begin_src R :session s1 :results output 
+  myDados$FPP.D.pre
+#+end_src
+
+#+RESULTS: FPP.D.pre dados
+:  [1]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+: [13]   NA   NA   NA   NA   NA   NA   NA   NA 20.0 20.0 20.0 11.5
+: [25] 11.0 15.0 16.5 11.0 17.5 10.0 13.0  9.0 27.5 16.5 16.5 21.0
+: [37]  5.0  8.0
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.D.pre"
+#+begin_src R :session s1 :file boxplot_FPP.D.pre.png :results output graphics file  :exports both
+
+ FPP.D.pre_BoxPlot <- plot_boxplot(
+     var_y = myDados$FPP.D.pre,
+     strTitle = "FPP.D.pre",
+     strVarYLabel = "FPP.D.pre")
+  FPP.D.pre_BoxPlot
+
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.D.pre"
+[[file:boxplot_FPP.E.pre.png]]
+
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.D.pre BY GENERO
+#+begin_src R :session s1 :file boxplot_FPP.D.pre_BY_GENERO.png :results output graphics file  :exports both
+    plot_boxplot(
+      var_y = myDados$FPP.D.pre,
+      var_x = myDados$Genero,
+      strTitle = "FPP.D.pre",
+      strSubTitle = "Agrupado por Genero",
+      strVarYLabel = "FPP.D.pre",
+      strVarXLabel = "Genero")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.D.pre BY GENERO
+[[file:boxplot_FPP.D.pre_BY_GENERO.png]]
+
+
+
+
+
+
+#+NAME:  plot_boxplot(myDados$FPP.D.pre  BY ESTADO-CIVIL)
+#+begin_src R :session s1 :file boxplot_FPP.D.pre_BY_ESTADOCIVIL.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$FPP.D.pre,
+      var_x = myDados$Estado.civil,
+      strTitle = "FPP.D.pre",
+      strSubTitle = "Agrupado por Estado Civil",
+      strVarYLabel = "FPP.D.pre",
+      strVarXLabel = "Estado Civil")
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$FPP.D.pre  BY ESTADO-CIVIL)
+[[file:boxplot_FPP.D.pre_BY_ESTADOCIVIL.png]]
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.D.pre BY ESCOLARIDADE
+#+begin_src R :session s1 :file boxplot_FPP.D.pre_BY_ESCOLARIDADE.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$FPP.D.pre,
+      var_x = myDados$Escolaridade,
+      strTitle = "FPP.D.pre",
+      strSubTitle = "Agrupado por Escolaridade",
+      strVarYLabel = "FPP.D.pre",
+      strVarXLabel = "Escolaridade")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.D.pre BY ESCOLARIDADE
+[[file:boxplot_FPP.D.pre_BY_ESCOLARIDADE.png]]
+
+
+*** "FPP.D.pos"
+
+#+Name: print_summary(dados$FPP.D.pos, c("Genero","Estado.civil","Escolaridade"));
+#+begin_src R :session s1 :results output 
+  print_summary(myDados$FPP.D.pos, c("Genero","Estado.civil","Escolaridade"));
+#+end_src
+
+#+RESULTS: print_summary(dados$FPP.D.pos, c("Genero","Estado.civil","Escolaridade"));
+#+begin_example
+[1] "Genero"
+[1] "Estado.civil"
+[1] "Escolaridade"
+[[1]]
+dados[[factorVar]]: F
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  10.00   14.30   21.00   19.49   23.00   30.00      17 
+------------------------------------------------- 
+dados[[factorVar]]: M
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     22      22      22      22      22      22       3 
+
+[[2]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  10.00   12.25   17.50   17.00   22.25   23.00       1 
+------------------------------------------------- 
+dados[[factorVar]]: casado(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  21.00   23.25   25.50   25.50   27.75   30.00       5 
+------------------------------------------------- 
+dados[[factorVar]]: divorciada/sep
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  12.00   13.15   14.30   15.10   16.65   19.00       3 
+------------------------------------------------- 
+dados[[factorVar]]: solteirao(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   14.0    18.5    21.5    20.4    23.4    24.6       3 
+------------------------------------------------- 
+dados[[factorVar]]: uniao estavel
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       1 
+------------------------------------------------- 
+dados[[factorVar]]: viuvo(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  14.50   22.00   22.40   21.48   22.90   25.60       7 
+
+[[3]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  10.00   12.25   17.50   17.00   22.25   23.00       1 
+------------------------------------------------- 
+dados[[factorVar]]: EspecializaÃ§Ã£o
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       4 
+------------------------------------------------- 
+dados[[factorVar]]: fund completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     19      19      19      19      19      19       4 
+------------------------------------------------- 
+dados[[factorVar]]: fund incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   25.6    25.6    25.6    25.6    25.6    25.6 
+------------------------------------------------- 
+dados[[factorVar]]: Fund Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       2 
+------------------------------------------------- 
+dados[[factorVar]]: med comp
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     23      23      23      23      23      23 
+------------------------------------------------- 
+dados[[factorVar]]: medio completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  14.30   14.45   18.25   18.43   22.23   22.90       1 
+------------------------------------------------- 
+dados[[factorVar]]: mestrado
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     21      21      21      21      21      21 
+------------------------------------------------- 
+dados[[factorVar]]: sup completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  12.00   15.50   21.20   20.50   24.05   30.00       5 
+------------------------------------------------- 
+dados[[factorVar]]: Sup Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       3
+#+end_example
+
+
+
+#+Name: FPP.D.pos dados
+#+begin_src R :session s1 :results output 
+  myDados$FPP.D.pos
+#+end_src
+
+#+RESULTS: FPP.D.pos dados
+:  [1]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+: [13]   NA   NA   NA   NA   NA   NA   NA   NA 19.0 30.0 23.0 22.4
+: [25] 22.0 14.3 21.0 24.6 22.9 14.5 13.0 12.0 22.0 23.0 20.0 25.6
+: [37] 10.0 14.0
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.D.pos"
+#+begin_src R :session s1 :file boxplot_FPP.D.pos.png :results output graphics file  :exports both
+
+ FPP.D.pos_BoxPlot <- plot_boxplot(
+     var_y = myDados$FPP.D.pos,
+     strTitle = "FPP.D.pos",
+     strVarYLabel = "FPP.D.pos")
+  FPP.D.pos_BoxPlot
+
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.D.pos"
+[[file:boxplot_FPP.D.pos.png]]
+
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.D.pos BY GENERO
+#+begin_src R :session s1 :file boxplot_FPP.D.pos_BY_GENERO.png :results output graphics file  :exports both
+    plot_boxplot(
+      var_y = myDados$FPP.D.pos,
+      var_x = myDados$Genero,
+      strTitle = "FPP.D.pos",
+      strSubTitle = "Agrupado por Genero",
+      strVarYLabel = "FPP.D.pos",
+      strVarXLabel = "Genero")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.D.pos BY GENERO
+[[file:boxplot_FPP.D.pos_BY_GENERO.png]]
+
+
+
+
+#+NAME:  plot_boxplot(myDados$FPP.D.pos  BY ESTADO-CIVIL)
+#+begin_src R :session s1 :file boxplot_FPP.D.pos_BY_ESTADOCIVIL.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$FPP.D.pos,
+      var_x = myDados$Estado.civil,
+      strTitle = "FPP.D.pos",
+      strSubTitle = "Agrupado por Estado Civil",
+      strVarYLabel = "FPP.D.pos",
+      strVarXLabel = "Estado Civil")
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$FPP.D.pos  BY ESTADO-CIVIL)
+[[file:boxplot_FPP.D.pos_BY_ESTADOCIVIL.png]]
+
+
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.D.pos BY ESCOLARIDADE
+#+begin_src R :session s1 :file boxplot_FPP.D.pos_BY_ESCOLARIDADE.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$FPP.D.pos,
+      var_x = myDados$Escolaridade,
+      strTitle = "FPP.D.pos",
+      strSubTitle = "Agrupado por Escolaridade",
+      strVarYLabel = "FPP.D.pos",
+      strVarXLabel = "Escolaridade")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.D.pos BY ESCOLARIDADE
+[[file:boxplot_FPP.D.pos_BY_ESCOLARIDADE.png]]
+
+
+
+
+*** FPP.D.pre e FPP.D.pos juntos
+
+#+NAME:  plot_boxplot_2vars(var1 = myDados$FPP.D.pre , var2 = myDados$FPP.D.pos)
+#+begin_src R :session s1 :file boxplot_2vars_FPP.D._-_EspPos.png :results output graphics file
+    boxplot_FPP_D_Pre_e_Pos_Juntos <- grid.arrange(FPP.D.pre_BoxPlot,FPP.D.pos_BoxPlot, ncol = 2)
+    boxplot_FPP_D_Pre_e_Pos_Juntos
+#+end_src
+
+#+RESULTS: plot_boxplot_2vars(var1 = myDados$FPP.D.pre , var2 = myDados$FPP.D.pos)
+[[file:boxplot_2vars_FPP.D._-_EspPos.png]]
+
+
 
 
 *** "FPP.E.pre"
@@ -1237,11 +1538,274 @@ dados[[factorVar]]: Sup Incompleto
 #+end_example
 
 
-*** "FPP.D.pos"
+#+Name: FPP.E.pre dados
+#+begin_src R :session s1 :results output 
+  myDados$FPP.E.pre
+#+end_src
+
+#+RESULTS: FPP.E.pre dados
+:  [1]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+: [13]   NA   NA   NA   NA   NA   NA   NA   NA 20.0 20.0 20.0 11.5
+: [25] 11.0 15.0 16.5 11.0 17.5 10.0 13.0  9.0 27.5 16.5 16.5 21.0
+: [37]  5.0  8.0
+
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.E.pre"
+#+begin_src R :session s1 :file boxplot_FPP.E.pre.png :results output graphics file  :exports both
+
+ FPP.E.pre_BoxPlot <- plot_boxplot(
+     var_y = myDados$FPP.E.pre,
+     strTitle = "FPP.E.pre",
+     strVarYLabel = "FPP.E.pre")
+ FPP.E.pre_BoxPlot
+
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.E.pre"
+[[file:boxplot_FPP.E.pre.png]]
+
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.E.pre BY GENERO
+#+begin_src R :session s1 :file boxplot_FPP.E.pre_BY_GENERO.png :results output graphics file  :exports both
+    plot_boxplot(
+      var_y = myDados$FPP.E.pre,
+      var_x = myDados$Genero,
+      strTitle = "FPP.E.pre",
+      strSubTitle = "Agrupado por Genero",
+      strVarYLabel = "FPP.E.pre",
+      strVarXLabel = "Genero")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.E.pre BY GENERO
+[[file:boxplot_FPP.E.pre_BY_GENERO.png]]
+
+
+
+#+NAME:  plot_boxplotmyDados$FPP.E.pre  BY ESTADO-CIVIL
+#+begin_src R :session s1 :file boxplot_FPP.E.pre_BY_ESTADOCIVIL.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$FPP.E.pre,
+      var_x = myDados$Estado.civil,
+      strTitle = "FPP.E.pre",
+      strSubTitle = "Agrupado por Estado Civil",
+      strVarYLabel = "FPP.E.pre",
+      strVarXLabel = "Estado Civil")
+#+end_src
+
+#+RESULTS: plot_boxplotmyDados$FPP.E.pre  BY ESTADO-CIVIL
+[[file:boxplot_FPP.E.pre_BY_ESTADOCIVIL.png]]
+
+
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.E.pre BY ESCOLARIDADE
+#+begin_src R :session s1 :file boxplot_FPP.E.pre_BY_ESCOLARIDADE.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$FPP.E.pre,
+      var_x = myDados$Escolaridade,
+      strTitle = "FPP.E.pre",
+      strSubTitle = "Agrupado por Escolaridade",
+      strVarYLabel = "FPP.E.pre",
+      strVarXLabel = "Escolaridade")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.E.pre BY ESCOLARIDADE
+[[file:boxplot_FPP.E.pre_BY_ESCOLARIDADE.png]]
+
+
+
 
 *** "FPP.E.pos"
+#+Name: print_summary(dados$FPP.E.pos, c("Genero","Estado.civil","Escolaridade"));
+#+begin_src R :session s1 :results output 
+  print_summary(myDados$FPP.E.pos, c("Genero","Estado.civil","Escolaridade"));
+#+end_src
+
+#+RESULTS: print_summary(dados$FPP.E.pos, c("Genero","Estado.civil","Escolaridade"));
+#+begin_example
+[1] "Genero"
+[1] "Estado.civil"
+[1] "Escolaridade"
+[[1]]
+dados[[factorVar]]: F
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   6.00   14.30   21.00   17.92   22.00   25.50      17 
+------------------------------------------------- 
+dados[[factorVar]]: M
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     28      28      28      28      28      28       3 
+
+[[2]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   6.00   12.38   15.75   16.38   19.75   28.00       1 
+------------------------------------------------- 
+dados[[factorVar]]: casado(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  22.00   22.88   23.75   23.75   24.62   25.50       5 
+------------------------------------------------- 
+dados[[factorVar]]: divorciada/sep
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   9.50   11.90   14.30   15.27   18.15   22.00       3 
+------------------------------------------------- 
+dados[[factorVar]]: solteirao(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   10.0    16.0    19.5    17.9    21.4    22.6       3 
+------------------------------------------------- 
+dados[[factorVar]]: uniao estavel
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       1 
+------------------------------------------------- 
+dados[[factorVar]]: viuvo(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  12.50   21.10   21.60   20.46   23.00   24.10       7 
+
+[[3]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   6.00   12.38   15.75   16.38   19.75   28.00       1 
+------------------------------------------------- 
+dados[[factorVar]]: EspecializaÃ§Ã£o
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       4 
+------------------------------------------------- 
+dados[[factorVar]]: fund completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     22      22      22      22      22      22       4 
+------------------------------------------------- 
+dados[[factorVar]]: fund incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   24.1    24.1    24.1    24.1    24.1    24.1 
+------------------------------------------------- 
+dados[[factorVar]]: Fund Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       2 
+------------------------------------------------- 
+dados[[factorVar]]: med comp
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     21      21      21      21      21      21 
+------------------------------------------------- 
+dados[[factorVar]]: medio completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  12.50   13.85   17.95   17.85   21.95   23.00       1 
+------------------------------------------------- 
+dados[[factorVar]]: mestrado
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     22      22      22      22      22      22 
+------------------------------------------------- 
+dados[[factorVar]]: sup completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   9.50   12.00   19.55   17.78   22.23   25.50       5 
+------------------------------------------------- 
+dados[[factorVar]]: Sup Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       3
+#+end_example
+
+
+#+Name: FPP.E.pos dados
+#+begin_src R :session s1 :results output 
+  myDados$FPP.E.pos
+#+end_src
+
+#+RESULTS: FPP.E.pos dados
+:  [1]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+: [13]   NA   NA   NA   NA   NA   NA   NA   NA 22.0 25.5 21.0 21.1
+: [25] 21.6 14.3 22.0 22.6 23.0 12.5 14.5  9.5 28.0 17.0 18.0 24.1
+: [37]  6.0 10.0
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.E.pos"
+#+begin_src R :session s1 :file boxplot_FPP.E.pos.png :results output graphics file  :exports both
+
+ FPP.E.pos_BoxPlot <- plot_boxplot(
+     var_y = myDados$FPP.E.pos,
+     strTitle = "FPP.E.pos",
+     strVarYLabel = "FPP.E.pos")
+ FPP.E.pos_BoxPlot
+
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.E.pos"
+[[file:boxplot_FPP.E.pos.png]]
+
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.E.pos BY GENERO
+#+begin_src R :session s1 :file boxplot_FPP.E.pos_BY_GENERO.png :results output graphics file  :exports both
+    plot_boxplot(
+      var_y = myDados$FPP.E.pos,
+      var_x = myDados$Genero,
+      strTitle = "FPP.E.pos",
+      strSubTitle = "Agrupado por Genero",
+      strVarYLabel = "FPP.E.pos",
+      strVarXLabel = "Genero")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.E.pos BY GENERO
+[[file:boxplot_FPP.E.pos_BY_GENERO.png]]
+
+
+
+
+#+NAME:  plot_boxplotmyDados$FPP.E.pos  BY ESTADO-CIVIL
+#+begin_src R :session s1 :file boxplot_FPP.E.pos_BY_ESTADOCIVIL.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$FPP.E.pos,
+      var_x = myDados$Estado.civil,
+      strTitle = "FPP.E.pos",
+      strSubTitle = "Agrupado por Estado Civil",
+      strVarYLabel = "FPP.E.pos",
+      strVarXLabel = "Estado Civil")
+#+end_src
+
+#+RESULTS: plot_boxplotmyDados$FPP.E.pos  BY ESTADO-CIVIL
+[[file:boxplot_FPP.E.pos_BY_ESTADOCIVIL.png]]
+
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.E.pos BY ESCOLARIDADE
+#+begin_src R :session s1 :file boxplot_FPP.E.pos_BY_ESCOLARIDADE.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$FPP.E.pos,
+      var_x = myDados$Escolaridade,
+      strTitle = "FPP.E.pos",
+      strSubTitle = "Agrupado por Escolaridade",
+      strVarYLabel = "FPP.E.pos",
+      strVarXLabel = "Escolaridade")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.E.pos BY ESCOLARIDADE
+[[file:boxplot_FPP.E.pos_BY_ESCOLARIDADE.png]]
+
+
+
+
+*** "FPP.D.pos" e FPP.D.pos juntos
+
+
+
+#+NAME:  plot_boxplot FPP_D Pre e Esp pos juntos
+#+begin_src R :session s1 :file boxplot_FPP_D_Pre_e_Pos_Juntos.png :results output graphics file  :exports both
+  boxplot_FPP_D_Pre_e_Pos_Juntos <- grid.arrange( FPP.D.pre_BoxPlot,FPP.D.pos_BoxPlot, ncol = 2)
+  boxplot_FPP_D_Pre_e_Pos_Juntos
+#+end_src
+
+#+RESULTS: plot_boxplot FPP_D Pre e Esp pos juntos
+[[file:boxplot_FPP_D_Pre_e_Pos_Juntos.png]]
+
+
 
 *** "TUG.pre"
+
 
 *** "TUG.pos"
 
