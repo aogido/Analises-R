@@ -1052,7 +1052,8 @@ dados[[factorVar]]: Sup Incompleto
 
 #+NAME:  plot_boxplot Esp Pre e Esp pos juntos
 #+begin_src R :session s1 :file boxplot_Esp_Pre_e_Pos_Juntos.png :results output graphics file  :exports both
-grid.arrange(Esp_Pre_BoxPlot,Esp_Pos_BoxPlot, ncol = 2)
+  boxplot_Esp_Pre_e_Pos_Juntos <- grid.arrange(Esp_Pre_BoxPlot,Esp_Pos_BoxPlot, ncol = 2)
+  boxplot_Esp_Pre_e_Pos_Juntos
 #+end_src
 
 #+RESULTS: plot_boxplot Esp Pre e Esp pos juntos
