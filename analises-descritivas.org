@@ -621,7 +621,7 @@ Os valores mais diferentes  foram
    p <- ggplot(data = myDados, aes(y = var_y, x = var_x)) + 
      geom_errorbar(stat = "boxplot", width = .2) +
      geom_boxplot(width = 0.4, outlier.shape=1, outlier.size=4, fill = "yellow") +
-     geom_point(stat = "summary", fun= "mean", shape = 4, size=2, color = "blue") +
+     #geom_point(stat = "summary", fun= "mean", shape = 4, size=2, color = "blue") +
      ggtitle (strTitle, subtitle=strSubTitle) + ylab(strVarYLabel) + xlab(strVarXLabel) +
      #coord_flip() +
      theme_classic()
@@ -1001,7 +1001,6 @@ dados[[factorVar]]: Sup Incompleto
 
 #+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos")
 #+begin_src R :session s1 :file boxplot_Esp_Pos.png :results output graphics file  :exports both
-
  Esp_Pos_BoxPlot <- plot_boxplot(
      var_y = myDados$ESP_Pos,
      strTitle = "Estresse Percebido - Pos",
@@ -1035,10 +1034,10 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY ESTADO-CIVIL)
-#+begin_src R :session s1 :file boxplot_Esp_Pos_BY_ESTADOCIVIL.png :results output graphics file :exports both
+#+begin_src R :session s1 :file boxplot_Esp_Pos_BY_ESTADOCIVILL.png :results output graphics file :exports both
     plot_boxplot(
       var_y = myDados$Esp_Pos,
-      var_x = myDados$Genero,
+      var_x = myDados$Estado.civil,
       strTitle = "Estresse Percebido - Pos",
       strSubTitle = "Agrupado por Estado Civil",
       strVarYLabel = "Estress Percebido - Pos",
@@ -1046,7 +1045,13 @@ dados[[factorVar]]: Sup Incompleto
 #+end_src
 
 #+RESULTS: plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY ESTADO-CIVIL)
-[[file:boxplot_Esp_Pos_BY_ESTADOCIVIL.png]]
+[[file:boxplot_Esp_Pos_BY_ESTADOCIVILL.png]]
+
+
+
+
+
+
 
 
 
