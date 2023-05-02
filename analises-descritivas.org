@@ -1,32 +1,5 @@
 #+Title: Analises Descritivas
 
-* varnames
-X                                                                                        
-Genero                                                                                   
-Cidade                                                                                   
-Idade                                                                                    
-Estado.civil                                                                             
-Escolaridade                                                                             
-Esp_Pre                                                                                  
-ESP_Pos                                                                                  
-FPP.D.pre
-FPP.E.pre
-FPP.D.pos
-FPP.E.pos
-UG.pre
-TUG.pos
-EP.Pre..D
-EP..Pre.E.
-EP.D..pos
-EP.E..por
-Teste.vel.pre
-Teste.vel.pos
-Alc.Func.pre
-Alc.Func.pos
-Sentar.levantar.pre
-Sentar.levantar.pos
-
-
 * Ambiente de execucao das estatisticas
 
  #+NAME: R environment which R
@@ -64,7 +37,7 @@ Sentar.levantar.pos
  R_PLATFORM                             x86_64-redhat-linux-gnu
  R_PRINTCMD                             lpr
  R_RD4PDF                               times,inconsolata,hyper
- R_SESSION_TMPDIR                       /tmp/Rtmp5cEBn6
+ R_SESSION_TMPDIR                       /tmp/Rtmp0nV19C
  R_SHARE_DIR                            /usr/share/R
  R_STRIP_SHARED_LIB                     strip --strip-unneeded
  R_STRIP_STATIC_LIB                     strip --strip-debug
@@ -87,6 +60,24 @@ Sentar.levantar.pos
 #+end_src
 
 #+RESULTS: library(ggplot2)
+#+begin_example
+
+Attaching package: âdplyrâ
+
+The following objects are masked from âpackage:statsâ:
+
+    filter, lag
+
+The following objects are masked from âpackage:baseâ:
+
+    intersect, setdiff, setequal, union
+
+Attaching package: âgridExtraâ
+
+The following object is masked from âpackage:dplyrâ:
+
+    combine
+#+end_example
 
 * Carregamento dos dados para analises
 
@@ -758,7 +749,7 @@ dados[[x]]: Sup Incompleto
 
 
 #+NAME: plot_boxplot idade
-#+begin_src R :session s1 :file boxplot_idade2.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_idade2.png :results output graphics file :exports both
   plot_boxplot(dados$Idade, "Idade")
 #+end_src
 
@@ -767,7 +758,7 @@ dados[[x]]: Sup Incompleto
 
 
 #+NAME: plot_boxplot idade by "Genero","Estado.civil","Escolaridade"
-#+begin_src R :session s1 :file boxplot_idade_by_genero.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_idade_by_genero.png :results output graphics file  :exports both
   plot_boxplot(dados$Idade, "Idade", dados$Genero, "Genero")
 #+end_src
 
@@ -864,7 +855,7 @@ dados[[factorVar]]: Sup Incompleto
 #+end_example
 
 #+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré")
-#+begin_src R :session s1 :file boxplot_Esp_Pre.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_Esp_Pre.png :results output graphics file  :exports both
   plot_boxplot(
     var_y = myDados$Esp_Pre,
     strTitle = "Estresse Percebido - Pre",
@@ -877,7 +868,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY GENERO)
-#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_GENERO.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_GENERO.png :results output graphics file  :exports both
     plot_boxplot(
       var_y = myDados$Esp_Pre,
       var_x = myDados$Genero,
