@@ -473,29 +473,29 @@ The following object is masked from âpackage:dplyrâ:
 * Testes de Normalidade
 #+name: testes de normalidade
 #+begin_src R :session s1 :results output :exports both
-shapiro.test(   myDados$Genero )
-shapiro.test(   myDados$Cidade )
-shapiro.test(   myDados$Idade )
-shapiro.test(   myDados$Estado.civil )
-shapiro.test(   myDados$Escolaridade )
-shapiro.test(   myDados$Esp_Pre )
-shapiro.test(   myDados$ESP_Pos ) 
-shapiro.test(   myDados$FPP.D.pre )
-shapiro.test(   myDados$FPP.E.pre )
-shapiro.test(   myDados$FPP.D.pos )
-shapiro.test(   myDados$FPP.E.pos )
-shapiro.test(   myDados$UG.pre )
-shapiro.test(   myDados$TUG.pos )
-shapiro.test(   myDados$EP.Pre..D )
-shapiro.test(   myDados$EP..Pre.E. )
-shapiro.test(   myDados$EP.D..pos )
-shapiro.test(   myDados$EP.E..por )
-shapiro.test(   myDados$Teste.vel.pre )
-shapiro.test(   myDados$Teste.vel.pos )
-shapiro.test(   myDados$Alc.Func.pre )
-shapiro.test(   myDados$Alc.Func.pos )
-shapiro.test(   myDados$Sentar.levantar.pre )
-shapiro.test(   myDados$Sentar.levantar.pos )
+  shapiro.test(   myDados$Genero )
+  shapiro.test(   myDados$Cidade )
+  shapiro.test(   myDados$Idade )
+  shapiro.test(   myDados$Estado.civil )
+  shapiro.test(   myDados$Escolaridade )
+  shapiro.test(   myDados$Esp_Pre )
+  shapiro.test(   myDados$ESP_Pos ) 
+  shapiro.test(   myDados$FPP.D.pre )
+  shapiro.test(   myDados$FPP.E.pre )
+  shapiro.test(   myDados$FPP.D.pos )
+  shapiro.test(   myDados$FPP.E.pos )
+  shapiro.test(   myDados$TUG.pre )
+  shapiro.test(   myDados$TUG.pos )
+  shapiro.test(   myDados$EP.Pre..D )
+  shapiro.test(   myDados$EP..Pre.E. )
+  shapiro.test(   myDados$EP.D..pos )
+  shapiro.test(   myDados$EP.E..por )
+  shapiro.test(   myDados$Teste.vel.pre )
+  shapiro.test(   myDados$Teste.vel.pos )
+  shapiro.test(   myDados$Alc.Func.pre )
+  shapiro.test(   myDados$Alc.Func.pos )
+  shapiro.test(   myDados$Sentar.levantar.pre )
+  shapiro.test(   myDados$Sentar.levantar.pos )
  #+end_src
 
  #+RESULTS: testes de normalidade
@@ -539,7 +539,11 @@ shapiro.test(   myDados$Sentar.levantar.pos )
 
  data:  myDados$FPP.E.pos
  W = 0.94266, p-value = 0.3216
- Error in shapiro.test(myDados$UG.pre) : is.numeric(x) is not TRUE
+
+         Shapiro-Wilk normality test
+
+ data:  myDados$TUG.pre
+ W = 0.97574, p-value = 0.8959
 
          Shapiro-Wilk normality test
 
