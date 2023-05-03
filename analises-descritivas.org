@@ -37,7 +37,7 @@
  R_PLATFORM                             x86_64-redhat-linux-gnu
  R_PRINTCMD                             lpr
  R_RD4PDF                               times,inconsolata,hyper
- R_SESSION_TMPDIR                       /tmp/Rtmp0nV19C
+ R_SESSION_TMPDIR                       /tmp/RtmppAS4Dg
  R_SHARE_DIR                            /usr/share/R
  R_STRIP_SHARED_LIB                     strip --strip-unneeded
  R_STRIP_STATIC_LIB                     strip --strip-debug
@@ -60,6 +60,25 @@
 #+end_src
 
 #+RESULTS: library(ggplot2)
+#+begin_example
+
+Attaching package: âdplyrâ
+
+The following objects are masked from âpackage:statsâ:
+
+    filter, lag
+
+The following objects are masked from âpackage:baseâ:
+
+    intersect, setdiff, setequal, union
+
+Attaching package: âgridExtraâ
+
+The following object is masked from âpackage:dplyrâ:
+
+    combine
+#+end_example
+
 
 * Carregamento dos dados para analises
 
@@ -112,7 +131,7 @@
  #+end_example
 
 #+Name:  str(myDados)
- #+begin_src R :session s1 :results output
+ #+begin_src R :session s1 :results output :exports both
   str(myDados)
 #+end_src
 
@@ -621,7 +640,7 @@ Os valores mais diferentes  foram
    p <- ggplot(data = myDados, aes(y = var_y, x = var_x)) + 
      geom_errorbar(stat = "boxplot", width = .2) +
      geom_boxplot(width = 0.4, outlier.shape=1, outlier.size=4, fill = "yellow") +
-     #geom_point(stat = "summary", fun= "mean", shape = 4, size=2, color = "blue") +
+     geom_point(stat = "summary", fun= "mean", shape = 4, size=2, color = "blue") +
      ggtitle (strTitle, subtitle=strSubTitle) + ylab(strVarYLabel) + xlab(strVarXLabel) +
      #coord_flip() +
      theme_classic()
@@ -988,7 +1007,7 @@ dados[[factorVar]]: Sup Incompleto
 #+end_example
 
 #+Name: myDados$ESP_Pos dados
-#+begin_src R :session s1 :results output 
+#+begin_src R :session s1 :results output :exports both
   myDados$ESP_Pos
 #+end_src
 
@@ -1597,7 +1616,7 @@ dados[[factorVar]]: Sup Incompleto
 
 
 #+NAME:  plot_boxplot - myDados$FPP.E.pre BY ESCOLARIDADE
-#+begin_src R :session s1 :file boxplot_FPP.E.pre_BY_ESCOLARIDADE.png :results output graphics file
+#+begin_src R :session s1 :file boxplot_FPP.E.pre_BY_ESCOLARIDADE.png :results output graphics file :exports both
     plot_boxplot(
       var_y = myDados$FPP.E.pre,
       var_x = myDados$Escolaridade,
@@ -1785,7 +1804,6 @@ dados[[factorVar]]: Sup Incompleto
 *** "FPP.D.pos" e FPP.D.pos juntos
 
 
-
 #+NAME:  plot_boxplot FPP_D Pre e Esp pos juntos
 #+begin_src R :session s1 :file boxplot_FPP_D_Pre_e_Pos_Juntos.png :results output graphics file  :exports both
   boxplot_FPP_D_Pre_e_Pos_Juntos <- grid.arrange( FPP.D.pre_BoxPlot,FPP.D.pos_BoxPlot, ncol = 2)
@@ -1798,9 +1816,383 @@ dados[[factorVar]]: Sup Incompleto
 
 
 *** "TUG.pre"
+#+Name: print_summary(dados$TUG.pre, c("Genero","Estado.civil","Escolaridade"));
+#+begin_src R :session s1 :results output :export both
+  print_summary(myDados$TUG.pre, c("Genero","Estado.civil","Escolaridade"));
+#+end_src
+
+#+RESULTS: print_summary(dados$TUG.pre, c("Genero","Estado.civil","Escolaridade"));
+#+begin_example
+[1] "Genero"
+[1] "Estado.civil"
+[1] "Escolaridade"
+[[1]]
+dados[[factorVar]]: F
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  5.070   6.720   7.760   8.118   9.190  10.870      17 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: M
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   8.32    8.32    8.32    8.32    8.32    8.32       3 
+
+[[2]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  7.560   8.130   8.595   8.485   8.950   9.190       1 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: casado(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  5.070   5.482   5.895   5.895   6.308   6.720       5 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: divorciada/sep
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  6.110   6.155   6.200   6.337   6.450   6.700       3 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: solteirao(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  7.760   9.057  10.120   9.717  10.780  10.870       3 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: uniao estavel
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       1 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: viuvo(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  7.500   7.750   8.900   8.544   8.960   9.610       7 
+
+[[3]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  7.560   8.130   8.595   8.485   8.950   9.190       1 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: EspecializaÃ§Ã£o
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       4 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: fund completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    6.7     6.7     6.7     6.7     6.7     6.7       4 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: fund incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    7.5     7.5     7.5     7.5     7.5     7.5 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: Fund Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       2 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: med comp
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   7.76    7.76    7.76    7.76    7.76    7.76 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: medio completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  6.110   7.340   8.325   7.930   8.915   8.960       1 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: mestrado
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   5.07    5.07    5.07    5.07    5.07    5.07 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: sup completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  6.200   7.412   9.550   8.940  10.465  10.870       5 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: Sup Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       3
+#+end_example
+
+
+
+
+#+Name: TUG.pre dados
+#+begin_src R :session s1 :results output :exports both
+  myDados$TUG.pre
+#+end_src
+
+#+RESULTS: TUG.pre dados
+:  [1]    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+: [21]  6.70  6.72  7.76  9.61  8.96  6.11  5.07  9.49  7.75  8.90  9.19  6.20  8.32  8.87 10.75  7.50  7.56 10.87
+
+
+
+
+
+#+NAME:  plot_boxplot - myDados$TUG.pre"
+#+begin_src R :session s1 :file boxplot_TUG.pre.png :results output graphics file  :exports both
+
+ TUG.pre_BoxPlot <- plot_boxplot(
+     var_y = myDados$TUG.pre,
+     strTitle = "Time Up and Go - pre",
+     strVarYLabel = "Time Up and Go - pre")
+ TUG.pre_BoxPlot
+
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$TUG.pre"
+[[file:boxplot_TUG.pre.png]]
+
+
+
+
+
+
+#+NAME:  plot_boxplot - myDados$TUG.pre BY GENERO
+#+begin_src R :session s1 :file boxplot_TUG.pre_BY_GENERO.png :results output graphics file  :exports both
+    plot_boxplot(
+      var_y = myDados$TUG.pre,
+      var_x = myDados$Genero,
+      strTitle = "Time Up and Go - Pre",
+      strSubTitle = "Agrupado por Genero",
+      strVarYLabel = "Time Up and Go - Pre",
+      strVarXLabel = "Genero")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$TUG.pre BY GENERO
+[[file:boxplot_TUG.pre_BY_GENERO.png]]
+
+
+
+
+
+
+#+NAME:  plot_boxplotmyDados$TUG.pre  BY ESTADO-CIVIL
+#+begin_src R :session s1 :file boxplot_TUG.pre_BY_ESTADOCIVIL.png :results output graphics file :exports both
+    plot_boxplot(
+      var_y = myDados$TUG.pre,
+      var_x = myDados$Estado.civil,
+      strTitle = "Time Up and Go - Pre",
+      strSubTitle = "Agrupado por Estado Civil",
+      strVarYLabel = "Time Up and Go - Pre",
+      strVarXLabel = "Estado Civil")
+#+end_src
+
+#+RESULTS: plot_boxplotmyDados$TUG.pre  BY ESTADO-CIVIL
+[[file:boxplot_TUG.pre_BY_ESTADOCIVIL.png]]
+
+
+
+
+
+
+#+NAME:  plot_boxplot - myDados$TUG.pre BY ESCOLARIDADE
+#+begin_src R :session s1 :file boxplot_TUG.pre_BY_ESCOLARIDADE.png :results output graphics file
+    plot_boxplot(
+      var_y = myDados$TUG.pre,
+      var_x = myDados$Escolaridade,
+      strTitle = "TUG.pre",
+      strSubTitle = "Agrupado por Escolaridade",
+      strVarYLabel = "TUG.pre",
+      strVarXLabel = "Escolaridade")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$TUG.pre BY ESCOLARIDADE
+[[file:boxplot_TUG.pre_BY_ESCOLARIDADE.png]]
+
+
+
 
 
 *** "TUG.pos"
+#+Name: print_summary(dados$TUG.pos, c("Genero","Estado.civil","Escolaridade"));
+#+begin_src R :session s1 :results output :export both
+  print_summary(myDados$TUG.pos, c("Genero","Estado.civil","Escolaridade"));
+#+end_src
+
+#+RESULTS: print_summary(dados$TUG.pos, c("Genero","Estado.civil","Escolaridade"));
+#+begin_example
+[1] "Genero"
+[1] "Estado.civil"
+[1] "Escolaridade"
+[[1]]
+dados[[factorVar]]: F
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  5.260   6.500   7.230   7.461   8.230   9.530      17 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: M
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   6.54    6.54    6.54    6.54    6.54    6.54       3 
+
+[[2]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  6.120   6.435   6.885   7.030   7.480   8.230       1 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: casado(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   5.26    5.57    5.88    5.88    6.19    6.50       5 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: divorciada/sep
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  5.870   6.155   6.440   6.353   6.595   6.750       3 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: solteirao(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  7.140   7.612   8.230   8.275   8.893   9.500       3 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: uniao estavel
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       1 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: viuvo(a)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  7.060   7.650   7.780   8.266   9.310   9.530       7 
+
+[[3]]
+dados[[factorVar]]: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  6.120   6.435   6.885   7.030   7.480   8.230       1 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: EspecializaÃ§Ã£o
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       4 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: fund completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   6.44    6.44    6.44    6.44    6.44    6.44       4 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: fund incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   7.78    7.78    7.78    7.78    7.78    7.78 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: Fund Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       2 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: med comp
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   7.14    7.14    7.14    7.14    7.14    7.14 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: medio completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  6.750   6.982   7.355   7.692   8.065   9.310       1 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: mestrado
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   5.26    5.26    5.26    5.26    5.26    5.26 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: sup completo
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  5.870   6.817   8.230   7.977   9.297   9.530       5 
+------------------------------------------------------------------------------------------------ 
+dados[[factorVar]]: Sup Incompleto
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+     NA      NA      NA     NaN      NA      NA       3
+#+end_example
+
+
+
+
+
+
+#+Name: TUG.pos dados
+#+begin_src R :session s1 :results output :exports both
+  myDados$TUG.pos
+#+end_src
+
+#+RESULTS: TUG.pos dados
+:  [1]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 6.44 6.50 7.14 9.53
+: [25] 9.31 6.75 5.26 7.77 7.06 7.65 8.23 5.87 6.54 7.23 8.69 7.78 6.12 9.50
+
+
+
+
+
+
+
+#+NAME:  plot_boxplot - myDados$TUG.pos"
+#+begin_src R :session s1 :file boxplot_TUG.pre.png :results output graphics file  :exports both
+
+ TUG.pos_BoxPlot <- plot_boxplot(
+     var_y = myDados$TUG.pos,
+     strTitle = "Time Up and Go - pos",
+     strVarYLabel = "Time Up and Go - pos")
+ TUG.pos_BoxPlot
+
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$TUG.pos"
+[[file:boxplot_TUG.pre.png]]
+
+
+
+
+
+
+
+
+#+NAME:  plot_boxplot - myDados$TUG.pos BY GENERO
+#+begin_src R :session s1 :file boxplot_TUG.pos_BY_GENERO.png :results output graphics file  :exports both
+    plot_boxplot(
+      var_y = myDados$TUG.pos,
+      var_x = myDados$Genero,
+      strTitle = "Time Up and Go - Pos",
+      strSubTitle = "Agrupado por Genero",
+      strVarYLabel = "Time Up and Go - Pos",
+      strVarXLabel = "Genero")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$TUG.pos BY GENERO
+[[file:boxplot_TUG.pos_BY_GENERO.png]]
+
+
+
+
+
+
+
+
+#+NAME:  plot_boxplotmyDados$TUG.pos  BY ESTADO-CIVIL
+#+begin_src R :session s1 :file boxplot_TUG.pos_BY_ESTADOCIVIL.png :results output graphics file :exports both
+    plot_boxplot(
+      var_y = myDados$TUG.pos,
+      var_x = myDados$Estado.civil,
+      strTitle = "Time Up and Go - Pos",
+      strSubTitle = "Agrupado por Estado Civil",
+      strVarYLabel = "Time Up and Go - Pos",
+      strVarXLabel = "Estado Civil")
+#+end_src
+
+#+RESULTS: plot_boxplotmyDados$TUG.pos  BY ESTADO-CIVIL
+[[file:boxplot_TUG.pos_BY_ESTADOCIVIL.png]]
+
+
+
+
+
+#+NAME:  plot_boxplot - myDados$TUG.pos BY ESCOLARIDADE
+#+begin_src R :session s1 :file boxplot_TUG.pos_BY_ESCOLARIDADE.png :results output graphics file :exports both
+    plot_boxplot(
+      var_y = myDados$TUG.pos,
+      var_x = myDados$Escolaridade,
+      strTitle = "Time Up and Go - pos",
+      strSubTitle = "Agrupado por Escolaridade",
+      strVarYLabel = "Time Up and Go - pos",
+      strVarXLabel = "Escolaridade")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$TUG.pos BY ESCOLARIDADE
+[[file:boxplot_TUG.pos_BY_ESCOLARIDADE.png]]
+
+
+
+
+
+
+
+
+
+*** "TUG.pre e TUG.pos juntos"
+
+#+NAME:  plot_boxplot_2vars(var1 = myDados$TUG.pre_BoxPlot , var2 = myDados$TUG.pos_BoxPlot)
+#+begin_src R :session s1 :file boxplot_2vars_TUG_-_PreEPos.png :results output graphics file
+    boxplot_TUG_Pre_e_Pos_Juntos <- grid.arrange(TUG.pre_BoxPlot,TUG.pos_BoxPlot, ncol = 2)
+    boxplot_TUG_Pre_e_Pos_Juntos
+#+end_src
+
+#+RESULTS: plot_boxplot_2vars(var1 = myDados$TUG.pre_BoxPlot , var2 = myDados$TUG.pos_BoxPlot)
+[[file:boxplot_2vars_TUG_-_PreEPos.png]]
+
 
 *** "EP.Pre..D"
 
