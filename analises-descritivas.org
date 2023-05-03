@@ -2197,11 +2197,15 @@ dados[[factorVar]]: Sup Incompleto
 
 *** "EP.Pre..D"
 
+
+
 *** "EP..Pre.E."
 
 *** "EP.D..pos"
 
 *** "EP.E..por"
+
+
 
 *** "Teste.vel.pre"
 
@@ -2544,18 +2548,17 @@ alternative hypothesis: true location shift is not equal to 0
 #+end_example
 
 
+**  myDados$FPP.E.pre, myDados$FPP.E.pos
 
-**  EspSemMissing <- cbind(myDados$FPP.E.pre, myDados$FPP.E.pos)
-
-#+Name: EspDados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
+#+Name: FPP.E Dados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
 #+begin_src R :session s1 :results output :exports both
-  print("=== Dados sem missing...")
+  print("=== Dados com missing...")
   FPP.E_Pre_e_Pos <- cbind(myDados$FPP.E.pre,myDados$FPP.E.pos)
   FPP.E_Pre_e_Pos
 
   print("=== Dados sem missing...")
   FPP.E_Pre_e_Pos_SemMissing <- na.omit(FPP.E_Pre_e_Pos)
-  FPP.E_Pre_e_Pos_SemMissing
+  Fpp.E_Pre_e_Pos_SemMissing
 
   resultWilcoxExactFALSE <- wilcox.test(
     FPP.E_Pre_e_Pos_SemMissing[,1],
@@ -2563,15 +2566,15 @@ alternative hypothesis: true location shift is not equal to 0
   resultWilcoxExactFALSE
 
   resultWilcoxPadrao <- wilcox.test(
-    Dados_var1_e_var2_SemMissing[,1],
-    Dados_var1_e_var2_SemMissing[,2], paired = TRUE)
+    FPP.E_Pre_e_Pos_SemMissing[,1],
+    FPP.E_Pre_e_Pos_SemMissing[,2], paired = TRUE)
   resultWilcoxPadrao
 
 #+end_src
 
-#+RESULTS: EspDados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
+#+RESULTS: FPP.E Dados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
 #+begin_example
-[1] "=== Dados sem missing..."
+[1] "=== Dados com missing..."
       [,1] [,2]
  [1,]   NA   NA
  [2,]   NA   NA
@@ -2612,42 +2615,109 @@ alternative hypothesis: true location shift is not equal to 0
 [37,]  5.0  6.0
 [38,]  8.0 10.0
 [1] "=== Dados sem missing..."
-      [,1] [,2]
- [1,] 20.0 22.0
- [2,] 20.0 25.5
- [3,] 20.0 21.0
- [4,] 11.5 21.1
- [5,] 11.0 21.6
- [6,] 15.0 14.3
- [7,] 16.5 22.0
- [8,] 11.0 22.6
- [9,] 17.5 23.0
-[10,] 10.0 12.5
-[11,] 13.0 14.5
-[12,]  9.0  9.5
-[13,] 27.5 28.0
-[14,] 16.5 17.0
-[15,] 16.5 18.0
-[16,] 21.0 24.1
-[17,]  5.0  6.0
-[18,]  8.0 10.0
-attr(,"na.action")
- [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
-attr(,"class")
-[1] "omit"
+Erro: objeto 'Fpp.E_Pre_e_Pos_SemMissing' nÃ£o encontrado
 
 	Wilcoxon signed rank test with continuity correction
 
 data:  FPP.E_Pre_e_Pos_SemMissing[, 1] and FPP.E_Pre_e_Pos_SemMissing[, 2]
 V = 4, p-value = 0.0004121
 alternative hypothesis: true location shift is not equal to 0
-Error in wilcox.test(Dados_var1_e_var2_SemMissing[, 1], Dados_var1_e_var2_SemMissing[,  : 
-  objeto 'Dados_var1_e_var2_SemMissing' nÃ£o encontrado
+Warning message:
+In wilcox.test.default(FPP.E_Pre_e_Pos_SemMissing[, 1], FPP.E_Pre_e_Pos_SemMissing[,  :
+  nÃ£o Ã© possÃ­vel computar o valor de p exato com o de desempate
 
 	Wilcoxon signed rank test with continuity correction
 
-data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
-V = 127, p-value = 0.01759
+data:  FPP.E_Pre_e_Pos_SemMissing[, 1] and FPP.E_Pre_e_Pos_SemMissing[, 2]
+V = 4, p-value = 0.0004121
+alternative hypothesis: true location shift is not equal to 0
+#+end_example
+
+
+
+
+**  EspSemMissing <- cbind(myDados$FPP.E.pre, myDados$FPP.E.pos)
+
+#+Name: EspDados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
+#+begin_src R :session s1 :results output :exports both
+  print("=== Dados sem missing...")
+  FPP.E_Pre_e_Pos <- cbind(myDados$FPP.E.pre,myDados$FPP.E.pos)
+  FPP.E_Pre_e_Pos
+
+  print("=== Dados sem missing...")
+  FPP.E_Pre_e_Pos_SemMissing <- na.omit(FPP.E_Pre_e_Pos)
+  FPP.E_Pre_e_Pos_SemMissing
+
+  resultWilcoxExactFALSE <- wilcox.test(
+    FPP.E_Pre_e_Pos_SemMissing[,1],
+    FPP.E_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE
+
+  resultWilcoxPadrao <- wilcox.test(
+    Dados_var1_e_var2_SemMissing[,1],
+    Dados_var1_e_var2_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao
+
+#+end_src
+
+#+RESULTS: EspDados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
+#+begin_example
+[1] "=== Dados com missing..."
+      [,1] [,2]
+ [1,]   NA   NA
+ [2,]   NA   NA
+ [3,]   NA   NA
+ [4,]   NA   NA
+ [5,]   NA   NA
+ [6,]   NA   NA
+ [7,]   NA   NA
+ [8,]   NA   NA
+ [9,]   NA   NA
+[10,]   NA   NA
+[11,]   NA   NA
+[12,]   NA   NA
+[13,]   NA   NA
+[14,]   NA   NA
+[15,]   NA   NA
+[16,]   NA   NA
+[17,]   NA   NA
+[18,]   NA   NA
+[19,]   NA   NA
+[20,]   NA   NA
+[21,] 20.0 22.0
+[22,] 20.0 25.5
+[23,] 20.0 21.0
+[24,] 11.5 21.1
+[25,] 11.0 21.6
+[26,] 15.0 14.3
+[27,] 16.5 22.0
+[28,] 11.0 22.6
+[29,] 17.5 23.0
+[30,] 10.0 12.5
+[31,] 13.0 14.5
+[32,]  9.0  9.5
+[33,] 27.5 28.0
+[34,] 16.5 17.0
+[35,] 16.5 18.0
+[36,] 21.0 24.1
+[37,]  5.0  6.0
+[38,]  8.0 10.0
+[1] "=== Dados sem missing..."
+Erro: objeto 'Fpp.E_Pre_e_Pos_SemMissing' nÃ£o encontrado
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  FPP.E_Pre_e_Pos_SemMissing[, 1] and FPP.E_Pre_e_Pos_SemMissing[, 2]
+V = 4, p-value = 0.0004121
+alternative hypothesis: true location shift is not equal to 0
+Warning message:
+In wilcox.test.default(FPP.E_Pre_e_Pos_SemMissing[, 1], FPP.E_Pre_e_Pos_SemMissing[,  :
+  nÃ£o Ã© possÃ­vel computar o valor de p exato com o de desempate
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  FPP.E_Pre_e_Pos_SemMissing[, 1] and FPP.E_Pre_e_Pos_SemMissing[, 2]
+V = 4, p-value = 0.0004121
 alternative hypothesis: true location shift is not equal to 0
 #+end_example
 
