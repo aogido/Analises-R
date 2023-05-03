@@ -2344,7 +2344,7 @@ alternative hypothesis: true location shift is not equal to 0
 #+Name: EspDados => teste_wilcox(myDados$FPP.D.pre,myDados$FPP.E.pre)
 #+begin_src R :session s1 :results output :exports both
   print("=== Dados sem missing...")
-  FPP.E.pre_e_Pos <- cbind(myDados$FPP.D.pre,myDados$FPP.E.pre)
+  FPP.E.pre_e_Pos <- cbind(myDados$FPP.E.pre,myDados$FPP.E.pos)
   FPP.E.pre_e_Pos
 
   print("=== Dados sem missing...")
@@ -2387,52 +2387,53 @@ alternative hypothesis: true location shift is not equal to 0
 [18,]   NA   NA
 [19,]   NA   NA
 [20,]   NA   NA
-[21,] 18.5 20.0
-[22,] 21.0 20.0
-[23,] 21.0 20.0
-[24,] 13.5 11.5
-[25,] 19.0 11.0
-[26,] 18.0 15.0
-[27,] 18.0 16.5
-[28,] 14.0 11.0
-[29,]   NA 17.5
-[30,] 13.0 10.0
-[31,] 11.0 13.0
-[32,] 11.0  9.0
-[33,] 20.0 27.5
-[34,] 23.0 16.5
-[35,] 19.0 16.5
-[36,] 23.0 21.0
-[37,] 10.0  5.0
-[38,] 11.0  8.0
+[21,] 20.0 22.0
+[22,] 20.0 25.5
+[23,] 20.0 21.0
+[24,] 11.5 21.1
+[25,] 11.0 21.6
+[26,] 15.0 14.3
+[27,] 16.5 22.0
+[28,] 11.0 22.6
+[29,] 17.5 23.0
+[30,] 10.0 12.5
+[31,] 13.0 14.5
+[32,]  9.0  9.5
+[33,] 27.5 28.0
+[34,] 16.5 17.0
+[35,] 16.5 18.0
+[36,] 21.0 24.1
+[37,]  5.0  6.0
+[38,]  8.0 10.0
 [1] "=== Dados sem missing..."
       [,1] [,2]
- [1,] 18.5 20.0
- [2,] 21.0 20.0
- [3,] 21.0 20.0
- [4,] 13.5 11.5
- [5,] 19.0 11.0
- [6,] 18.0 15.0
- [7,] 18.0 16.5
- [8,] 14.0 11.0
- [9,] 13.0 10.0
-[10,] 11.0 13.0
-[11,] 11.0  9.0
-[12,] 20.0 27.5
-[13,] 23.0 16.5
-[14,] 19.0 16.5
-[15,] 23.0 21.0
-[16,] 10.0  5.0
-[17,] 11.0  8.0
+ [1,] 20.0 22.0
+ [2,] 20.0 25.5
+ [3,] 20.0 21.0
+ [4,] 11.5 21.1
+ [5,] 11.0 21.6
+ [6,] 15.0 14.3
+ [7,] 16.5 22.0
+ [8,] 11.0 22.6
+ [9,] 17.5 23.0
+[10,] 10.0 12.5
+[11,] 13.0 14.5
+[12,]  9.0  9.5
+[13,] 27.5 28.0
+[14,] 16.5 17.0
+[15,] 16.5 18.0
+[16,] 21.0 24.1
+[17,]  5.0  6.0
+[18,]  8.0 10.0
 attr(,"na.action")
- [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 29
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
 attr(,"class")
 [1] "omit"
 
 	Wilcoxon signed rank test with continuity correction
 
 data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
-V = 127, p-value = 0.01759
+V = 4, p-value = 0.0004121
 alternative hypothesis: true location shift is not equal to 0
 Warning message:
 In wilcox.test.default(FPP.E.pre_e_Pos_SemMissing[, 1], FPP.E.pre_e_Pos_SemMissing[,  :
@@ -2441,7 +2442,7 @@ In wilcox.test.default(FPP.E.pre_e_Pos_SemMissing[, 1], FPP.E.pre_e_Pos_SemMissi
 	Wilcoxon signed rank test with continuity correction
 
 data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
-V = 127, p-value = 0.01759
+V = 4, p-value = 0.0004121
 alternative hypothesis: true location shift is not equal to 0
 #+end_example
 
