@@ -352,8 +352,9 @@ The following object is masked from âpackage:dplyrâ:
   print(paste("Desvio Padrao = ", sd(na.omit(myDados$Sentar.levantar.pos))))
    #+end_src
 
-   #+RESULTS: mean sd var
-   #+begin_example
+   #+Name: saida mean sd e var
+    #+begin_src sh  :results output :exports cod
+
    [1] "---------------------------------------"
    [1] "## Media, Variancia e Desvios Padrao"
    [1] "Idade"
@@ -466,7 +467,7 @@ The following object is masked from âpackage:dplyrâ:
    [1] "Media = 11.7058823529412"
    [1] "Variancia =  15.2205882352941"
    [1] "Desvio Padrao =  3.90135722990014"
-   #+end_example
+      #+end_src
 
    
 * Testes de Normalidade
