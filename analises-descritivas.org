@@ -353,7 +353,7 @@ The following object is masked from âpackage:dplyrâ:
    #+end_src
 
    #+Name: saida mean sd e var
-    #+begin_src sh  :results output :exports cod
+    #+begin_src sh  :results output 
 
    [1] "---------------------------------------"
    [1] "## Media, Variancia e Desvios Padrao"
