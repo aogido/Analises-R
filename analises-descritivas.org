@@ -80,6 +80,9 @@ The following object is masked from âpackage:dplyrâ:
 #+end_example
 
 
+
+
+
 * Carregamento dos dados para analises
 
 #+Name: read.csv
@@ -231,144 +234,152 @@ The following object is masked from âpackage:dplyrâ:
   NA's   :20      NA's   :20          NA's   :21
  #+end_src
 
-
 #+Name: mean sd var
  #+begin_src R :session s1 :results output :exports both
-    print("---------------------------------------")
-    print("## Media, Variancia e Desvios Padrao")
-    print("Idade")
-    print(paste("Media =", mean(na.omit(myDados$Idade))))
-    print(paste("Variancia = ", var((na.omit(myDados$Idade)))))
-    print(paste("Desvio Padrao = ", sd(na.omit(myDados$Idade))))
+      print("---------------------------------------")
+      print("## Media, Variancia e Desvios Padrao")
+      print("Idade")
+      print(paste("Media =", mean(na.omit(myDados$Idade))))
+      print(paste("Variancia = ", var((na.omit(myDados$Idade)))))
+      print(paste("Desvio Padrao = ", sd(na.omit(myDados$Idade))))
+
+      print("---------------------------------------")
+      print("## Media, Variancia e Desvios Padrao")
+      print("Estress Pre ")  
+      print(paste("Media =", mean(na.omit(myDados$Esp_Pre))))
+      print(paste("Variancia = ", var(na.omit(myDados$Esp_Pre))))
+      print(paste("Desvio Padrao = ", sd(na.omit(myDados$Esp_Pre)))
+
+      print("---------------------------------------")
+      print("## Media, Variancia e Desvios Padrao")
+      print("Estress Pos")  
+      print(paste("Media =", mean(na.omit(myDados$ESP_Pos))))
+      print(paste("Variancia = ", var(na.omit(myDados$ESP_Pos))))
+      print(paste("Desvio Padrao = ", sd(na.omit(myDados$ESP_Pos))))
+
+
 
     print("---------------------------------------")
     print("## Media, Variancia e Desvios Padrao")
-    print("Estress Pre ")  
-    print(paste("Media =", mean(na.omit(myDados$Esp_Pre))))
-    print(paste("Variancia = ", var(na.omit(myDados$Esp_Pre))))
-    print(paste("Desvio Padrao = ", sd(na.omit(myDados$Esp_Pre)))
+    print("FPP.D.pre")  
+    print(paste("Media =", mean(na.omit(myDados$FPP.D.pre))))
+    print(paste("Variancia = ", var(na.omit(myDados$FPP.D.pre))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$FPP.D.pre))))
+
 
     print("---------------------------------------")
     print("## Media, Variancia e Desvios Padrao")
-    print("Estress Pos")  
-    print(paste("Media =", mean(na.omit(myDados$ESP_Pos))))
-    print(paste("Variancia = ", var(na.omit(myDados$ESP_Pos))))
-    print(paste("Desvio Padrao = ", sd(na.omit(myDados$ESP_Pos))))
-
-  print("XXX---------------------------------------")
-  print("XXX## Media, Variancia e Desvios Padrao")
-  print("XXXEP.D.pre")  
-  print(paste("Media =", mean(na.omit(myDados$EP.D.pre))))
-  print(paste("Variancia = ", var(na.omit(myDados$EP.D.pre))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP.D.pre))))
-
-
-  print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("FPP.D.pos")  
-  print(paste("Media =", mean(na.omit(myDados$FPP.D.pos))))
-  print(paste("Variancia = ", var(na.omit(myDados$FPP.D.pos))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$FPP.D.pos))))
-
-    print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("FPP.E.pos")  
-  print(paste("Media =", mean(na.omit(myDados$FPP.E.pos))))
-  print(paste("Variancia = ", var(na.omit(myDados$FPP.E.pos))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$FPP.E.pos))))
-
-    print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("TUG.pre")
-  print(paste("Media =", mean(na.omit(myDados$TUG.pre))))
-  print(paste("Variancia = ", var(na.omit(myDados$TUG.pre))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$TUG.pre))))
-
-    print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("TUG.pos")  
-  print(paste("Media =", mean(na.omit(myDados$TUG.pos))))
-  print(paste("Variancia = ", var(na.omit(myDados$TUG.pos))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$TUG.pos))))
-
-    print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("EP.Pre..D")  
-  print(paste("Media =", mean(na.omit(myDados$EP.Pre..D))))
-  print(paste("Variancia = ", var(na.omit(myDados$EP.Pre..D))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP.Pre..D))))
+    print("FPP.D.pos")  
+    print(paste("Media =", mean(na.omit(myDados$FPP.D.pos))))
+    print(paste("Variancia = ", var(na.omit(myDados$FPP.D.pos))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$FPP.D.pos))))
 
 
     print("---------------------------------------")
   print("## Media, Variancia e Desvios Padrao")
-  print("EP..Pre.E.")  
-  print(paste("Media =", mean(na.omit(myDados$EP..Pre.E.))))
-  print(paste("Variancia = ", var(na.omit(myDados$EP..Pre.E.))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP..Pre.E.))))
-
-
-    print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("EP.D..pos")  
-  print(paste("Media =", mean(na.omit(myDados$EP.D..pos))))
-  print(paste("Variancia = ", var(na.omit(myDados$EP.D..pos))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP.D..pos))))
-
+  print("FPP.E.pre")  
+  print(paste("Media =", mean(na.omit(myDados$FPP.E.pre))))
+  print(paste("Variancia = ", var(na.omit(myDados$FPP.E.pre))))
+  print(paste("Desvio Padrao = ", sd(na.omit(myDados$FPP.E.pre))))
 
     print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("EP.E..por")  
-  print(paste("Media =", mean(na.omit(myDados$EP.E..por))))
-  print(paste("Variancia = ", var(na.omit(myDados$EP.E..por))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP.E..por))))
+    print("## Media, Variancia e Desvios Padrao")
+    print("FPP.E.pos")  
+    print(paste("Media =", mean(na.omit(myDados$FPP.E.pos))))
+    print(paste("Variancia = ", var(na.omit(myDados$FPP.E.pos))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$FPP.E.pos))))
 
-    print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("Teste.vel.pre")  
-  print(paste("Media =", mean(na.omit(myDados$Teste.vel.pre))))
-  print(paste("Variancia = ", var(na.omit(myDados$Teste.vel.pre))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Teste.vel.pre))))
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("TUG.pre")
+    print(paste("Media =", mean(na.omit(myDados$TUG.pre))))
+    print(paste("Variancia = ", var(na.omit(myDados$TUG.pre))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$TUG.pre))))
 
-    print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("Teste.vel.pos")  
-  print(paste("Media =", mean(na.omit(myDados$Teste.vel.pos))))
-  print(paste("Variancia = ", var(na.omit(myDados$Teste.vel.pos))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Teste.vel.pos))))
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("TUG.pos")  
+    print(paste("Media =", mean(na.omit(myDados$TUG.pos))))
+    print(paste("Variancia = ", var(na.omit(myDados$TUG.pos))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$TUG.pos))))
+
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("EP.Pre..D")  
+    print(paste("Media =", mean(na.omit(myDados$EP.Pre..D))))
+    print(paste("Variancia = ", var(na.omit(myDados$EP.Pre..D))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP.Pre..D))))
 
 
-    print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("Alc.Func.pre")  
-  print(paste("Media =", mean(na.omit(myDados$Alc.Func.pre))))
-  print(paste("Variancia = ", var(na.omit(myDados$Alc.Func.pre))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Alc.Func.pre))))
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("EP..Pre.E.")  
+    print(paste("Media =", mean(na.omit(myDados$EP..Pre.E.))))
+    print(paste("Variancia = ", var(na.omit(myDados$EP..Pre.E.))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP..Pre.E.))))
 
-    print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("Alc.Func.pos")  
-  print(paste("Media =", mean(na.omit(myDados$Alc.Func.pos))))
-  print(paste("Variancia = ", var(na.omit(myDados$Alc.Func.pos))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Alc.Func.pos))))
 
-    print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("Sentar.levantar.pre")  
-  print(paste("Media =", mean(na.omit(myDados$Sentar.levantar.pre))))
-  print(paste("Variancia = ", var(na.omit(myDados$Sentar.levantar.pre))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Sentar.levantar.pre))))
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("EP.D..pos")  
+    print(paste("Media =", mean(na.omit(myDados$EP.D..pos))))
+    print(paste("Variancia = ", var(na.omit(myDados$EP.D..pos))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP.D..pos))))
 
-    print("---------------------------------------")
-  print("## Media, Variancia e Desvios Padrao")
-  print("Sentar.levantar.pos")  
-  print(paste("Media =", mean(na.omit(myDados$Sentar.levantar.pos))))
-  print(paste("Variancia = ", var(na.omit(myDados$Sentar.levantar.pos))))
-  print(paste("Desvio Padrao = ", sd(na.omit(myDados$Sentar.levantar.pos))))
+
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("EP.E..por")  
+    print(paste("Media =", mean(na.omit(myDados$EP.E..por))))
+    print(paste("Variancia = ", var(na.omit(myDados$EP.E..por))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$EP.E..por))))
+
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("Teste.vel.pre")  
+    print(paste("Media =", mean(na.omit(myDados$Teste.vel.pre))))
+    print(paste("Variancia = ", var(na.omit(myDados$Teste.vel.pre))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$Teste.vel.pre))))
+
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("Teste.vel.pos")  
+    print(paste("Media =", mean(na.omit(myDados$Teste.vel.pos))))
+    print(paste("Variancia = ", var(na.omit(myDados$Teste.vel.pos))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$Teste.vel.pos))))
+
+
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("Alc.Func.pre")  
+    print(paste("Media =", mean(na.omit(myDados$Alc.Func.pre))))
+    print(paste("Variancia = ", var(na.omit(myDados$Alc.Func.pre))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$Alc.Func.pre))))
+
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("Alc.Func.pos")  
+    print(paste("Media =", mean(na.omit(myDados$Alc.Func.pos))))
+    print(paste("Variancia = ", var(na.omit(myDados$Alc.Func.pos))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$Alc.Func.pos))))
+
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("Sentar.levantar.pre")  
+    print(paste("Media =", mean(na.omit(myDados$Sentar.levantar.pre))))
+    print(paste("Variancia = ", var(na.omit(myDados$Sentar.levantar.pre))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$Sentar.levantar.pre))))
+
+      print("---------------------------------------")
+    print("## Media, Variancia e Desvios Padrao")
+    print("Sentar.levantar.pos")  
+    print(paste("Media =", mean(na.omit(myDados$Sentar.levantar.pos))))
+    print(paste("Variancia = ", var(na.omit(myDados$Sentar.levantar.pos))))
+    print(paste("Desvio Padrao = ", sd(na.omit(myDados$Sentar.levantar.pos))))
    #+end_src
 
-   #+Name: saida mean sd e var
-    #+begin_src sh  :results output 
-
+   #+RESULTS: mean sd var
+   #+begin_src sh
    [1] "---------------------------------------"
    [1] "## Media, Variancia e Desvios Padrao"
    [1] "Idade"
@@ -382,27 +393,30 @@ The following object is masked from âpackage:dplyrâ:
    [1] "Variancia =  24.1777777777778"
    Erro: unexpected symbol em:
    "
-     print"
+       print"
    [1] "## Media, Variancia e Desvios Padrao"
    [1] "Estress Pos"
    [1] "Media = 9.66666666666667"
    [1] "Variancia =  19.4857142857143"
    [1] "Desvio Padrao =  4.41426259818266"
-   [1] "XXX---------------------------------------"
-   [1] "XXX## Media, Variancia e Desvios Padrao"
-   [1] "XXXEP.D.pre"
-   [1] "Media = NA"
-   Warning message:
-   In mean.default(na.omit(myDados$EP.D.pre)) :
-     argumento nÃ£o Ã© numÃ©rico nem lÃ³gico: retornando NA
-   Error in var(na.omit(myDados$EP.D.pre)) : 'x' Ã© NULL
-   [1] "Desvio Padrao =  NA"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "FPP.D.pre"
+   [1] "Media = 16.7058823529412"
+   [1] "Variancia =  19.8768382352941"
+   [1] "Desvio Padrao =  4.45834478649802"
    [1] "---------------------------------------"
    [1] "## Media, Variancia e Desvios Padrao"
    [1] "FPP.D.pos"
    [1] "Media = 19.6277777777778"
    [1] "Variancia =  29.6433006535948"
    [1] "Desvio Padrao =  5.44456615843676"
+   [1] "---------------------------------------"
+   [1] "## Media, Variancia e Desvios Padrao"
+   [1] "FPP.E.pre"
+   [1] "Media = 14.9444444444444"
+   [1] "Variancia =  31.6732026143791"
+   [1] "Desvio Padrao =  5.62789504294271"
    [1] "---------------------------------------"
    [1] "## Media, Variancia e Desvios Padrao"
    [1] "FPP.E.pos"
@@ -481,8 +495,15 @@ The following object is masked from âpackage:dplyrâ:
    [1] "Media = 11.7058823529412"
    [1] "Variancia =  15.2205882352941"
    [1] "Desvio Padrao =  3.90135722990014"
-      #+end_src
+   #+end_example
 
+
+
+
+
+
+
+      
    
 * Testes de Normalidade
 #+name: testes de normalidade
