@@ -2302,33 +2302,6 @@ dados[[factorVar]]: Sup Incompleto
 
 ** ESP
 
-#+Name FUNCTION teste_wilcox 
-#+begin_src R :session s1 :results output :exports both
-
-  teste_wilcox <- function(var1, var2){    
-    Dados_var1_e_var2 <- cbind(var1,var2)
-    Dados_var1_e_var2_SemMissing <- na.omit(Dados_var1_e_var2)
-
-    resultWilcoxExactFALSE <- wilcox.test(
-     Dados_var1_e_var2_SemMissing[,1],
-     Dados_var1_e_var2_SemMissing[,2], paired = TRUE, exact = FALSE)
-    resultWilcoxExactFALSE
-
-    resultWilcoxPadrao <- wilcox.test(
-     Dados_var1_e_var2_SemMissing[,1],
-     Dados_var1_e_var2_SemMissing[,2], paired = TRUE)
-    resultWilcoxPadrao
-
-    return(
-      list(
-        resultWilcoxExactFALSE = resultWilcoxExactFALSE,
-        resultWilcoxPadrao = resultWilcoxPadrao))
-    }
-
-#+end_src
-
-#+RESULTS:
-
 
 #+Name: EspDados => teste_wilcox(myDados$Esp_Pre,myDados$ESP_Pos)__2
 #+begin_src R :session s1 :results output :exports both
@@ -2512,13 +2485,6 @@ data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
 V = 4, p-value = 0.0004121
 alternative hypothesis: true location shift is not equal to 0
 #+end_example
-
-
-
-
-
-
-
 
  
 **  myDados$FPP.D.pre, myDados$FPP.D.pos
@@ -3036,10 +3002,6 @@ alternative hypothesis: true location shift is not equal to 0
 
 
 
-
-
-
-
 **  EspSemMissing <- cbind(myDados$Teste.vel.pre, myDados$Teste.vel.pos)
 
 #+Name: EspDados => teste_wilcox(myDados$Teste.vel.pre.,myDados$Teste.vel.pos)
@@ -3145,17 +3107,14 @@ alternative hypothesis: true location shift is not equal to 0
 #+end_example
 
 
-
-
-
 **  EspSemMissing <- cbind(myDados$Alc.Func.pre, myDados$Alc.Func.pos)
 #+Name: EspDados => teste_wilcox(myDados$Alc.Func.pre,myDados$Alc.Func.pos)
 #+begin_src R :session s1 :results output :exports both
-  print("=== Dados sem missing...")
-  Alc.Func_Pre_e_Pos <- cbind(myDados$Teste.vel.pre,myDados$Teste.vel.pos)
+  print("=== Dados Com missing...")
+  Alc.Func_Pre_e_Pos <- cbind(myDados$Alc.Func.pre,myDados$Alc.Func.pos)
   Alc.Func_Pre_e_Pos
 
-  print("=== Dados sem missing...")
+  print("=== Dados Sem missing...")
   Alc.Func_Pre_e_Pos_SemMissing <- na.omit(Alc.Func_Pre_e_Pos)
   Alc.Func_Pre_e_Pos_SemMissing
 
@@ -3173,7 +3132,7 @@ alternative hypothesis: true location shift is not equal to 0
 
 #+RESULTS: EspDados => teste_wilcox(myDados$Alc.Func.pre,myDados$Alc.Func.pos)
 #+begin_example
-[1] "=== Dados sem missing..."
+[1] "=== Dados Com missing..."
       [,1] [,2]
  [1,]   NA   NA
  [2,]   NA   NA
@@ -3195,44 +3154,44 @@ alternative hypothesis: true location shift is not equal to 0
 [18,]   NA   NA
 [19,]   NA   NA
 [20,]   NA   NA
-[21,] 3.44 4.16
-[22,] 3.02 5.63
-[23,] 3.01 3.45
-[24,] 3.42 3.87
-[25,] 4.25 4.44
-[26,] 2.98 3.25
-[27,] 2.22 2.01
-[28,] 3.28 3.31
-[29,] 3.31 3.35
-[30,] 3.57 4.11
-[31,] 3.40 3.90
-[32,] 3.15 4.10
-[33,] 3.88 3.20
-[34,] 4.75 4.10
-[35,] 4.81 4.36
-[36,] 3.43 4.75
-[37,] 4.80 5.10
-[38,] 4.80 3.77
-[1] "=== Dados sem missing..."
+[21,] 22.0 28.0
+[22,] 21.5 20.0
+[23,]  8.0 11.0
+[24,] 10.5 19.5
+[25,] 11.0 14.0
+[26,] 25.0 26.0
+[27,] 28.0 29.0
+[28,] 19.5 24.0
+[29,] 15.0 15.0
+[30,] 16.0 14.0
+[31,]  8.5 10.5
+[32,] 15.0 13.0
+[33,] 18.0 18.0
+[34,] 16.0 16.5
+[35,] 14.0 10.0
+[36,]  8.0  9.0
+[37,] 10.0 11.0
+[38,]  8.0 10.0
+[1] "=== Dados Sem missing..."
       [,1] [,2]
- [1,] 3.44 4.16
- [2,] 3.02 5.63
- [3,] 3.01 3.45
- [4,] 3.42 3.87
- [5,] 4.25 4.44
- [6,] 2.98 3.25
- [7,] 2.22 2.01
- [8,] 3.28 3.31
- [9,] 3.31 3.35
-[10,] 3.57 4.11
-[11,] 3.40 3.90
-[12,] 3.15 4.10
-[13,] 3.88 3.20
-[14,] 4.75 4.10
-[15,] 4.81 4.36
-[16,] 3.43 4.75
-[17,] 4.80 5.10
-[18,] 4.80 3.77
+ [1,] 22.0 28.0
+ [2,] 21.5 20.0
+ [3,]  8.0 11.0
+ [4,] 10.5 19.5
+ [5,] 11.0 14.0
+ [6,] 25.0 26.0
+ [7,] 28.0 29.0
+ [8,] 19.5 24.0
+ [9,] 15.0 15.0
+[10,] 16.0 14.0
+[11,]  8.5 10.5
+[12,] 15.0 13.0
+[13,] 18.0 18.0
+[14,] 16.0 16.5
+[15,] 14.0 10.0
+[16,]  8.0  9.0
+[17,] 10.0 11.0
+[18,]  8.0 10.0
 attr(,"na.action")
  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
 attr(,"class")
@@ -3241,13 +3200,18 @@ attr(,"class")
 	Wilcoxon signed rank test with continuity correction
 
 data:  Alc.Func_Pre_e_Pos_SemMissing[, 1] and Alc.Func_Pre_e_Pos_SemMissing[, 2]
-V = 53, p-value = 0.1634
+V = 36, p-value = 0.1021
 alternative hypothesis: true location shift is not equal to 0
+Warning messages:
+1: In wilcox.test.default(Alc.Func_Pre_e_Pos_SemMissing[, 1], Alc.Func_Pre_e_Pos_SemMissing[,  :
+  nÃ£o Ã© possÃ­vel computar o valor de p exato com o de desempate
+2: In wilcox.test.default(Alc.Func_Pre_e_Pos_SemMissing[, 1], Alc.Func_Pre_e_Pos_SemMissing[,  :
+  cannot compute exact p-value with zeroes
 
-	Wilcoxon signed rank exact test
+	Wilcoxon signed rank test with continuity correction
 
 data:  Alc.Func_Pre_e_Pos_SemMissing[, 1] and Alc.Func_Pre_e_Pos_SemMissing[, 2]
-V = 53, p-value = 0.1674
+V = 36, p-value = 0.1021
 alternative hypothesis: true location shift is not equal to 0
 #+end_example
 
