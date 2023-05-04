@@ -23,29 +23,30 @@
  GNU General Public License versions 2 or 3.
  For more information about these matters see
  https://www.gnu.org/licenses/.
- R_ARCH                      
- R_BROWSER                   /usr/bin/xdg-open
- R_BZIPCMD                   /usr/bin/bzip2
- R_DOC_DIR                   /usr/share/doc/R
- R_GZIPCMD                   /usr/bin/gzip
- R_HOME                      /usr/lib64/R
- R_INCLUDE_DIR               /usr/include/R
- R_LIBS_SITE                 /usr/local/lib/R/site-library:/usr/local/lib/R/library:/usr/lib64/R/library:/usr/share/R/library
- R_LIBS_USER                 /home/wgn/R/x86_64-redhat-linux-gnu-library/4.2
- R_PAPERSIZE                 a4
- R_PDFVIEWER                 /usr/bin/xdg-open
- R_PLATFORM                  x86_64-redhat-linux-gnu
- R_PRINTCMD                  lpr
- R_RD4PDF                    times,inconsolata,hyper
- R_SESSION_TMPDIR            /tmp/RtmpOMF1L0
- R_SHARE_DIR                 /usr/share/R
- R_STRIP_SHARED_LIB          strip --strip-unneeded
- R_STRIP_STATIC_LIB          strip --strip-debug
- R_SYSTEM_ABI                linux,gcc,gxx,gfortran,gfortran
- R_TEXI2DVICMD               /usr/bin/texi2dvi
- R_UNZIPCMD                  /usr/bin/unzip
- R_ZIPCMD                    /usr/bin/zip
+ R_ARCH                
+ R_BROWSER             /usr/bin/xdg-open
+ R_BZIPCMD             /usr/bin/bzip2
+ R_DOC_DIR             /usr/share/doc/R
+ R_GZIPCMD             /usr/bin/gzip
+ R_HOME                /usr/lib64/R
+ R_INCLUDE_DIR         /usr/include/R
+ R_LIBS_SITE           /usr/local/lib/R/site-library:/usr/local/lib/R/library:/usr/lib64/R/library:/usr/share/R/library
+ R_LIBS_USER           /home/wgn/R/x86_64-redhat-linux-gnu-library/4.2
+ R_PAPERSIZE           a4
+ R_PDFVIEWER           /usr/bin/xdg-open
+ R_PLATFORM            x86_64-redhat-linux-gnu
+ R_PRINTCMD            lpr
+ R_RD4PDF              times,inconsolata,hyper
+ R_SESSION_TMPDIR      /tmp/RtmpnbyzuP
+ R_SHARE_DIR           /usr/share/R
+ R_STRIP_SHARED_LIB    strip --strip-unneeded
+ R_STRIP_STATIC_LIB    strip --strip-debug
+ R_SYSTEM_ABI          linux,gcc,gxx,gfortran,gfortran
+ R_TEXI2DVICMD         /usr/bin/texi2dvi
+ R_UNZIPCMD            /usr/bin/unzip
+ R_ZIPCMD              /usr/bin/zip
  #+end_example
+
 
 * Prepacao do ambiente para execucao das analises
 
@@ -80,9 +81,6 @@ The following object is masked from âpackage:dplyrâ:
 #+end_example
 
 
-
-
-
 * Carregamento dos dados para analises
 
 #+Name: read.csv
@@ -91,8 +89,7 @@ The following object is masked from âpackage:dplyrâ:
   myDados <- dados %>% rename(Esp_Pre = ESP...Pre, ESP_Pos = ESP..Pos, Rem_Pres="X")
  #+end_src
 
- #+RESULTS: read.csv
-
+ 
 * Conhecendo as variaveis 
 
  #+name: names(dados)
@@ -703,7 +700,7 @@ Os valores mais diferentes  foram
 
 *** Idade
 #+Name: summary(dados$idade) by "Genero","Estado.civil","Escolaridade"
-#+begin_src R :session s1 :results output 
+#+begin_src R :session s1 :results output :exports both
   summary(dados$Idade)
   vars <- c("Genero","Estado.civil","Escolaridade")
   lapply(vars, function(x) by(dados$Idade, dados[[x]], summary))
@@ -795,6 +792,7 @@ dados[[x]]: Sup Incompleto
   plot_boxplot(dados$Idade, "Idade")
 #+end_src
 
+
 #+RESULTS: plot_boxplot idade
 [[file:boxplot_idade2.png]]
 
@@ -806,7 +804,6 @@ dados[[x]]: Sup Incompleto
 
 #+RESULTS: plot_boxplot idade by "Genero","Estado.civil","Escolaridade"
 [[file:boxplot_idade_by_genero.png]]
-
 
 
 *** "ESP_Pre"
@@ -926,37 +923,19 @@ dados[[factorVar]]: Sup Incompleto
 
 
 
-#+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY GENERO)
-#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_GENERO.png :results output graphics file  :exports both
+#+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY Presenncial ou Remoto)
+#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_PresOuRemoto.png :results output graphics file  :exports both
     plot_boxplot(
       var_y = myDados$Esp_Pre,
       var_x = myDados$Rem_Pres,
       strTitle = "Estresse Percebido - Pre",
-      strSubTitle = "Agrupado por Genero",
+      strSubTitle = "Agrupado por Participacao: Presencial ou Remota",
       strVarYLabel = "Estress Percebido - Pre",
-      strVarXLabel = "Genero")
+      strVarXLabel = "Participacao: Presencial ou Remota")
 #+end_src
 
-
-
-#+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY Rem_Pres)
-#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_Rem_Pres.png :results output graphics file: :exports both
-  Esp_Pre_BoxPlot_BY_RemPres <- plot_boxplot(
-     var_y = myDados$Esp_Pre,
-     var_x = myDados$Rem_Pres,
-     strTitle = "Estresse Percebido - Pre",
-     strSubTitle = "Agrupado por tipo de partipacao: Remoto ou Presencial",
-     strVarYLabel = "Estress Percebido - Pre",
-     strVarXLabel = "Partipacao: Remoto ou Presencial")
-#+end_src
-
-#+RESULTS: plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY Rem_Pres)
-
-
-
-
-
-
+#+RESULTS: plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY Presenncial ou Remoto)
+[[file:boxplot_Esp_Pre_BY_PresOuRemoto.png]]
 
 
 
@@ -1076,7 +1055,6 @@ dados[[factorVar]]: Sup Incompleto
 
 
 
-
 #+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos")
 #+begin_src R :session s1 :file boxplot_Esp_Pos.png :results output graphics file  :exports both
  Esp_Pos_BoxPlot <- plot_boxplot(
@@ -1106,6 +1084,26 @@ dados[[factorVar]]: Sup Incompleto
 
 #+RESULTS: plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY GENERO)
 [[file:boxplot_Esp_Pos_BY_GENERO.png]]
+
+
+
+
+
+#+NAME:  plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY Participacao Presencial ou Remoto
+#+begin_src R :session s1 :file boxplot_Esp_Pos_BY_ParticipacaoPresencialOuRemota.png :results output graphics file  :exports both
+    plot_boxplot(
+      var_y = myDados$ESP_Pos,
+      var_x = myDados$Rem_Pres,
+      strTitle = "Estresse Percebido - Pos",
+      strSubTitle = "Agrupado por Participacao Presencial ou Remota",
+      strVarYLabel = "Estress Percebido - Pos",
+      strVarXLabel = "Participacao Presencial ou Remota")
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$Esp_Pos, "Estresse Percebido - Pos" BY Participacao Presencial ou Remoto
+[[file:boxplot_Esp_Pos_BY_ParticipacaoPresencialOuRemota.png]]
+
+
 
 
 
@@ -1297,6 +1295,25 @@ dados[[factorVar]]: Sup Incompleto
 
 #+RESULTS: plot_boxplot - myDados$FPP.D.pre BY GENERO
 [[file:boxplot_FPP.D.pre_BY_GENERO.png]]
+
+
+
+
+#+NAME:  plot_boxplot - myDados$FPP.D.pre BY Participacao Presencial ou Remota
+#+begin_src R :session s1 :file boxplot_FPP.D.pre_BY_ParticipacaoPresencialOuRemota.png :results output graphics file  :exports both
+    plot_boxplot(
+      var_y = myDados$FPP.D.pre,
+      var_x = myDados$Rem_Pres,
+      strTitle = "FPP.D.pre",
+      strSubTitle = "Agrupado por Participacao Presencial ou Remota",
+      strVarYLabel = "FPP.D.pre",
+      strVarXLabel = " Participacao Presencial ou Remota")
+#+end_src
+
+#+RESULTS: plot_boxplot - myDados$FPP.D.pre BY Participacao Presencial ou Remota
+[[file:boxplot_FPP.D.pre_BY_ParticipacaoPresencialOuRemota.png]]
+
+
 
 
 
