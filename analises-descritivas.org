@@ -10,7 +10,7 @@
    env_vars_R <- env_vars[grep("^R", names(env_vars))]
    env_vars_R
  #+end_src
-
+ 
  #+RESULTS: R environment which R
  #+begin_example
  /bin/R
@@ -23,28 +23,28 @@
  GNU General Public License versions 2 or 3.
  For more information about these matters see
  https://www.gnu.org/licenses/.
- R_ARCH                                 
- R_BROWSER                              /usr/bin/xdg-open
- R_BZIPCMD                              /usr/bin/bzip2
- R_DOC_DIR                              /usr/share/doc/R
- R_GZIPCMD                              /usr/bin/gzip
- R_HOME                                 /usr/lib64/R
- R_INCLUDE_DIR                          /usr/include/R
- R_LIBS_SITE                            /usr/local/lib/R/site-library:/usr/local/lib/R/library:/usr/lib64/R/library:/usr/share/R/library
- R_LIBS_USER                            /home/wgn/R/x86_64-redhat-linux-gnu-library/4.2
- R_PAPERSIZE                            a4
- R_PDFVIEWER                            /usr/bin/xdg-open
- R_PLATFORM                             x86_64-redhat-linux-gnu
- R_PRINTCMD                             lpr
- R_RD4PDF                               times,inconsolata,hyper
- R_SESSION_TMPDIR                       /tmp/RtmppAS4Dg
- R_SHARE_DIR                            /usr/share/R
- R_STRIP_SHARED_LIB                     strip --strip-unneeded
- R_STRIP_STATIC_LIB                     strip --strip-debug
- R_SYSTEM_ABI                           linux,gcc,gxx,gfortran,gfortran
- R_TEXI2DVICMD                          /usr/bin/texi2dvi
- R_UNZIPCMD                             /usr/bin/unzip
- R_ZIPCMD                               /usr/bin/zip
+ R_ARCH                      
+ R_BROWSER                   /usr/bin/xdg-open
+ R_BZIPCMD                   /usr/bin/bzip2
+ R_DOC_DIR                   /usr/share/doc/R
+ R_GZIPCMD                   /usr/bin/gzip
+ R_HOME                      /usr/lib64/R
+ R_INCLUDE_DIR               /usr/include/R
+ R_LIBS_SITE                 /usr/local/lib/R/site-library:/usr/local/lib/R/library:/usr/lib64/R/library:/usr/share/R/library
+ R_LIBS_USER                 /home/wgn/R/x86_64-redhat-linux-gnu-library/4.2
+ R_PAPERSIZE                 a4
+ R_PDFVIEWER                 /usr/bin/xdg-open
+ R_PLATFORM                  x86_64-redhat-linux-gnu
+ R_PRINTCMD                  lpr
+ R_RD4PDF                    times,inconsolata,hyper
+ R_SESSION_TMPDIR            /tmp/RtmpOMF1L0
+ R_SHARE_DIR                 /usr/share/R
+ R_STRIP_SHARED_LIB          strip --strip-unneeded
+ R_STRIP_STATIC_LIB          strip --strip-debug
+ R_SYSTEM_ABI                linux,gcc,gxx,gfortran,gfortran
+ R_TEXI2DVICMD               /usr/bin/texi2dvi
+ R_UNZIPCMD                  /usr/bin/unzip
+ R_ZIPCMD                    /usr/bin/zip
  #+end_example
 
 * Prepacao do ambiente para execucao das analises
@@ -130,6 +130,20 @@ The following object is masked from âpackage:dplyrâ:
  [28] "Sentar.levantar.pos"
  #+end_example
 
+ #+name: variavel Remoto-Presencial
+ #+begin_src R :session s1 :results output :exports both
+   myDados$Rem_Pres
+ #+end_src
+
+ #+RESULTS: variavel Remoto-Presencial
+ :  [1] Remoto     Remoto     Remoto     Remoto     Remoto     Remoto     Remoto     Remoto    
+ :  [9] Remoto     Remoto     Remoto     Remoto     Remoto     Remoto     Remoto     Remoto    
+ : [17] Remoto     Remoto     Remoto     Remoto     Presencial Presencial Presencial Presencial
+ : [25] Presencial Presencial Presencial Presencial Presencial Presencial Presencial Presencial
+ : [33] Presencial Presencial Presencial Presencial Presencial Presencial
+ : Levels: Presencial Remoto
+
+ 
 #+Name:  str(myDados)
  #+begin_src R :session s1 :results output :exports both
   str(myDados)
@@ -773,6 +787,7 @@ dados[[x]]: Sup Incompleto
 [[file:boxplot_idade_by_genero.png]]
 
 
+
 *** "ESP_Pre"
 
 #+Name: print_summary(dados$Esp...Pre, c("Genero","Estado.civil","Escolaridade"));
@@ -890,19 +905,37 @@ dados[[factorVar]]: Sup Incompleto
 
 
 
-#+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY ESTADO-CIVIL)
-#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_ESTADOCIVIL.png :results output graphics file: :exports both
+#+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY GENERO)
+#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_GENERO.png :results output graphics file  :exports both
     plot_boxplot(
       var_y = myDados$Esp_Pre,
-      var_x = myDados$Genero,
+      var_x = myDados$Rem_Pres,
       strTitle = "Estresse Percebido - Pre",
-      strSubTitle = "Agrupado por Estado Civil",
+      strSubTitle = "Agrupado por Genero",
       strVarYLabel = "Estress Percebido - Pre",
-      strVarXLabel = "Estado Civil")
+      strVarXLabel = "Genero")
 #+end_src
 
-#+RESULTS: plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY ESTADO-CIVIL)
-[[file:boxplot_Esp_Pre_BY_ESTADOCIVIL.png]]
+
+
+#+NAME:  plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY Rem_Pres)
+#+begin_src R :session s1 :file boxplot_Esp_Pre_BY_Rem_Pres.png :results output graphics file: :exports both
+  Esp_Pre_BoxPlot_BY_RemPres <- plot_boxplot(
+     var_y = myDados$Esp_Pre,
+     var_x = myDados$Rem_Pres,
+     strTitle = "Estresse Percebido - Pre",
+     strSubTitle = "Agrupado por tipo de partipacao: Remoto ou Presencial",
+     strVarYLabel = "Estress Percebido - Pre",
+     strVarXLabel = "Partipacao: Remoto ou Presencial")
+#+end_src
+
+#+RESULTS: plot_boxplot(myDados$Esp_Pre, "Estresse Percebido - Pré" BY Rem_Pres)
+
+
+
+
+
+
 
 
 
@@ -2259,9 +2292,9 @@ dados[[factorVar]]: Sup Incompleto
 #+RESULTS:
 
 
-#+Name: EspDados => teste_wilcox(myDados$Esp_Pre,myDados$ESP_Pos)
+#+Name: EspDados => teste_wilcox(myDados$Esp_Pre,myDados$ESP_Pos)__2
 #+begin_src R :session s1 :results output :exports both
-  print("=== Dados sem missing...")
+  print("=== Dados Com missing...")
   ESP_Pre_e_Pos <- cbind(myDados$Esp_Pre,myDados$ESP_Pos)
   ESP_Pre_e_Pos
 
@@ -2275,88 +2308,75 @@ dados[[factorVar]]: Sup Incompleto
   resultWilcoxExactFALSE
 
   resultWilcoxPadrao <- wilcox.test(
-    Dados_var1_e_var2_SemMissing[,1],
-    Dados_var1_e_var2_SemMissing[,2], paired = TRUE)
+    ESP_Pre_e_Pos_SemMissing[,1],
+    ESP_Pre_e_Pos_SemMissing[,2], paired = TRUE)
   resultWilcoxPadrao
 
 #+end_src
 
-#+RESULTS: EspDados => teste_wilcox(myDados$Esp_Pre,myDados$ESP_Pos)
+#+RESULTS: EspDados => teste_wilcox(myDados$Esp_Pre,myDados$ESP_Pos)__2
 #+begin_example
-[1] "=== Dados sem missing..."
+[1] "=== Dados Com missing..."
       [,1] [,2]
- [1,]   NA   NA
- [2,]   NA   NA
- [3,]   NA   NA
- [4,]   NA   NA
- [5,]   NA   NA
- [6,]   NA   NA
- [7,]   NA   NA
- [8,]   NA   NA
- [9,]   NA   NA
-[10,]   NA   NA
-[11,]   NA   NA
-[12,]   NA   NA
-[13,]   NA   NA
-[14,]   NA   NA
-[15,]   NA   NA
-[16,]   NA   NA
-[17,]   NA   NA
-[18,]   NA   NA
-[19,]   NA   NA
-[20,]   NA   NA
-[21,] 18.5 19.0
-[22,] 21.0 30.0
-[23,] 21.0 23.0
-[24,] 13.5 22.4
-[25,] 19.0 22.0
-[26,] 18.0 14.3
-[27,] 18.0 21.0
-[28,] 14.0 24.6
-[29,]   NA 22.9
-[30,] 13.0 14.5
-[31,] 11.0 13.0
-[32,] 11.0 12.0
-[33,] 20.0 22.0
-[34,] 23.0 23.0
-[35,] 19.0 20.0
-[36,] 23.0 25.6
-[37,] 10.0 10.0
-[38,] 11.0 14.0
+ [1,]   12    6
+ [2,]   14    4
+ [3,]   15   12
+ [4,]   13   13
+ [5,]   14   12
+ [6,]   13    7
+ [7,]   17   15
+ [8,]   16   14
+ [9,]   11   10
+[10,]   15   12
+[11,]    4    3
+[12,]   23   22
+[13,]   17   13
+[14,]   15   10
+[15,]   16   12
+[16,]   15   11
+[17,]   20   16
+[18,]   17   13
+[19,]    8    6
+[20,]    5    3
+[21,]   17    2
+[22,]   14    8
+[23,]   20    9
+[24,]    9    6
+[25,]   19   10
+[26,]    4    3
+[27,]   14   12
+[28,]    2    3
+[29,]   19   13
+[30,]   15    8
+[31,]   18   12
+[32,]    7    5
+[33,]   NA   NA
+[34,]   14   10
+[35,]   12    9
+[36,]   19   14
+[37,]   NA   NA
+[38,]   13   10
 [1] "=== Dados sem missing..."
 Error in na.omit(Dados_var1_e_var2) : 
   objeto 'Dados_var1_e_var2' nÃ£o encontrado
 Erro: objeto 'ESP_Pre_e_Pos_SemMissing' nÃ£o encontrado
 Error in wilcox.test(ESP_Pre_e_Pos_SemMissing[, 1], ESP_Pre_e_Pos_SemMissing[,  : 
   objeto 'ESP_Pre_e_Pos_SemMissing' nÃ£o encontrado
-
-	Wilcoxon signed rank test with continuity correction
-
-data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
-V = 127, p-value = 0.01759
-alternative hypothesis: true location shift is not equal to 0
-Error in wilcox.test(Dados_var1_e_var2_SemMissing[, 1], Dados_var1_e_var2_SemMissing[,  : 
-  objeto 'Dados_var1_e_var2_SemMissing' nÃ£o encontrado
-
-	Wilcoxon signed rank test with continuity correction
-
-data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
-V = 127, p-value = 0.01759
-alternative hypothesis: true location shift is not equal to 0
+Erro: objeto 'resultWilcoxExactFALSE' nÃ£o encontrado
+Error in wilcox.test(ESP_Pre_e_Pos_SemMissing[, 1], ESP_Pre_e_Pos_SemMissing[,  : 
+  objeto 'ESP_Pre_e_Pos_SemMissing' nÃ£o encontrado
+Erro: objeto 'resultWilcoxPadrao' nÃ£o encontrado
 #+end_example
-
-
-
 
 
 
 #+Name: EspDados => teste_wilcox(myDados$FPP.D.pre,myDados$FPP.E.pre)
 #+begin_src R :session s1 :results output :exports both
-  print("=== Dados sem missing...")
+  print("=== Dados Com missing...")
   FPP.E.pre_e_Pos <- cbind(myDados$FPP.E.pre,myDados$FPP.E.pos)
   FPP.E.pre_e_Pos
 
-  print("=== Dados sem missing...")
+  print("=== Dados Sem missing...")
   FPP.E.pre_e_Pos_SemMissing <- na.omit(FPP.E.pre_e_Pos)
   FPP.E.pre_e_Pos_SemMissing
 
@@ -2374,7 +2394,7 @@ alternative hypothesis: true location shift is not equal to 0
 
 #+RESULTS: EspDados => teste_wilcox(myDados$FPP.D.pre,myDados$FPP.E.pre)
 #+begin_example
-[1] "=== Dados sem missing..."
+[1] "=== Dados Com missing..."
       [,1] [,2]
  [1,]   NA   NA
  [2,]   NA   NA
@@ -2414,7 +2434,7 @@ alternative hypothesis: true location shift is not equal to 0
 [36,] 21.0 24.1
 [37,]  5.0  6.0
 [38,]  8.0 10.0
-[1] "=== Dados sem missing..."
+[1] "=== Dados Sem missing..."
       [,1] [,2]
  [1,] 20.0 22.0
  [2,] 20.0 25.5
@@ -2467,29 +2487,29 @@ alternative hypothesis: true location shift is not equal to 0
 
 #+Name: EspDados => teste_wilcox(myDados$FPP.D.pre,myDados$FPP.D.pos)
 #+begin_src R :session s1 :results output :exports both
-  print("=== Dados sem missing...")
+  print("=== Dados Com missing...")
   FPP.D_Pre_e_Pos <- cbind(myDados$FPP.D.pre,myDados$FPP.D.pos)
   FPP.D_Pre_e_Pos
 
   print("=== Dados sem missing...")
-  ESP_Pre_e_Pos_SemMissing <- na.omit(Dados_var1_e_var2)
-  ESP_Pre_e_Pos_SemMissing
+  FPP.D_Pre_e_Pos_SemMissing <- na.omit(FPP.D_Pre_e_Pos)
+  FPP.D_Pre_e_Pos_SemMissing
 
-  resultWilcoxExactFALSE <- wilcox.test(
-    ESP_Pre_e_Pos_SemMissing[,1],
-    ESP_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
-  resultWilcoxExactFALSE
+  resultWilcoxExactFALSE_FPP.D_Pre_e_Pos <- wilcox.test(
+    FPP.D_Pre_e_Pos_SemMissing[,1],
+    FPP.D_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
+  resultWilcoxExactFALSE_FPP.D_Pre_e_Pos
 
-  resultWilcoxPadrao <- wilcox.test(
-    Dados_var1_e_var2_SemMissing[,1],
-    Dados_var1_e_var2_SemMissing[,2], paired = TRUE)
-  resultWilcoxPadrao
+  resultWilcoxPadrao_FPP.D_Pre_e_Pos <- wilcox.test(
+    FPP.D_Pre_e_Pos_SemMissing[,1],
+    FPP.D_Pre_e_Pos_SemMissing[,2], paired = TRUE)
+  resultWilcoxPadrao_FPP.D_Pre_e_Pos
 
 #+end_src
 
 #+RESULTS: EspDados => teste_wilcox(myDados$FPP.D.pre,myDados$FPP.D.pos)
 #+begin_example
-[1] "=== Dados sem missing..."
+[1] "=== Dados Com missing..."
       [,1] [,2]
  [1,]   NA   NA
  [2,]   NA   NA
@@ -2530,24 +2550,44 @@ alternative hypothesis: true location shift is not equal to 0
 [37,] 10.0 10.0
 [38,] 11.0 14.0
 [1] "=== Dados sem missing..."
-Error in na.omit(Dados_var1_e_var2) : 
-  objeto 'Dados_var1_e_var2' nÃ£o encontrado
-Erro: objeto 'ESP_Pre_e_Pos_SemMissing' nÃ£o encontrado
-Error in wilcox.test(ESP_Pre_e_Pos_SemMissing[, 1], ESP_Pre_e_Pos_SemMissing[,  : 
-  objeto 'ESP_Pre_e_Pos_SemMissing' nÃ£o encontrado
+      [,1] [,2]
+ [1,] 18.5 19.0
+ [2,] 21.0 30.0
+ [3,] 21.0 23.0
+ [4,] 13.5 22.4
+ [5,] 19.0 22.0
+ [6,] 18.0 14.3
+ [7,] 18.0 21.0
+ [8,] 14.0 24.6
+ [9,] 13.0 14.5
+[10,] 11.0 13.0
+[11,] 11.0 12.0
+[12,] 20.0 22.0
+[13,] 23.0 23.0
+[14,] 19.0 20.0
+[15,] 23.0 25.6
+[16,] 10.0 10.0
+[17,] 11.0 14.0
+attr(,"na.action")
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 29
+attr(,"class")
+[1] "omit"
 
 	Wilcoxon signed rank test with continuity correction
 
-data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
-V = 127, p-value = 0.01759
+data:  FPP.D_Pre_e_Pos_SemMissing[, 1] and FPP.D_Pre_e_Pos_SemMissing[, 2]
+V = 12, p-value = 0.006877
 alternative hypothesis: true location shift is not equal to 0
-Error in wilcox.test(Dados_var1_e_var2_SemMissing[, 1], Dados_var1_e_var2_SemMissing[,  : 
-  objeto 'Dados_var1_e_var2_SemMissing' nÃ£o encontrado
+Warning messages:
+1: In wilcox.test.default(FPP.D_Pre_e_Pos_SemMissing[, 1], FPP.D_Pre_e_Pos_SemMissing[,  :
+  nÃ£o Ã© possÃ­vel computar o valor de p exato com o de desempate
+2: In wilcox.test.default(FPP.D_Pre_e_Pos_SemMissing[, 1], FPP.D_Pre_e_Pos_SemMissing[,  :
+  cannot compute exact p-value with zeroes
 
 	Wilcoxon signed rank test with continuity correction
 
-data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
-V = 127, p-value = 0.01759
+data:  FPP.D_Pre_e_Pos_SemMissing[, 1] and FPP.D_Pre_e_Pos_SemMissing[, 2]
+V = 12, p-value = 0.006877
 alternative hypothesis: true location shift is not equal to 0
 #+end_example
 
@@ -2556,7 +2596,7 @@ alternative hypothesis: true location shift is not equal to 0
 
 #+Name: FPP.E Dados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
 #+begin_src R :session s1 :results output :exports both
-  print("=== Dados com missing...")
+  print("=== Dados Com missing...")
   FPP.E_Pre_e_Pos <- cbind(myDados$FPP.E.pre,myDados$FPP.E.pos)
   FPP.E_Pre_e_Pos
 
@@ -2564,21 +2604,21 @@ alternative hypothesis: true location shift is not equal to 0
   FPP.E_Pre_e_Pos_SemMissing <- na.omit(FPP.E_Pre_e_Pos)
   Fpp.E_Pre_e_Pos_SemMissing
 
-  resultWilcoxExactFALSE <- wilcox.test(
+  resultWilcoxExactFALSE_FPP.E_Pre_e_Pos <- wilcox.test(
     FPP.E_Pre_e_Pos_SemMissing[,1],
     FPP.E_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
-  resultWilcoxExactFALSE
+  resultWilcoxExactFALSE_FPP.E_Pre_e_Pos
 
-  resultWilcoxPadrao <- wilcox.test(
+  resultWilcoxPadrao_FPP.E_Pre_e_Pos <- wilcox.test(
     FPP.E_Pre_e_Pos_SemMissing[,1],
     FPP.E_Pre_e_Pos_SemMissing[,2], paired = TRUE)
-  resultWilcoxPadrao
+  resultWilcoxPadrao_FPP.E_Pre_e_Pos
 
 #+end_src
 
 #+RESULTS: FPP.E Dados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
 #+begin_example
-[1] "=== Dados com missing..."
+[1] "=== Dados Com missing..."
       [,1] [,2]
  [1,]   NA   NA
  [2,]   NA   NA
@@ -2638,99 +2678,13 @@ alternative hypothesis: true location shift is not equal to 0
 #+end_example
 
 
-
-
-**  EspSemMissing <- cbind(myDados$FPP.E.pre, myDados$FPP.E.pos)
-
-#+Name: EspDados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
-#+begin_src R :session s1 :results output :exports both
-  print("=== Dados sem missing...")
-  FPP.E_Pre_e_Pos <- cbind(myDados$FPP.E.pre,myDados$FPP.E.pos)
-  FPP.E_Pre_e_Pos
-
-  print("=== Dados sem missing...")
-  FPP.E_Pre_e_Pos_SemMissing <- na.omit(FPP.E_Pre_e_Pos)
-  FPP.E_Pre_e_Pos_SemMissing
-
-  resultWilcoxExactFALSE <- wilcox.test(
-    FPP.E_Pre_e_Pos_SemMissing[,1],
-    FPP.E_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
-  resultWilcoxExactFALSE
-
-  resultWilcoxPadrao <- wilcox.test(
-    Dados_var1_e_var2_SemMissing[,1],
-    Dados_var1_e_var2_SemMissing[,2], paired = TRUE)
-  resultWilcoxPadrao
-
-#+end_src
-
-#+RESULTS: EspDados => teste_wilcox(myDados$FPP.E.pre,myDados$FPP.E.pos)
-#+begin_example
-[1] "=== Dados com missing..."
-      [,1] [,2]
- [1,]   NA   NA
- [2,]   NA   NA
- [3,]   NA   NA
- [4,]   NA   NA
- [5,]   NA   NA
- [6,]   NA   NA
- [7,]   NA   NA
- [8,]   NA   NA
- [9,]   NA   NA
-[10,]   NA   NA
-[11,]   NA   NA
-[12,]   NA   NA
-[13,]   NA   NA
-[14,]   NA   NA
-[15,]   NA   NA
-[16,]   NA   NA
-[17,]   NA   NA
-[18,]   NA   NA
-[19,]   NA   NA
-[20,]   NA   NA
-[21,] 20.0 22.0
-[22,] 20.0 25.5
-[23,] 20.0 21.0
-[24,] 11.5 21.1
-[25,] 11.0 21.6
-[26,] 15.0 14.3
-[27,] 16.5 22.0
-[28,] 11.0 22.6
-[29,] 17.5 23.0
-[30,] 10.0 12.5
-[31,] 13.0 14.5
-[32,]  9.0  9.5
-[33,] 27.5 28.0
-[34,] 16.5 17.0
-[35,] 16.5 18.0
-[36,] 21.0 24.1
-[37,]  5.0  6.0
-[38,]  8.0 10.0
-[1] "=== Dados sem missing..."
-Erro: objeto 'Fpp.E_Pre_e_Pos_SemMissing' nÃ£o encontrado
-
-	Wilcoxon signed rank test with continuity correction
-
-data:  FPP.E_Pre_e_Pos_SemMissing[, 1] and FPP.E_Pre_e_Pos_SemMissing[, 2]
-V = 4, p-value = 0.0004121
-alternative hypothesis: true location shift is not equal to 0
-Warning message:
-In wilcox.test.default(FPP.E_Pre_e_Pos_SemMissing[, 1], FPP.E_Pre_e_Pos_SemMissing[,  :
-  nÃ£o Ã© possÃ­vel computar o valor de p exato com o de desempate
-
-	Wilcoxon signed rank test with continuity correction
-
-data:  FPP.E_Pre_e_Pos_SemMissing[, 1] and FPP.E_Pre_e_Pos_SemMissing[, 2]
-V = 4, p-value = 0.0004121
-alternative hypothesis: true location shift is not equal to 0
-#+end_example
 
 
 **  EspSemMissing <- cbind(myDados$TUG.pre, myDados$TUG.pos)
 
 #+Name: EspDados => teste_wilcox(myDados$TUG.pre,myDados$TUG.pos) 
 #+begin_src R :session s1 :results output :exports both
-  print("=== Dados sem missing...")
+  print("=== Dados Com missing...")
   TUG_Pre_e_Pos <- cbind(myDados$TUG.pre,myDados$TUG.pos)
   TUG_Pre_e_Pos
 
@@ -2738,7 +2692,7 @@ alternative hypothesis: true location shift is not equal to 0
   TUG_Pre_e_Pos_SemMissing <- na.omit(TUG_Pre_e_Pos)
   TUG_Pre_e_Pos_SemMissing
 
-  resultWilcoxExactFALSE <- wilcox.test(
+  resultWilcoxExactFALSE_TUG_Pre_e_Pos <- wilcox.test(
     TUG_Pre_e_Pos_SemMissing[,1],
     TUG_Pre_e_Pos_SemMissing[,2], paired = TRUE, exact = FALSE)
   resultWilcoxExactFALSE
@@ -2746,13 +2700,13 @@ alternative hypothesis: true location shift is not equal to 0
   resultWilcoxPadrao <- wilcox.test(
     TUG_Pre_e_Pos_SemMissing[,1],
     TUG_Pre_e_Pos_SemMissing[,2], paired = TRUE)
-  resultWilcoxPadrao
+  resultWilcoxPadrao_TUG_Pre_e_Pos
 
 #+end_src
 
 #+RESULTS: EspDados => teste_wilcox(myDados$TUG.pre,myDados$TUG.pos)
 #+begin_example
-[1] "=== Dados sem missing..."
+[1] "=== Dados Com missing..."
        [,1] [,2]
  [1,]    NA   NA
  [2,]    NA   NA
@@ -2819,15 +2773,10 @@ attr(,"class")
 
 	Wilcoxon signed rank test with continuity correction
 
-data:  TUG_Pre_e_Pos_SemMissing[, 1] and TUG_Pre_e_Pos_SemMissing[, 2]
-V = 148, p-value = 0.006931
+data:  FPP.E.pre_e_Pos_SemMissing[, 1] and FPP.E.pre_e_Pos_SemMissing[, 2]
+V = 4, p-value = 0.0004121
 alternative hypothesis: true location shift is not equal to 0
-
-	Wilcoxon signed rank exact test
-
-data:  TUG_Pre_e_Pos_SemMissing[, 1] and TUG_Pre_e_Pos_SemMissing[, 2]
-V = 148, p-value = 0.004745
-alternative hypothesis: true location shift is not equal to 0
+Erro: objeto 'resultWilcoxPadrao_TUG_Pre_e_Pos' nÃ£o encontrado
 #+end_example
 
 
@@ -2836,7 +2785,7 @@ alternative hypothesis: true location shift is not equal to 0
 
 #+Name: EspDados => teste_wilcox(myDados$EP.Pre..D,myDados$EP.D..pos)
 #+begin_src R :session s1 :results output :exports both
-  print("=== Dados sem missing...")
+  print("=== Dados Com missing...")
   EP.D_Pre_e_Pos <- cbind(myDados$EP.Pre..D,myDados$EP.D..pos)
   EP.D_Pre_e_Pos
 
